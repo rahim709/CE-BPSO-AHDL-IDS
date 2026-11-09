@@ -1,0 +1,34 @@
+extends: gas_pipeline.yaml
+space: debug
+final_epochs: 2
+training:
+  device: cpu
+search:
+  population: 3
+  generations: 2
+  epochs: 2
+  min_epochs: 1
+  candidates: 8
+  brackets: 1
+compute:
+  max_epochs: 12
+diagnostics:
+  candidates: 4
+  seeds: [42]
+  epochs: [1, 2]
+  long_epochs: 3
+  shortlist: 1
+  audit_rejected: 1
+  top_k: 1
+comparison:
+  seeds: [42]
+  methods: [bpso, bpso_reduced, bpso_sh, hyperband, dehb, random]
+  final_train: true
+architecture:
+  batch_size: 8
+  optimizer: adam
+  learning_rate: 0.001
+  cnn:
+    - {padding: same, filters: 4, kernel: 2, pool: 1, activation: relu}
+  rnn:
+    - {kind: gru, units: 4, activation: tanh, regularization: none, dropout: 0.0}

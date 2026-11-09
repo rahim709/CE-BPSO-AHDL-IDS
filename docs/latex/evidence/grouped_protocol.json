@@ -1,0 +1,19 @@
+{
+  "split_seed": 1729,
+  "seeds": [
+    42,
+    43,
+    44
+  ],
+  "epochs": 30,
+  "grouping": "pandas hashes of all 25 non-time predictors, excluding labels",
+  "input_features": "all 26 including query-response duration",
+  "normalization": "training-fitted Min-Max",
+  "methods": [
+    "random_forest",
+    "logistic_regression",
+    "reference_hybrid"
+  ],
+  "test_access": false,
+  "scope": "state-grouped sensitivity; no capture identities or temporal generalization"
+}

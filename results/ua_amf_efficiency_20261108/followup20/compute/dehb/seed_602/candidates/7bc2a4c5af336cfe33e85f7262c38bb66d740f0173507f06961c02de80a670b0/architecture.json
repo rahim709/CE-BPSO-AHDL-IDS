@@ -1,0 +1,30 @@
+{
+  "batch_size": 256,
+  "optimizer": "adagrad",
+  "learning_rate": 0.0005,
+  "cnn": [
+    {
+      "padding": "same",
+      "filters": 8,
+      "kernel": 5,
+      "pool": 4,
+      "activation": "tanh"
+    },
+    {
+      "padding": "same",
+      "filters": 32,
+      "kernel": 2,
+      "pool": 2,
+      "activation": "none"
+    }
+  ],
+  "rnn": [
+    {
+      "kind": "simrnn",
+      "units": 8,
+      "activation": "none",
+      "regularization": "l1_l2",
+      "dropout": 0.3
+    }
+  ]
+}

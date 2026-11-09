@@ -1,0 +1,111 @@
+{
+  "finalists": [
+    {
+      "architecture": {
+        "batch_size": 2048,
+        "optimizer": "momentum",
+        "learning_rate": 0.0001,
+        "cnn": [
+          {
+            "padding": "valid",
+            "filters": 32,
+            "kernel": 3,
+            "pool": 1,
+            "activation": "none"
+          },
+          {
+            "padding": "same",
+            "filters": 512,
+            "kernel": 4,
+            "pool": 2,
+            "activation": "relu"
+          },
+          {
+            "padding": "valid",
+            "filters": 512,
+            "kernel": 3,
+            "pool": 2,
+            "activation": "relu"
+          },
+          {
+            "padding": "same",
+            "filters": 32,
+            "kernel": 4,
+            "pool": 1,
+            "activation": "tanh"
+          }
+        ],
+        "rnn": [
+          {
+            "kind": "gru",
+            "units": 8,
+            "activation": "tanh",
+            "regularization": "none",
+            "dropout": 0.0
+          },
+          {
+            "kind": "gru",
+            "units": 512,
+            "activation": "relu",
+            "regularization": "l2",
+            "dropout": 0.1
+          }
+        ]
+      },
+      "fitness": 0.001998062484863163,
+      "completed_budget": 30,
+      "replicate_seeds": [
+        503
+      ],
+      "observed_seed_fitness": [
+        0.001998062484863163
+      ],
+      "search_wall_seconds": 15.111839891000272
+    },
+    {
+      "architecture": {
+        "batch_size": 256,
+        "optimizer": "momentum",
+        "learning_rate": 0.001,
+        "cnn": [
+          {
+            "padding": "same",
+            "filters": 384,
+            "kernel": 3,
+            "pool": 3,
+            "activation": "tanh"
+          },
+          {
+            "padding": "valid",
+            "filters": 256,
+            "kernel": 3,
+            "pool": 2,
+            "activation": "relu"
+          }
+        ],
+        "rnn": [
+          {
+            "kind": "gru",
+            "units": 16,
+            "activation": "tanh",
+            "regularization": "l2",
+            "dropout": 0.3
+          }
+        ]
+      },
+      "fitness": 0.5426153686286774,
+      "completed_budget": 30,
+      "replicate_seeds": [
+        503
+      ],
+      "observed_seed_fitness": [
+        0.5426153686286774
+      ],
+      "search_wall_seconds": 25.91203893599959
+    }
+  ],
+  "predictor_load_seconds": 0.009097901998757152,
+  "prediction_seconds": 0.0951055610057665,
+  "predictor_fit_charged_separately": true,
+  "scheduler_inclusive_seconds_this_invocation": 30.064549208000244
+}

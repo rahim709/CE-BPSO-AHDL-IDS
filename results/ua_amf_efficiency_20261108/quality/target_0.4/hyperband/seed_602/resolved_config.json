@@ -1,0 +1,164 @@
+{
+  "seed": 602,
+  "space": "paper",
+  "final_epochs": 200,
+  "final_seed": 10042,
+  "data": {
+    "name": "gas_pipeline",
+    "files": [
+      "datasets/raw/gas_pipeline/gas_final.arff"
+    ],
+    "target": "result",
+    "processed": "results/ua_amf_prediction_20261108/data",
+    "normal_label": "0",
+    "normalization": "minmax",
+    "split": "stratified",
+    "split_seed": 1729,
+    "test_fraction": 0.2,
+    "validation_fraction": 0.2,
+    "features": [
+      "command_address",
+      "response_address",
+      "command_memory",
+      "response_memory",
+      "command_memory_count",
+      "response_memory_count",
+      "comm_read_function",
+      "comm_write_fun",
+      "resp_read_fun",
+      "resp_write_fun",
+      "sub_function",
+      "command_length",
+      "resp_length",
+      "gain",
+      "reset",
+      "deadband",
+      "cycletime",
+      "rate",
+      "setpoint",
+      "control_mode",
+      "control_scheme",
+      "pump",
+      "solenoid",
+      "crc_rate",
+      "measurement",
+      "time"
+    ],
+    "drop_columns": [
+      "binary result",
+      "specific result",
+      "class"
+    ]
+  },
+  "training": {
+    "device": "cuda",
+    "threads": 1,
+    "l1": 1e-05,
+    "l2": 1e-05,
+    "prediction_epochs": [
+      3,
+      10,
+      30
+    ],
+    "class_weighting": "balanced",
+    "gradient_clip": 1.0
+  },
+  "search": {
+    "method": "hyperband",
+    "population": 6,
+    "generations": 100000,
+    "epochs": 30,
+    "min_epochs": 3,
+    "eta": 3,
+    "w_max": 0.8,
+    "w_min": 0.4,
+    "v_max": 10.0,
+    "v_min": -10.0,
+    "c1": 1.5,
+    "c2": 1.5,
+    "candidates": 100000,
+    "brackets": 10000,
+    "budgets": [
+      3,
+      10,
+      30
+    ],
+    "stop_f1": 0.4
+  },
+  "compute": {
+    "max_epochs": 1000000,
+    "max_seconds": 20.0,
+    "max_gpu_seconds": 8.0,
+    "gpu_budget_mode": "execution"
+  },
+  "diagnostics": {
+    "candidates": 25,
+    "cohort_seed": 1729,
+    "seeds": [
+      42,
+      43,
+      44
+    ],
+    "epochs": [
+      3,
+      10,
+      30
+    ],
+    "long_epochs": 200,
+    "shortlist": 5,
+    "audit_rejected": 5,
+    "top_k": 5
+  },
+  "comparison": {
+    "seeds": [
+      42,
+      43,
+      44
+    ],
+    "methods": [
+      "bpso",
+      "bpso_reduced",
+      "bpso_sh",
+      "hyperband",
+      "dehb",
+      "random",
+      "surrogate"
+    ],
+    "final_train": true
+  },
+  "architecture": {
+    "batch_size": 1024,
+    "optimizer": "adamax",
+    "learning_rate": 0.01,
+    "cnn": [
+      {
+        "padding": "same",
+        "filters": 384,
+        "kernel": 2,
+        "pool": 4,
+        "activation": "relu"
+      }
+    ],
+    "rnn": [
+      {
+        "kind": "gru",
+        "units": 256,
+        "activation": "relu",
+        "regularization": "l1_l2",
+        "dropout": 0.2
+      }
+    ]
+  },
+  "runtime": {
+    "vectorized": true,
+    "resident": true,
+    "cache_data": true,
+    "cache_model": true,
+    "defer_scalar_sync": true,
+    "validation_epochs": [
+      3,
+      10,
+      30
+    ]
+  }
+}

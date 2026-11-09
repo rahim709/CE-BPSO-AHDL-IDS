@@ -1,0 +1,44 @@
+{
+  "batch_size": 1024,
+  "optimizer": "adamax",
+  "learning_rate": 0.001,
+  "cnn": [
+    {
+      "padding": "valid",
+      "filters": 256,
+      "kernel": 3,
+      "pool": 3,
+      "activation": "sigmoid"
+    },
+    {
+      "padding": "valid",
+      "filters": 16,
+      "kernel": 3,
+      "pool": 2,
+      "activation": "none"
+    },
+    {
+      "padding": "same",
+      "filters": 512,
+      "kernel": 4,
+      "pool": 3,
+      "activation": "none"
+    },
+    {
+      "padding": "same",
+      "filters": 384,
+      "kernel": 2,
+      "pool": 1,
+      "activation": "sigmoid"
+    }
+  ],
+  "rnn": [
+    {
+      "kind": "simrnn",
+      "units": 384,
+      "activation": "sigmoid",
+      "regularization": "l1_l2",
+      "dropout": 0.0
+    }
+  ]
+}

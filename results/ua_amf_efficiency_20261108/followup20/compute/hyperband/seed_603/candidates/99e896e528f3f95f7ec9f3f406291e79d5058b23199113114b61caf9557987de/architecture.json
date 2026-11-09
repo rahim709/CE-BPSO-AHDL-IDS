@@ -1,0 +1,30 @@
+{
+  "batch_size": 2048,
+  "optimizer": "rmsprop",
+  "learning_rate": 0.005,
+  "cnn": [
+    {
+      "padding": "same",
+      "filters": 64,
+      "kernel": 3,
+      "pool": 3,
+      "activation": "none"
+    },
+    {
+      "padding": "same",
+      "filters": 384,
+      "kernel": 2,
+      "pool": 4,
+      "activation": "relu"
+    }
+  ],
+  "rnn": [
+    {
+      "kind": "simrnn",
+      "units": 64,
+      "activation": "relu",
+      "regularization": "none",
+      "dropout": 0.3
+    }
+  ]
+}

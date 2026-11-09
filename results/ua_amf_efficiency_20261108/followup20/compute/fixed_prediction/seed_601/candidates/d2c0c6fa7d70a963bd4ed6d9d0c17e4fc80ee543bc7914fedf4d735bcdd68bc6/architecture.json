@@ -1,0 +1,23 @@
+{
+  "batch_size": 512,
+  "optimizer": "momentum",
+  "learning_rate": 0.001,
+  "cnn": [
+    {
+      "padding": "same",
+      "filters": 64,
+      "kernel": 4,
+      "pool": 2,
+      "activation": "none"
+    }
+  ],
+  "rnn": [
+    {
+      "kind": "gru",
+      "units": 64,
+      "activation": "tanh",
+      "regularization": "none",
+      "dropout": 0.3
+    }
+  ]
+}

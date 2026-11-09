@@ -1,0 +1,15 @@
+extends: ton_iot.yaml
+# SYNTHETIC SOFTWARE FIXTURE; not original SWaT or research evidence.
+data:
+  name: swat
+  synthetic: true
+  files: [datasets/synthetic/swat/SYNTHETIC_sensor_log.csv]
+  test_files: null
+  provenance_file: datasets/synthetic/swat/SYNTHETIC_MANIFEST.json
+  target: Normal/Attack
+  processed: datasets/processed/synthetic/swat
+  normal_label: Normal
+  split: chronological
+  time_column: Timestamp
+  time_format: '%Y-%m-%d %H:%M:%S'
+  drop_columns: [Timestamp]

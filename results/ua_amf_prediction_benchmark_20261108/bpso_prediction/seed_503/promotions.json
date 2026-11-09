@@ -1,0 +1,1155 @@
+[
+  {
+    "generation": 0,
+    "budget": 3,
+    "next_budget": 10,
+    "candidates": [
+      {
+        "architecture": {
+          "batch_size": 512,
+          "optimizer": "adamax",
+          "learning_rate": 1e-05,
+          "cnn": [
+            {
+              "padding": "same",
+              "filters": 256,
+              "kernel": 2,
+              "pool": 4,
+              "activation": "sigmoid"
+            },
+            {
+              "padding": "same",
+              "filters": 64,
+              "kernel": 4,
+              "pool": 4,
+              "activation": "relu"
+            },
+            {
+              "padding": "valid",
+              "filters": 256,
+              "kernel": 2,
+              "pool": 4,
+              "activation": "none"
+            }
+          ],
+          "rnn": [
+            {
+              "kind": "simrnn",
+              "units": 16,
+              "activation": "tanh",
+              "regularization": "l1_l2",
+              "dropout": 0.2
+            }
+          ]
+        },
+        "observed_macro_f1": 0.1010014082303239,
+        "predicted_final_f1": 0.1135197728625215,
+        "radius": 0.5448968232739363,
+        "lower": 0.0,
+        "upper": 0.6584165961364578,
+        "predicted_remaining_execution_seconds": 3.531349106986454,
+        "acquisition": 0.1135197728625215
+      },
+      {
+        "architecture": {
+          "batch_size": 512,
+          "optimizer": "adam",
+          "learning_rate": 0.01,
+          "cnn": [
+            {
+              "padding": "valid",
+              "filters": 32,
+              "kernel": 2,
+              "pool": 3,
+              "activation": "tanh"
+            },
+            {
+              "padding": "same",
+              "filters": 32,
+              "kernel": 2,
+              "pool": 4,
+              "activation": "none"
+            },
+            {
+              "padding": "valid",
+              "filters": 512,
+              "kernel": 3,
+              "pool": 4,
+              "activation": "sigmoid"
+            },
+            {
+              "padding": "same",
+              "filters": 16,
+              "kernel": 4,
+              "pool": 2,
+              "activation": "relu"
+            }
+          ],
+          "rnn": [
+            {
+              "kind": "simrnn",
+              "units": 64,
+              "activation": "tanh",
+              "regularization": "l2",
+              "dropout": 0.0
+            }
+          ]
+        },
+        "observed_macro_f1": 0.016370066164727356,
+        "predicted_final_f1": 0.21823743466879966,
+        "radius": 0.6792341881475021,
+        "lower": 0.0,
+        "upper": 0.8974716228163018,
+        "predicted_remaining_execution_seconds": 2.99932886696115,
+        "acquisition": 0.21823743466879966
+      },
+      {
+        "architecture": {
+          "batch_size": 256,
+          "optimizer": "adagrad",
+          "learning_rate": 0.01,
+          "cnn": [
+            {
+              "padding": "valid",
+              "filters": 16,
+              "kernel": 4,
+              "pool": 2,
+              "activation": "sigmoid"
+            },
+            {
+              "padding": "same",
+              "filters": 16,
+              "kernel": 3,
+              "pool": 4,
+              "activation": "relu"
+            }
+          ],
+          "rnn": [
+            {
+              "kind": "linear",
+              "units": 16,
+              "activation": "none",
+              "regularization": "none",
+              "dropout": 0.1
+            },
+            {
+              "kind": "simrnn",
+              "units": 512,
+              "activation": "relu",
+              "regularization": "none",
+              "dropout": 0.1
+            }
+          ]
+        },
+        "observed_macro_f1": 0.22269690887419938,
+        "predicted_final_f1": 0.3669144605199608,
+        "radius": 0.49029359292175895,
+        "lower": 0.0,
+        "upper": 0.8572080534417197,
+        "predicted_remaining_execution_seconds": 2.733981597051752,
+        "acquisition": 0.3669144605199608
+      },
+      {
+        "architecture": {
+          "batch_size": 1024,
+          "optimizer": "adam",
+          "learning_rate": 5e-05,
+          "cnn": [
+            {
+              "padding": "valid",
+              "filters": 128,
+              "kernel": 5,
+              "pool": 3,
+              "activation": "none"
+            },
+            {
+              "padding": "valid",
+              "filters": 16,
+              "kernel": 3,
+              "pool": 1,
+              "activation": "none"
+            },
+            {
+              "padding": "valid",
+              "filters": 384,
+              "kernel": 3,
+              "pool": 3,
+              "activation": "sigmoid"
+            },
+            {
+              "padding": "valid",
+              "filters": 256,
+              "kernel": 5,
+              "pool": 2,
+              "activation": "none"
+            }
+          ],
+          "rnn": [
+            {
+              "kind": "linear",
+              "units": 16,
+              "activation": "none",
+              "regularization": "l1",
+              "dropout": 0.2
+            },
+            {
+              "kind": "simrnn",
+              "units": 256,
+              "activation": "sigmoid",
+              "regularization": "l1_l2",
+              "dropout": 0.2
+            }
+          ]
+        },
+        "observed_macro_f1": 0.001998062484863163,
+        "predicted_final_f1": 0.17235988402272848,
+        "radius": 0.7144511057682369,
+        "lower": 0.0,
+        "upper": 0.8868109897909654,
+        "predicted_remaining_execution_seconds": 4.649448240004858,
+        "acquisition": 0.17235988402272848
+      },
+      {
+        "architecture": {
+          "batch_size": 2048,
+          "optimizer": "momentum",
+          "learning_rate": 0.0001,
+          "cnn": [
+            {
+              "padding": "valid",
+              "filters": 32,
+              "kernel": 3,
+              "pool": 1,
+              "activation": "none"
+            },
+            {
+              "padding": "same",
+              "filters": 512,
+              "kernel": 4,
+              "pool": 2,
+              "activation": "relu"
+            },
+            {
+              "padding": "valid",
+              "filters": 512,
+              "kernel": 3,
+              "pool": 2,
+              "activation": "relu"
+            },
+            {
+              "padding": "same",
+              "filters": 32,
+              "kernel": 4,
+              "pool": 1,
+              "activation": "tanh"
+            }
+          ],
+          "rnn": [
+            {
+              "kind": "gru",
+              "units": 8,
+              "activation": "tanh",
+              "regularization": "none",
+              "dropout": 0.0
+            },
+            {
+              "kind": "gru",
+              "units": 512,
+              "activation": "relu",
+              "regularization": "l2",
+              "dropout": 0.1
+            }
+          ]
+        },
+        "observed_macro_f1": 0.001998062484863163,
+        "predicted_final_f1": 0.19619179300162332,
+        "radius": 0.8498172039149103,
+        "lower": 0.0,
+        "upper": 1.0,
+        "predicted_remaining_execution_seconds": 10.265368553969893,
+        "acquisition": 0.19619179300162332
+      },
+      {
+        "architecture": {
+          "batch_size": 256,
+          "optimizer": "adadelta",
+          "learning_rate": 0.001,
+          "cnn": [
+            {
+              "padding": "valid",
+              "filters": 16,
+              "kernel": 5,
+              "pool": 4,
+              "activation": "relu"
+            },
+            {
+              "padding": "same",
+              "filters": 512,
+              "kernel": 4,
+              "pool": 2,
+              "activation": "relu"
+            },
+            {
+              "padding": "same",
+              "filters": 8,
+              "kernel": 4,
+              "pool": 2,
+              "activation": "tanh"
+            },
+            {
+              "padding": "valid",
+              "filters": 64,
+              "kernel": 4,
+              "pool": 4,
+              "activation": "relu"
+            }
+          ],
+          "rnn": [
+            {
+              "kind": "lstm",
+              "units": 32,
+              "activation": "sigmoid",
+              "regularization": "none",
+              "dropout": 0.1
+            },
+            {
+              "kind": "lstm",
+              "units": 384,
+              "activation": "sigmoid",
+              "regularization": "l1_l2",
+              "dropout": 0.1
+            }
+          ]
+        },
+        "observed_macro_f1": 0.004671777671298514,
+        "predicted_final_f1": 0.04929660182179514,
+        "radius": 0.3783489746247341,
+        "lower": 0.0,
+        "upper": 0.42764557644652923,
+        "predicted_remaining_execution_seconds": 5.3304089580597065,
+        "acquisition": 0.04929660182179514
+      }
+    ],
+    "selected_indices": [
+      2,
+      1
+    ]
+  },
+  {
+    "generation": 0,
+    "budget": 10,
+    "next_budget": 30,
+    "candidates": [
+      {
+        "architecture": {
+          "batch_size": 256,
+          "optimizer": "adagrad",
+          "learning_rate": 0.01,
+          "cnn": [
+            {
+              "padding": "valid",
+              "filters": 16,
+              "kernel": 4,
+              "pool": 2,
+              "activation": "sigmoid"
+            },
+            {
+              "padding": "same",
+              "filters": 16,
+              "kernel": 3,
+              "pool": 4,
+              "activation": "relu"
+            }
+          ],
+          "rnn": [
+            {
+              "kind": "linear",
+              "units": 16,
+              "activation": "none",
+              "regularization": "none",
+              "dropout": 0.1
+            },
+            {
+              "kind": "simrnn",
+              "units": 512,
+              "activation": "relu",
+              "regularization": "none",
+              "dropout": 0.1
+            }
+          ]
+        },
+        "observed_macro_f1": 0.33898528039239306,
+        "predicted_final_f1": 0.45847927911419284,
+        "radius": 0.4064757127286359,
+        "lower": 0.05200356638555692,
+        "upper": 0.8649549918428288,
+        "predicted_remaining_execution_seconds": 2.0332704160173307,
+        "acquisition": 0.45847927911419284
+      },
+      {
+        "architecture": {
+          "batch_size": 512,
+          "optimizer": "adam",
+          "learning_rate": 0.01,
+          "cnn": [
+            {
+              "padding": "valid",
+              "filters": 32,
+              "kernel": 2,
+              "pool": 3,
+              "activation": "tanh"
+            },
+            {
+              "padding": "same",
+              "filters": 32,
+              "kernel": 2,
+              "pool": 4,
+              "activation": "none"
+            },
+            {
+              "padding": "valid",
+              "filters": 512,
+              "kernel": 3,
+              "pool": 4,
+              "activation": "sigmoid"
+            },
+            {
+              "padding": "same",
+              "filters": 16,
+              "kernel": 4,
+              "pool": 2,
+              "activation": "relu"
+            }
+          ],
+          "rnn": [
+            {
+              "kind": "simrnn",
+              "units": 64,
+              "activation": "tanh",
+              "regularization": "l2",
+              "dropout": 0.0
+            }
+          ]
+        },
+        "observed_macro_f1": 0.006942796107286969,
+        "predicted_final_f1": 0.08935408161873803,
+        "radius": 0.35895215761253846,
+        "lower": 0.0,
+        "upper": 0.4483062392312765,
+        "predicted_remaining_execution_seconds": 2.3339366739892284,
+        "acquisition": 0.08935408161873803
+      }
+    ],
+    "selected_indices": [
+      0
+    ]
+  },
+  {
+    "generation": 1,
+    "budget": 3,
+    "next_budget": 10,
+    "candidates": [
+      {
+        "architecture": {
+          "batch_size": 1024,
+          "optimizer": "sgd",
+          "learning_rate": 0.001,
+          "cnn": [
+            {
+              "padding": "same",
+              "filters": 128,
+              "kernel": 3,
+              "pool": 1,
+              "activation": "relu"
+            }
+          ],
+          "rnn": [
+            {
+              "kind": "simrnn",
+              "units": 16,
+              "activation": "none",
+              "regularization": "none",
+              "dropout": 0.2
+            },
+            {
+              "kind": "simrnn",
+              "units": 256,
+              "activation": "none",
+              "regularization": "l1",
+              "dropout": 0.0
+            }
+          ]
+        },
+        "observed_macro_f1": 0.036192105440933535,
+        "predicted_final_f1": 0.18563771814946667,
+        "radius": 0.6675862013172651,
+        "lower": 0.0,
+        "upper": 0.8532239194667317,
+        "predicted_remaining_execution_seconds": 5.832467594987975,
+        "acquisition": 0.18563771814946667
+      },
+      {
+        "architecture": {
+          "batch_size": 1024,
+          "optimizer": "adadelta",
+          "learning_rate": 0.001,
+          "cnn": [
+            {
+              "padding": "valid",
+              "filters": 384,
+              "kernel": 3,
+              "pool": 1,
+              "activation": "tanh"
+            },
+            {
+              "padding": "same",
+              "filters": 64,
+              "kernel": 4,
+              "pool": 1,
+              "activation": "tanh"
+            }
+          ],
+          "rnn": [
+            {
+              "kind": "gru",
+              "units": 8,
+              "activation": "none",
+              "regularization": "l1_l2",
+              "dropout": 0.0
+            }
+          ]
+        },
+        "observed_macro_f1": 0.004671777671298514,
+        "predicted_final_f1": 0.046020625359175796,
+        "radius": 0.34656739370907375,
+        "lower": 0.0,
+        "upper": 0.3925880190682495,
+        "predicted_remaining_execution_seconds": 4.907325042026059,
+        "acquisition": 0.046020625359175796
+      },
+      {
+        "architecture": {
+          "batch_size": 2048,
+          "optimizer": "sgd",
+          "learning_rate": 0.0001,
+          "cnn": [
+            {
+              "padding": "same",
+              "filters": 256,
+              "kernel": 5,
+              "pool": 1,
+              "activation": "relu"
+            },
+            {
+              "padding": "same",
+              "filters": 256,
+              "kernel": 5,
+              "pool": 1,
+              "activation": "relu"
+            }
+          ],
+          "rnn": [
+            {
+              "kind": "gru",
+              "units": 32,
+              "activation": "none",
+              "regularization": "l1",
+              "dropout": 0.0
+            }
+          ]
+        },
+        "observed_macro_f1": 0.004671777671298514,
+        "predicted_final_f1": 0.04781337656623344,
+        "radius": 0.34375051270018225,
+        "lower": 0.0,
+        "upper": 0.3915638892664157,
+        "predicted_remaining_execution_seconds": 7.563988647052612,
+        "acquisition": 0.04781337656623344
+      },
+      {
+        "architecture": {
+          "batch_size": 1024,
+          "optimizer": "rmsprop",
+          "learning_rate": 0.01,
+          "cnn": [
+            {
+              "padding": "same",
+              "filters": 128,
+              "kernel": 3,
+              "pool": 2,
+              "activation": "relu"
+            }
+          ],
+          "rnn": [
+            {
+              "kind": "gru",
+              "units": 256,
+              "activation": "sigmoid",
+              "regularization": "l2",
+              "dropout": 0.3
+            },
+            {
+              "kind": "linear",
+              "units": 32,
+              "activation": "sigmoid",
+              "regularization": "l2",
+              "dropout": 0.0
+            }
+          ]
+        },
+        "observed_macro_f1": 0.004671777671298514,
+        "predicted_final_f1": 0.21206183984647103,
+        "radius": 0.7733195032311106,
+        "lower": 0.0,
+        "upper": 0.9853813430775817,
+        "predicted_remaining_execution_seconds": 4.355376741001237,
+        "acquisition": 0.21206183984647103
+      },
+      {
+        "architecture": {
+          "batch_size": 512,
+          "optimizer": "adam",
+          "learning_rate": 0.05,
+          "cnn": [
+            {
+              "padding": "valid",
+              "filters": 128,
+              "kernel": 5,
+              "pool": 2,
+              "activation": "none"
+            },
+            {
+              "padding": "valid",
+              "filters": 8,
+              "kernel": 2,
+              "pool": 2,
+              "activation": "sigmoid"
+            }
+          ],
+          "rnn": [
+            {
+              "kind": "linear",
+              "units": 16,
+              "activation": "none",
+              "regularization": "l1",
+              "dropout": 0.3
+            },
+            {
+              "kind": "lstm",
+              "units": 512,
+              "activation": "sigmoid",
+              "regularization": "l2",
+              "dropout": 0.2
+            }
+          ]
+        },
+        "observed_macro_f1": 0.004671777671298514,
+        "predicted_final_f1": 0.18044775340031477,
+        "radius": 0.7437618887219475,
+        "lower": 0.0,
+        "upper": 0.9242096421222623,
+        "predicted_remaining_execution_seconds": 4.719850173045415,
+        "acquisition": 0.18044775340031477
+      },
+      {
+        "architecture": {
+          "batch_size": 256,
+          "optimizer": "adagrad",
+          "learning_rate": 0.001,
+          "cnn": [
+            {
+              "padding": "same",
+              "filters": 384,
+              "kernel": 3,
+              "pool": 3,
+              "activation": "tanh"
+            },
+            {
+              "padding": "valid",
+              "filters": 256,
+              "kernel": 3,
+              "pool": 2,
+              "activation": "relu"
+            }
+          ],
+          "rnn": [
+            {
+              "kind": "gru",
+              "units": 16,
+              "activation": "tanh",
+              "regularization": "l2",
+              "dropout": 0.3
+            }
+          ]
+        },
+        "observed_macro_f1": 0.655636353693644,
+        "predicted_final_f1": 0.3728779509525877,
+        "radius": 0.7137688103634958,
+        "lower": 0.0,
+        "upper": 1.0,
+        "predicted_remaining_execution_seconds": 5.275674927022919,
+        "acquisition": 0.3728779509525877
+      }
+    ],
+    "selected_indices": [
+      5,
+      3
+    ]
+  },
+  {
+    "generation": 1,
+    "budget": 10,
+    "next_budget": 30,
+    "candidates": [
+      {
+        "architecture": {
+          "batch_size": 256,
+          "optimizer": "adagrad",
+          "learning_rate": 0.001,
+          "cnn": [
+            {
+              "padding": "same",
+              "filters": 384,
+              "kernel": 3,
+              "pool": 3,
+              "activation": "tanh"
+            },
+            {
+              "padding": "valid",
+              "filters": 256,
+              "kernel": 3,
+              "pool": 2,
+              "activation": "relu"
+            }
+          ],
+          "rnn": [
+            {
+              "kind": "gru",
+              "units": 16,
+              "activation": "tanh",
+              "regularization": "l2",
+              "dropout": 0.3
+            }
+          ]
+        },
+        "observed_macro_f1": 0.614120740546416,
+        "predicted_final_f1": 0.4422331517297213,
+        "radius": 0.4868093711165936,
+        "lower": 0.0,
+        "upper": 0.9290425228463148,
+        "predicted_remaining_execution_seconds": 3.9104883820182295,
+        "acquisition": 0.4422331517297213
+      },
+      {
+        "architecture": {
+          "batch_size": 1024,
+          "optimizer": "rmsprop",
+          "learning_rate": 0.01,
+          "cnn": [
+            {
+              "padding": "same",
+              "filters": 128,
+              "kernel": 3,
+              "pool": 2,
+              "activation": "relu"
+            }
+          ],
+          "rnn": [
+            {
+              "kind": "gru",
+              "units": 256,
+              "activation": "sigmoid",
+              "regularization": "l2",
+              "dropout": 0.3
+            },
+            {
+              "kind": "linear",
+              "units": 32,
+              "activation": "sigmoid",
+              "regularization": "l2",
+              "dropout": 0.0
+            }
+          ]
+        },
+        "observed_macro_f1": 0.0014563106796116505,
+        "predicted_final_f1": 0.058460679708582465,
+        "radius": 0.2570739381270944,
+        "lower": 0.0,
+        "upper": 0.3155346178356769,
+        "predicted_remaining_execution_seconds": 3.316909598004713,
+        "acquisition": 0.058460679708582465
+      }
+    ],
+    "selected_indices": [
+      0
+    ]
+  },
+  {
+    "generation": 2,
+    "budget": 3,
+    "next_budget": 10,
+    "candidates": [
+      {
+        "architecture": {
+          "batch_size": 2048,
+          "optimizer": "adamax",
+          "learning_rate": 0.0005,
+          "cnn": [
+            {
+              "padding": "same",
+              "filters": 384,
+              "kernel": 5,
+              "pool": 3,
+              "activation": "none"
+            },
+            {
+              "padding": "valid",
+              "filters": 384,
+              "kernel": 2,
+              "pool": 1,
+              "activation": "tanh"
+            }
+          ],
+          "rnn": [
+            {
+              "kind": "simrnn",
+              "units": 64,
+              "activation": "relu",
+              "regularization": "none",
+              "dropout": 0.3
+            },
+            {
+              "kind": "linear",
+              "units": 8,
+              "activation": "none",
+              "regularization": "l1_l2",
+              "dropout": 0.1
+            }
+          ]
+        },
+        "observed_macro_f1": 0.3144933453607815,
+        "predicted_final_f1": 0.37632716728928856,
+        "radius": 0.6871016463744107,
+        "lower": 0.0,
+        "upper": 1.0,
+        "predicted_remaining_execution_seconds": 4.72581940497912,
+        "acquisition": 0.37632716728928856
+      },
+      {
+        "architecture": {
+          "batch_size": 1024,
+          "optimizer": "adagrad",
+          "learning_rate": 0.0005,
+          "cnn": [
+            {
+              "padding": "valid",
+              "filters": 512,
+              "kernel": 3,
+              "pool": 1,
+              "activation": "sigmoid"
+            },
+            {
+              "padding": "valid",
+              "filters": 512,
+              "kernel": 2,
+              "pool": 4,
+              "activation": "sigmoid"
+            },
+            {
+              "padding": "same",
+              "filters": 64,
+              "kernel": 2,
+              "pool": 1,
+              "activation": "tanh"
+            }
+          ],
+          "rnn": [
+            {
+              "kind": "gru",
+              "units": 32,
+              "activation": "relu",
+              "regularization": "l1_l2",
+              "dropout": 0.3
+            }
+          ]
+        },
+        "observed_macro_f1": 0.010123225199490653,
+        "predicted_final_f1": 0.11460958359798601,
+        "radius": 0.7115578868793181,
+        "lower": 0.0,
+        "upper": 0.8261674704773041,
+        "predicted_remaining_execution_seconds": 9.771907184996962,
+        "acquisition": 0.11460958359798601
+      },
+      {
+        "architecture": {
+          "batch_size": 2048,
+          "optimizer": "sgd",
+          "learning_rate": 0.0001,
+          "cnn": [
+            {
+              "padding": "valid",
+              "filters": 128,
+              "kernel": 3,
+              "pool": 3,
+              "activation": "relu"
+            }
+          ],
+          "rnn": [
+            {
+              "kind": "gru",
+              "units": 32,
+              "activation": "none",
+              "regularization": "l1_l2",
+              "dropout": 0.0
+            }
+          ]
+        },
+        "observed_macro_f1": 0.001998062484863163,
+        "predicted_final_f1": 0.05172571850450292,
+        "radius": 0.3594884488196062,
+        "lower": 0.0,
+        "upper": 0.4112141673241091,
+        "predicted_remaining_execution_seconds": 1.627460127012455,
+        "acquisition": 0.05172571850450292
+      },
+      {
+        "architecture": {
+          "batch_size": 2048,
+          "optimizer": "adadelta",
+          "learning_rate": 0.01,
+          "cnn": [
+            {
+              "padding": "valid",
+              "filters": 256,
+              "kernel": 5,
+              "pool": 2,
+              "activation": "relu"
+            },
+            {
+              "padding": "same",
+              "filters": 128,
+              "kernel": 2,
+              "pool": 1,
+              "activation": "none"
+            }
+          ],
+          "rnn": [
+            {
+              "kind": "gru",
+              "units": 512,
+              "activation": "sigmoid",
+              "regularization": "l2",
+              "dropout": 0.3
+            },
+            {
+              "kind": "linear",
+              "units": 128,
+              "activation": "tanh",
+              "regularization": "none",
+              "dropout": 0.0
+            }
+          ]
+        },
+        "observed_macro_f1": 0.0014563106796116505,
+        "predicted_final_f1": 0.06489354885015391,
+        "radius": 0.46255352668703453,
+        "lower": 0.0,
+        "upper": 0.5274470755371885,
+        "predicted_remaining_execution_seconds": 8.157264804056467,
+        "acquisition": 0.06489354885015391
+      },
+      {
+        "architecture": {
+          "batch_size": 512,
+          "optimizer": "momentum",
+          "learning_rate": 0.0005,
+          "cnn": [
+            {
+              "padding": "valid",
+              "filters": 384,
+              "kernel": 5,
+              "pool": 2,
+              "activation": "tanh"
+            },
+            {
+              "padding": "valid",
+              "filters": 8,
+              "kernel": 5,
+              "pool": 2,
+              "activation": "sigmoid"
+            }
+          ],
+          "rnn": [
+            {
+              "kind": "linear",
+              "units": 16,
+              "activation": "none",
+              "regularization": "l1_l2",
+              "dropout": 0.3
+            },
+            {
+              "kind": "lstm",
+              "units": 512,
+              "activation": "sigmoid",
+              "regularization": "l2",
+              "dropout": 0.2
+            }
+          ]
+        },
+        "observed_macro_f1": 0.03437565803327016,
+        "predicted_final_f1": 0.29152853065771167,
+        "radius": 0.9004639735038631,
+        "lower": 0.0,
+        "upper": 1.0,
+        "predicted_remaining_execution_seconds": 5.011160112047946,
+        "acquisition": 0.29152853065771167
+      },
+      {
+        "architecture": {
+          "batch_size": 256,
+          "optimizer": "adagrad",
+          "learning_rate": 0.001,
+          "cnn": [
+            {
+              "padding": "same",
+              "filters": 128,
+              "kernel": 2,
+              "pool": 3,
+              "activation": "tanh"
+            },
+            {
+              "padding": "valid",
+              "filters": 256,
+              "kernel": 3,
+              "pool": 2,
+              "activation": "relu"
+            }
+          ],
+          "rnn": [
+            {
+              "kind": "gru",
+              "units": 16,
+              "activation": "none",
+              "regularization": "l2",
+              "dropout": 0.3
+            }
+          ]
+        },
+        "observed_macro_f1": 0.4620866341127283,
+        "predicted_final_f1": 0.12543995315335574,
+        "radius": 0.48096379046672116,
+        "lower": 0.0,
+        "upper": 0.6064037436200769,
+        "predicted_remaining_execution_seconds": 3.370371812950907,
+        "acquisition": 0.12543995315335574
+      }
+    ],
+    "selected_indices": [
+      0,
+      4
+    ]
+  },
+  {
+    "generation": 2,
+    "budget": 10,
+    "next_budget": 30,
+    "candidates": [
+      {
+        "architecture": {
+          "batch_size": 2048,
+          "optimizer": "adamax",
+          "learning_rate": 0.0005,
+          "cnn": [
+            {
+              "padding": "same",
+              "filters": 384,
+              "kernel": 5,
+              "pool": 3,
+              "activation": "none"
+            },
+            {
+              "padding": "valid",
+              "filters": 384,
+              "kernel": 2,
+              "pool": 1,
+              "activation": "tanh"
+            }
+          ],
+          "rnn": [
+            {
+              "kind": "simrnn",
+              "units": 64,
+              "activation": "relu",
+              "regularization": "none",
+              "dropout": 0.3
+            },
+            {
+              "kind": "linear",
+              "units": 8,
+              "activation": "none",
+              "regularization": "l1_l2",
+              "dropout": 0.1
+            }
+          ]
+        },
+        "observed_macro_f1": 0.31876853555809037,
+        "predicted_final_f1": 0.4247275939585041,
+        "radius": 0.5579997291782034,
+        "lower": 0.0,
+        "upper": 0.9827273231367075,
+        "predicted_remaining_execution_seconds": 3.5831130059959833,
+        "acquisition": 0.4247275939585041
+      },
+      {
+        "architecture": {
+          "batch_size": 512,
+          "optimizer": "momentum",
+          "learning_rate": 0.0005,
+          "cnn": [
+            {
+              "padding": "valid",
+              "filters": 384,
+              "kernel": 5,
+              "pool": 2,
+              "activation": "tanh"
+            },
+            {
+              "padding": "valid",
+              "filters": 8,
+              "kernel": 5,
+              "pool": 2,
+              "activation": "sigmoid"
+            }
+          ],
+          "rnn": [
+            {
+              "kind": "linear",
+              "units": 16,
+              "activation": "none",
+              "regularization": "l1_l2",
+              "dropout": 0.3
+            },
+            {
+              "kind": "lstm",
+              "units": 512,
+              "activation": "sigmoid",
+              "regularization": "l2",
+              "dropout": 0.2
+            }
+          ]
+        },
+        "observed_macro_f1": 0.0966606768493561,
+        "predicted_final_f1": 0.2269584684749181,
+        "radius": 0.38530705943743093,
+        "lower": 0.0,
+        "upper": 0.612265527912349,
+        "predicted_remaining_execution_seconds": 3.80219790598494,
+        "acquisition": 0.2269584684749181
+      }
+    ],
+    "selected_indices": [
+      0
+    ]
+  }
+]

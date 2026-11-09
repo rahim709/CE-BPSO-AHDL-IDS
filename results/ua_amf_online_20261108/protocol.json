@@ -1,0 +1,92 @@
+{
+  "seeds": [
+    601,
+    602,
+    603
+  ],
+  "phases": [
+    "quality",
+    "compute"
+  ],
+  "target": 0.6,
+  "gpu_cap": 20.0,
+  "wall_safety_cap": 50.0,
+  "fixed_compute_gpu_limits": [
+    5.0,
+    10.0,
+    20.0
+  ],
+  "fidelities": [
+    3,
+    10,
+    30
+  ],
+  "variants": {
+    "bpso": [
+      "bpso",
+      null
+    ],
+    "bpso_sh": [
+      "bpso_sh",
+      null
+    ],
+    "dehb": [
+      "dehb",
+      null
+    ],
+    "offline_ua": [
+      "ua_amf_bpso",
+      "offline"
+    ],
+    "online_prediction": [
+      "ua_amf_bpso",
+      "prediction"
+    ],
+    "online_uncertainty": [
+      "ua_amf_bpso",
+      "uncertainty"
+    ],
+    "online_full": [
+      "ua_amf_bpso",
+      "full"
+    ]
+  },
+  "runtime": {
+    "vectorized": true,
+    "resident": true,
+    "cache_data": true,
+    "cache_model": true,
+    "defer_scalar_sync": true,
+    "validation_epochs": [
+      3,
+      10,
+      30
+    ]
+  },
+  "online_fit": "CPU only, search-generated terminal labels only; no extra label GPU allocation.",
+  "gates": {
+    "min_fit": 6,
+    "min_calibration": 4,
+    "min_out_of_time_checks": 4,
+    "max_mae": 0.08,
+    "relative_error_improvement": 0.1,
+    "minimum_absolute_error_improvement": 0.005,
+    "minimum_spearman": 0.3,
+    "min_target_range": 0.02,
+    "nominal_coverage": 0.8,
+    "minimum_empirical_coverage": 0.75,
+    "maximum_mean_width": 0.3
+  },
+  "online_coefficients": "fixed generic beta=.1 lambda=.05, median-normalized measured cost; not read from historical development.",
+  "primary_cost": "actual GPU to first terminal target or cap; all misses retained/right-censored",
+  "historical_offline_archive_gpu_seconds": 403.8190207847874,
+  "archive_free_external_gpu_seconds": 0.0,
+  "diagnostic": {
+    "seed": 601,
+    "gpu_cap": 120.0,
+    "wall_cap": 150.0,
+    "purpose": "activation/cold-start diagnostic only, not a matched comparison"
+  },
+  "maximum_primary_gpu_seconds": 840.0,
+  "method_order": "seeded permutation; serial methods; no GPU test jobs concurrently"
+}

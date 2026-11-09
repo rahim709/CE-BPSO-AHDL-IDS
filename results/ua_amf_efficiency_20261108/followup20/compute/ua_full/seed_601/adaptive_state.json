@@ -1,0 +1,262 @@
+{
+  "finalists": [
+    {
+      "architecture": {
+        "batch_size": 512,
+        "optimizer": "adam",
+        "learning_rate": 0.005,
+        "cnn": [
+          {
+            "padding": "valid",
+            "filters": 384,
+            "kernel": 4,
+            "pool": 4,
+            "activation": "tanh"
+          },
+          {
+            "padding": "same",
+            "filters": 16,
+            "kernel": 3,
+            "pool": 3,
+            "activation": "tanh"
+          },
+          {
+            "padding": "valid",
+            "filters": 512,
+            "kernel": 2,
+            "pool": 3,
+            "activation": "none"
+          },
+          {
+            "padding": "valid",
+            "filters": 8,
+            "kernel": 2,
+            "pool": 4,
+            "activation": "relu"
+          }
+        ],
+        "rnn": [
+          {
+            "kind": "gru",
+            "units": 16,
+            "activation": "none",
+            "regularization": "l1",
+            "dropout": 0.2
+          },
+          {
+            "kind": "linear",
+            "units": 16,
+            "activation": "sigmoid",
+            "regularization": "l1_l2",
+            "dropout": 0.0
+          }
+        ]
+      },
+      "fitness": 0.016370066164727356,
+      "completed_budget": 30,
+      "replicate_seeds": [
+        601
+      ],
+      "observed_seed_fitness": [
+        0.016370066164727356
+      ]
+    },
+    {
+      "architecture": {
+        "batch_size": 2048,
+        "optimizer": "adadelta",
+        "learning_rate": 0.0005,
+        "cnn": [
+          {
+            "padding": "valid",
+            "filters": 64,
+            "kernel": 3,
+            "pool": 2,
+            "activation": "none"
+          },
+          {
+            "padding": "valid",
+            "filters": 8,
+            "kernel": 3,
+            "pool": 1,
+            "activation": "relu"
+          }
+        ],
+        "rnn": [
+          {
+            "kind": "linear",
+            "units": 32,
+            "activation": "relu",
+            "regularization": "none",
+            "dropout": 0.2
+          }
+        ]
+      },
+      "fitness": 0.03437565803327016,
+      "completed_budget": 30,
+      "replicate_seeds": [
+        601
+      ],
+      "observed_seed_fitness": [
+        0.03437565803327016
+      ]
+    },
+    {
+      "architecture": {
+        "batch_size": 512,
+        "optimizer": "adam",
+        "learning_rate": 0.005,
+        "cnn": [
+          {
+            "padding": "valid",
+            "filters": 16,
+            "kernel": 3,
+            "pool": 3,
+            "activation": "tanh"
+          },
+          {
+            "padding": "valid",
+            "filters": 128,
+            "kernel": 3,
+            "pool": 4,
+            "activation": "tanh"
+          }
+        ],
+        "rnn": [
+          {
+            "kind": "simrnn",
+            "units": 32,
+            "activation": "sigmoid",
+            "regularization": "l1_l2",
+            "dropout": 0.2
+          }
+        ]
+      },
+      "fitness": 0.6764249073260011,
+      "completed_budget": 30,
+      "replicate_seeds": [
+        601
+      ],
+      "observed_seed_fitness": [
+        0.6764249073260011
+      ]
+    },
+    {
+      "architecture": {
+        "batch_size": 512,
+        "optimizer": "adamax",
+        "learning_rate": 0.05,
+        "cnn": [
+          {
+            "padding": "same",
+            "filters": 64,
+            "kernel": 5,
+            "pool": 3,
+            "activation": "relu"
+          },
+          {
+            "padding": "same",
+            "filters": 64,
+            "kernel": 5,
+            "pool": 4,
+            "activation": "tanh"
+          },
+          {
+            "padding": "valid",
+            "filters": 64,
+            "kernel": 3,
+            "pool": 2,
+            "activation": "tanh"
+          },
+          {
+            "padding": "same",
+            "filters": 32,
+            "kernel": 5,
+            "pool": 1,
+            "activation": "relu"
+          }
+        ],
+        "rnn": [
+          {
+            "kind": "lstm",
+            "units": 256,
+            "activation": "relu",
+            "regularization": "l2",
+            "dropout": 0.2
+          }
+        ]
+      },
+      "fitness": 0.016370066164727356,
+      "completed_budget": 30,
+      "replicate_seeds": [
+        601
+      ],
+      "observed_seed_fitness": [
+        0.016370066164727356
+      ]
+    },
+    {
+      "architecture": {
+        "batch_size": 512,
+        "optimizer": "adamax",
+        "learning_rate": 0.005,
+        "cnn": [
+          {
+            "padding": "same",
+            "filters": 32,
+            "kernel": 5,
+            "pool": 3,
+            "activation": "tanh"
+          },
+          {
+            "padding": "valid",
+            "filters": 512,
+            "kernel": 4,
+            "pool": 3,
+            "activation": "sigmoid"
+          },
+          {
+            "padding": "same",
+            "filters": 512,
+            "kernel": 4,
+            "pool": 1,
+            "activation": "sigmoid"
+          },
+          {
+            "padding": "valid",
+            "filters": 128,
+            "kernel": 4,
+            "pool": 4,
+            "activation": "tanh"
+          }
+        ],
+        "rnn": [
+          {
+            "kind": "lstm",
+            "units": 8,
+            "activation": "none",
+            "regularization": "l1_l2",
+            "dropout": 0.2
+          },
+          {
+            "kind": "lstm",
+            "units": 256,
+            "activation": "sigmoid",
+            "regularization": "l2",
+            "dropout": 0.3
+          }
+        ]
+      },
+      "fitness": 0.006942796107286969,
+      "completed_budget": 30,
+      "replicate_seeds": [
+        601
+      ],
+      "observed_seed_fitness": [
+        0.006942796107286969
+      ]
+    }
+  ],
+  "prediction_seconds": 0.10095452999303234,
+  "scheduler_inclusive_seconds_this_invocation": 13.152959325001575
+}

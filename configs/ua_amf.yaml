@@ -1,0 +1,16 @@
+extends: gas_pipeline.yaml
+search:
+  method: ua_amf_bpso
+  budgets: [3, 10, 30]
+  replicate_offsets: [0, 1000, 2000]
+  uncertainty_beta: 1.0
+  cost_weight: 0.05
+  restart_fraction: 0.2
+compute:
+  max_epochs: 540
+  max_seconds: 1800
+  max_gpu_seconds: 1500
+training:
+  gradient_clip: 1.0
+comparison:
+  final_train: false

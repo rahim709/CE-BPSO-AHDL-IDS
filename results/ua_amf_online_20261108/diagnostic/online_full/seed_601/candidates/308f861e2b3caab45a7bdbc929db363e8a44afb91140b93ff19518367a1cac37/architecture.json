@@ -1,0 +1,23 @@
+{
+  "batch_size": 1024,
+  "optimizer": "adam",
+  "learning_rate": 0.01,
+  "cnn": [
+    {
+      "padding": "valid",
+      "filters": 16,
+      "kernel": 4,
+      "pool": 1,
+      "activation": "sigmoid"
+    }
+  ],
+  "rnn": [
+    {
+      "kind": "gru",
+      "units": 512,
+      "activation": "sigmoid",
+      "regularization": "l1_l2",
+      "dropout": 0.2
+    }
+  ]
+}

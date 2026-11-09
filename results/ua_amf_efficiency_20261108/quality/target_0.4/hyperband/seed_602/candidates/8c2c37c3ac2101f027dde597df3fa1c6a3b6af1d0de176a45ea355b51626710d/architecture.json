@@ -1,0 +1,37 @@
+{
+  "batch_size": 1024,
+  "optimizer": "nesterov",
+  "learning_rate": 5e-05,
+  "cnn": [
+    {
+      "padding": "same",
+      "filters": 64,
+      "kernel": 2,
+      "pool": 1,
+      "activation": "none"
+    },
+    {
+      "padding": "valid",
+      "filters": 384,
+      "kernel": 3,
+      "pool": 1,
+      "activation": "none"
+    },
+    {
+      "padding": "valid",
+      "filters": 8,
+      "kernel": 3,
+      "pool": 2,
+      "activation": "none"
+    }
+  ],
+  "rnn": [
+    {
+      "kind": "lstm",
+      "units": 64,
+      "activation": "none",
+      "regularization": "l1",
+      "dropout": 0.2
+    }
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "architecture_count": 25,
+  "cohort_seed": 271828,
+  "training_seeds": [
+    42,
+    43,
+    44
+  ],
+  "budgets": [
+    3,
+    10,
+    30
+  ],
+  "device": "cuda",
+  "train_rows": 8192,
+  "val_rows": 4096,
+  "max_wall_seconds": 480,
+  "max_gpu_seconds": 420,
+  "data_choice": "MinMax/balanced fixed from pre-existing validation evidence, before current measurements; old column-L2 studies retained",
+  "execution_order": "seed, architecture, ascending cumulative rung; partial results retained at cap",
+  "predictor_split": "architecture index 0..11 fit, 12..17 calibration, 18..24 held-out; every seed of an architecture stays in one partition",
+  "prediction": "forest mean, separate split-conformal absolute residual radius at nominal 80%; no own terminal target in features",
+  "score": "predicted F1 + beta*interval_radius - lambda*(predicted extra GPU seconds / 60); beta=1 lambda=0.05 fixed before data",
+  "benchmark": "seeds 501,502,503; per-run wall cap 30s; max fidelity30; anytime wall limits10/20/30; targets0.2,0.4,0.6; no tuning on held-out predictor architectures or IDS test"
+}

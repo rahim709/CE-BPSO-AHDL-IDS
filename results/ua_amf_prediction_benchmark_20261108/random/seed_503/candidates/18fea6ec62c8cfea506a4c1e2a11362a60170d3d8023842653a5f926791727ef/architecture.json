@@ -1,0 +1,30 @@
+{
+  "batch_size": 512,
+  "optimizer": "rmsprop",
+  "learning_rate": 0.05,
+  "cnn": [
+    {
+      "padding": "same",
+      "filters": 16,
+      "kernel": 2,
+      "pool": 3,
+      "activation": "tanh"
+    },
+    {
+      "padding": "same",
+      "filters": 16,
+      "kernel": 5,
+      "pool": 4,
+      "activation": "none"
+    }
+  ],
+  "rnn": [
+    {
+      "kind": "linear",
+      "units": 64,
+      "activation": "sigmoid",
+      "regularization": "none",
+      "dropout": 0.1
+    }
+  ]
+}

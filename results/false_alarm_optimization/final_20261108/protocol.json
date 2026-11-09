@@ -1,0 +1,401 @@
+{
+  "config": {
+    "seed": 42,
+    "space": "debug",
+    "final_epochs": 200,
+    "final_seed": 10042,
+    "data": {
+      "name": "gas_pipeline",
+      "files": [
+        "datasets/raw/gas_pipeline/gas_final.arff"
+      ],
+      "target": "result",
+      "processed": "results/submission_final_evaluation/20261108/processed",
+      "normal_label": "0",
+      "normalization": "minmax",
+      "split": "stratified",
+      "split_seed": 1729,
+      "test_fraction": 0.2,
+      "validation_fraction": 0.2,
+      "features": [
+        "command_address",
+        "response_address",
+        "command_memory",
+        "response_memory",
+        "command_memory_count",
+        "response_memory_count",
+        "comm_read_function",
+        "comm_write_fun",
+        "resp_read_fun",
+        "resp_write_fun",
+        "sub_function",
+        "command_length",
+        "resp_length",
+        "gain",
+        "reset",
+        "deadband",
+        "cycletime",
+        "rate",
+        "setpoint",
+        "control_mode",
+        "control_scheme",
+        "pump",
+        "solenoid",
+        "crc_rate",
+        "measurement",
+        "time"
+      ],
+      "drop_columns": [
+        "binary result",
+        "specific result",
+        "class"
+      ]
+    },
+    "training": {
+      "device": "cuda",
+      "threads": 1,
+      "l1": 1e-05,
+      "l2": 1e-05,
+      "prediction_epochs": [
+        3,
+        10,
+        30,
+        200
+      ],
+      "gradient_clip": 1.0,
+      "class_weighting": "sqrt_balanced"
+    },
+    "search": {
+      "method": "bpso",
+      "population": 3,
+      "generations": 2,
+      "epochs": 2,
+      "min_epochs": 1,
+      "eta": 3,
+      "w_max": 0.8,
+      "w_min": 0.4,
+      "v_max": 10.0,
+      "v_min": -10.0,
+      "c1": 1.5,
+      "c2": 1.5,
+      "candidates": 8,
+      "brackets": 1
+    },
+    "compute": {
+      "max_epochs": 12
+    },
+    "diagnostics": {
+      "candidates": 4,
+      "cohort_seed": 1729,
+      "seeds": [
+        42
+      ],
+      "epochs": [
+        1,
+        2
+      ],
+      "long_epochs": 3,
+      "shortlist": 1,
+      "audit_rejected": 1,
+      "top_k": 1
+    },
+    "comparison": {
+      "seeds": [
+        42
+      ],
+      "methods": [
+        "bpso",
+        "bpso_reduced",
+        "bpso_sh",
+        "hyperband",
+        "dehb",
+        "random"
+      ],
+      "final_train": true
+    },
+    "architecture": {
+      "batch_size": 256,
+      "optimizer": "adam",
+      "learning_rate": 0.001,
+      "cnn": [
+        {
+          "padding": "same",
+          "filters": 16,
+          "kernel": 3,
+          "pool": 2,
+          "activation": "relu"
+        }
+      ],
+      "rnn": [
+        {
+          "kind": "gru",
+          "units": 32,
+          "activation": "tanh",
+          "regularization": "none",
+          "dropout": 0.1
+        }
+      ]
+    },
+    "extension": {
+      "seeds": [
+        42,
+        43,
+        44
+      ],
+      "budgets": [
+        3,
+        10,
+        30
+      ],
+      "normalizations": [
+        "column_l2",
+        "minmax",
+        "row_l2"
+      ],
+      "component_families": [
+        "mlp",
+        "cnn",
+        "gru"
+      ],
+      "long_epochs": 200,
+      "long_column_seeds": [
+        42,
+        43,
+        44
+      ],
+      "long_minmax_seeds": [
+        42
+      ]
+    },
+    "evaluation": {
+      "seeds": [
+        10042,
+        10043,
+        10044
+      ]
+    }
+  },
+  "selected_on_validation": {
+    "weighting": "sqrt_balanced",
+    "metrics": {
+      "accuracy": 0.9541847041847041,
+      "macro_precision": 0.9781795105621997,
+      "macro_recall": 0.8525437945963799,
+      "macro_f1": 0.8551770170458179,
+      "weighted_precision": 0.9557550981133776,
+      "weighted_recall": 0.9541847041847041,
+      "weighted_f1": 0.9410570401596827,
+      "confusion_matrix": [
+        [
+          11975,
+          0,
+          217,
+          4,
+          33,
+          0,
+          2,
+          0
+        ],
+        [
+          545,
+          8,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          36,
+          0,
+          3057,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          7,
+          0,
+          0,
+          150,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          29,
+          0,
+          0,
+          0,
+          1498,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          9,
+          105,
+          0,
+          0
+        ],
+        [
+          7,
+          0,
+          0,
+          0,
+          0,
+          0,
+          361,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1361
+        ]
+      ],
+      "predicted_class_count": 8,
+      "collapsed_to_single_class": false,
+      "prediction_counts": {
+        "0": 12599,
+        "1": 8,
+        "2": 3274,
+        "3": 154,
+        "4": 1540,
+        "5": 105,
+        "6": 363,
+        "7": 1361
+      },
+      "zero_recall_classes": [],
+      "per_class": {
+        "0": {
+          "precision": 0.9504722597031511,
+          "recall": 0.9790695773035729,
+          "f1": 0.9645590012082159,
+          "support": 12231,
+          "tp": 11975,
+          "fp": 624,
+          "fn": 256,
+          "tn": 6549,
+          "fpr": 0.08699289000418235,
+          "fnr": 0.02093042269642711
+        },
+        "1": {
+          "precision": 1.0,
+          "recall": 0.014466546112115732,
+          "f1": 0.0285204991087344,
+          "support": 553,
+          "tp": 8,
+          "fp": 0,
+          "fn": 545,
+          "tn": 18851,
+          "fpr": 0.0,
+          "fnr": 0.9855334538878843
+        },
+        "2": {
+          "precision": 0.9337202199144777,
+          "recall": 0.988360814742968,
+          "f1": 0.9602638605308622,
+          "support": 3093,
+          "tp": 3057,
+          "fp": 217,
+          "fn": 36,
+          "tn": 16094,
+          "fpr": 0.013303905339954632,
+          "fnr": 0.011639185257032008
+        },
+        "3": {
+          "precision": 0.974025974025974,
+          "recall": 0.9554140127388535,
+          "f1": 0.9646302250803859,
+          "support": 157,
+          "tp": 150,
+          "fp": 4,
+          "fn": 7,
+          "tn": 19243,
+          "fpr": 0.00020782459604094144,
+          "fnr": 0.044585987261146494
+        },
+        "4": {
+          "precision": 0.9727272727272728,
+          "recall": 0.9810085134250164,
+          "f1": 0.976850342354092,
+          "support": 1527,
+          "tp": 1498,
+          "fp": 42,
+          "fn": 29,
+          "tn": 17835,
+          "fpr": 0.0023493874811209934,
+          "fnr": 0.01899148657498363
+        },
+        "5": {
+          "precision": 1.0,
+          "recall": 0.9210526315789473,
+          "f1": 0.958904109589041,
+          "support": 114,
+          "tp": 105,
+          "fp": 0,
+          "fn": 9,
+          "tn": 19290,
+          "fpr": 0.0,
+          "fnr": 0.07894736842105263
+        },
+        "6": {
+          "precision": 0.9944903581267218,
+          "recall": 0.9809782608695652,
+          "f1": 0.987688098495212,
+          "support": 368,
+          "tp": 361,
+          "fp": 2,
+          "fn": 7,
+          "tn": 19034,
+          "fpr": 0.00010506408909434755,
+          "fnr": 0.019021739130434784
+        },
+        "7": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "support": 1361,
+          "tp": 1361,
+          "fp": 0,
+          "fn": 0,
+          "tn": 18043,
+          "fpr": 0.0,
+          "fnr": 0.0
+        }
+      },
+      "attack_detection": {
+        "false_positive": 256,
+        "false_negative": 624,
+        "fpr": 0.02093042269642711,
+        "fnr": 0.08699289000418235
+      }
+    },
+    "feasible": false
+  },
+  "maximum_validation_fpr": 0.03,
+  "minimum_validation_attack_recall": 0.9,
+  "revision_reason": "Neither candidate met the initial 1% target; revised exploratory 3% target before new test scores",
+  "selection_source": "results/false_alarm_optimization/20261108",
+  "endpoint": 200,
+  "seeds": [
+    10042,
+    10043,
+    10044
+  ],
+  "limitation": "development-known historical split; exploratory correction, not blind confirmation"
+}

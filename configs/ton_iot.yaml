@@ -1,0 +1,21 @@
+extends: gas_pipeline.yaml
+data:
+  features: null
+  name: ton_iot
+  files: [datasets/raw/ton_iot/train*.csv]
+  test_files: [datasets/raw/ton_iot/test*.csv]
+  target: type
+  processed: datasets/processed/ton_iot
+  normal_label: normal
+  normalization: minmax
+  drop_columns: [label, ts, src_ip, dst_ip]
+architecture:
+  batch_size: 512
+  optimizer: adamax
+  learning_rate: 0.01
+  cnn:
+    - {padding: same, filters: 384, kernel: 2, pool: 3, activation: relu}
+    - {padding: same, filters: 512, kernel: 3, pool: 1, activation: tanh}
+  rnn:
+    - {kind: gru, units: 16, activation: relu, regularization: none, dropout: 0.0}
+    - {kind: gru, units: 32, activation: relu, regularization: l1_l2, dropout: 0.2}

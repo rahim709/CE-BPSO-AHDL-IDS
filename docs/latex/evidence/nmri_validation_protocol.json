@@ -1,0 +1,25 @@
+{
+  "seed": 42,
+  "neural_epochs": 100,
+  "fpr_caps": [
+    0.01,
+    0.03,
+    0.05,
+    0.1,
+    0.2
+  ],
+  "success_criteria": {
+    "maximum_fpr": 0.05,
+    "minimum_nmri_recall": 0.5,
+    "minimum_attack_detection": 0.9
+  },
+  "methods": [
+    "existing_hybrid_score",
+    "extra_trees",
+    "hist_gradient_boosting",
+    "neural_specialist"
+  ],
+  "routing": "only replace normal/NMRI predictions; preserve six other predicted classes",
+  "selection_data": "validation only; test arrays and predictions never opened",
+  "scope": "exploratory development-known split; no confirmatory generalization claim"
+}

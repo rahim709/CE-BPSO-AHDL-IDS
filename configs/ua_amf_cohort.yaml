@@ -1,0 +1,19 @@
+extends: ua_amf.yaml
+# Diagnostic only: same reduced-row real-data view as the CUDA pilot.
+data:
+  processed: results/ua_amf_cuda_pilot_20261108/data
+training:
+  device: cuda
+diagnostics:
+  candidates: 3
+  cohort_seed: 1729
+  seeds: [42, 1042, 2042]
+  epochs: [3, 10, 30]
+  long_epochs: 30
+  shortlist: 3
+  audit_rejected: 0
+  top_k: 1
+compute:
+  max_epochs: 270
+  max_seconds: 120
+  max_gpu_seconds: 100

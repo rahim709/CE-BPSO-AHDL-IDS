@@ -1,0 +1,106 @@
+{
+  "finalists": [
+    {
+      "architecture": {
+        "batch_size": 512,
+        "optimizer": "adam",
+        "learning_rate": 0.005,
+        "cnn": [
+          {
+            "padding": "valid",
+            "filters": 16,
+            "kernel": 3,
+            "pool": 3,
+            "activation": "tanh"
+          },
+          {
+            "padding": "valid",
+            "filters": 128,
+            "kernel": 3,
+            "pool": 4,
+            "activation": "tanh"
+          }
+        ],
+        "rnn": [
+          {
+            "kind": "simrnn",
+            "units": 32,
+            "activation": "sigmoid",
+            "regularization": "l1_l2",
+            "dropout": 0.2
+          }
+        ]
+      },
+      "fitness": 0.6764249073260011,
+      "completed_budget": 30
+    },
+    {
+      "architecture": {
+        "batch_size": 256,
+        "optimizer": "momentum",
+        "learning_rate": 0.005,
+        "cnn": [
+          {
+            "padding": "valid",
+            "filters": 256,
+            "kernel": 5,
+            "pool": 1,
+            "activation": "relu"
+          },
+          {
+            "padding": "valid",
+            "filters": 64,
+            "kernel": 2,
+            "pool": 4,
+            "activation": "none"
+          }
+        ],
+        "rnn": [
+          {
+            "kind": "simrnn",
+            "units": 256,
+            "activation": "none",
+            "regularization": "l1",
+            "dropout": 0.2
+          }
+        ]
+      },
+      "fitness": 0.6930998163125321,
+      "completed_budget": 30
+    },
+    {
+      "architecture": {
+        "batch_size": 256,
+        "optimizer": "momentum",
+        "learning_rate": 0.005,
+        "cnn": [
+          {
+            "padding": "same",
+            "filters": 256,
+            "kernel": 5,
+            "pool": 1,
+            "activation": "relu"
+          },
+          {
+            "padding": "valid",
+            "filters": 64,
+            "kernel": 5,
+            "pool": 4,
+            "activation": "none"
+          }
+        ],
+        "rnn": [
+          {
+            "kind": "simrnn",
+            "units": 256,
+            "activation": "none",
+            "regularization": "l1",
+            "dropout": 0.2
+          }
+        ]
+      },
+      "fitness": 0.6940904241778598,
+      "completed_budget": 30
+    }
+  ]
+}

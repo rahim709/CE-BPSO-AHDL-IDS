@@ -1,0 +1,24 @@
+extends: gas_pipeline.yaml
+data:
+  features: null
+  name: bot_iot
+  files: [datasets/raw/bot_iot/train*.csv]
+  test_files: [datasets/raw/bot_iot/test*.csv]
+  target: category
+  normal_label: Normal
+  processed: datasets/processed/bot_iot
+  normalization: minmax
+  drop_columns: [attack, subcategory, pkSeqID, seq, stime, ltime, saddr, daddr]
+architecture:
+  # Fig.11 batch4096 is outside the paper's reported encoded search space.
+  batch_size: 4096
+  optimizer: sgd
+  learning_rate: 0.01
+  cnn:
+    - {padding: same, filters: 64, kernel: 3, pool: 3, activation: sigmoid}
+    - {padding: same, filters: 64, kernel: 2, pool: 2, activation: relu}
+    - {padding: valid, filters: 512, kernel: 5, pool: 4, activation: sigmoid}
+    - {padding: same, filters: 384, kernel: 2, pool: 4, activation: relu}
+  rnn:
+    - {kind: lstm, units: 256, activation: tanh, regularization: none, dropout: 0.2}
+    - {kind: lstm, units: 256, activation: tanh, regularization: l1_l2, dropout: 0.1}

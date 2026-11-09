@@ -1,0 +1,648 @@
+[
+  {
+    "case": "pytest_cpu",
+    "exit_code": 0,
+    "wall_seconds": 9.792420097001013,
+    "command": [
+      "/home/abdur/Desktop/BPSO-AHDL-IDS/.venv/bin/python",
+      "-m",
+      "pytest",
+      "-q",
+      "--durations=0",
+      "--junitxml=results/gpu_validation/20261108T105751Z/pytest_cpu.xml"
+    ],
+    "environment_overrides": {
+      "BPSO_TEST_DEVICE": "cpu"
+    },
+    "log": "results/gpu_validation/20261108T105751Z/pytest_cpu.log"
+  },
+  {
+    "case": "pytest_cuda",
+    "exit_code": 0,
+    "wall_seconds": 10.29209487299886,
+    "command": [
+      "/home/abdur/Desktop/BPSO-AHDL-IDS/.venv/bin/python",
+      "-m",
+      "pytest",
+      "-q",
+      "--durations=0",
+      "--junitxml=results/gpu_validation/20261108T105751Z/pytest_cuda.xml"
+    ],
+    "environment_overrides": {
+      "BPSO_TEST_DEVICE": "cuda"
+    },
+    "log": "results/gpu_validation/20261108T105751Z/pytest_cuda.log"
+  },
+  {
+    "case": "gas_pipeline_prepare",
+    "exit_code": 0,
+    "wall_seconds": 4.627298310000697,
+    "command": [
+      "/home/abdur/Desktop/BPSO-AHDL-IDS/.venv/bin/python",
+      "-m",
+      "src.cli",
+      "prepare",
+      "--config",
+      "results/gpu_validation/20261108T105751Z/gas_pipeline/config.json"
+    ],
+    "environment_overrides": {},
+    "log": "results/gpu_validation/20261108T105751Z/gas_pipeline_prepare.log"
+  },
+  {
+    "case": "gas_pipeline_train",
+    "exit_code": 0,
+    "wall_seconds": 4.377850849001334,
+    "command": [
+      "/home/abdur/Desktop/BPSO-AHDL-IDS/.venv/bin/python",
+      "-m",
+      "src.cli",
+      "train",
+      "--config",
+      "results/gpu_validation/20261108T105751Z/gas_pipeline/config.json",
+      "--output",
+      "results/gpu_validation/20261108T105751Z/gas_pipeline/train"
+    ],
+    "environment_overrides": {},
+    "log": "results/gpu_validation/20261108T105751Z/gas_pipeline_train.log"
+  },
+  {
+    "case": "gas_pipeline_search",
+    "exit_code": 0,
+    "wall_seconds": 36.909847420000006,
+    "command": [
+      "/home/abdur/Desktop/BPSO-AHDL-IDS/.venv/bin/python",
+      "-m",
+      "src.cli",
+      "search",
+      "--config",
+      "results/gpu_validation/20261108T105751Z/gas_pipeline/config.json",
+      "--output",
+      "results/gpu_validation/20261108T105751Z/gas_pipeline/search"
+    ],
+    "environment_overrides": {},
+    "log": "results/gpu_validation/20261108T105751Z/gas_pipeline_search.log"
+  },
+  {
+    "case": "gas_pipeline_diagnostics",
+    "exit_code": 0,
+    "wall_seconds": 68.39243399299994,
+    "command": [
+      "/home/abdur/Desktop/BPSO-AHDL-IDS/.venv/bin/python",
+      "-m",
+      "src.cli",
+      "diagnostics",
+      "--config",
+      "results/gpu_validation/20261108T105751Z/gas_pipeline/diagnostic_config.json",
+      "--output",
+      "results/gpu_validation/20261108T105751Z/gas_pipeline/diagnostics"
+    ],
+    "environment_overrides": {},
+    "log": "results/gpu_validation/20261108T105751Z/gas_pipeline_diagnostics.log"
+  },
+  {
+    "case": "gas_pipeline_compare",
+    "exit_code": 0,
+    "wall_seconds": 208.6593633399989,
+    "command": [
+      "/home/abdur/Desktop/BPSO-AHDL-IDS/.venv/bin/python",
+      "-m",
+      "src.cli",
+      "compare",
+      "--config",
+      "results/gpu_validation/20261108T105751Z/gas_pipeline/config.json",
+      "--output",
+      "results/gpu_validation/20261108T105751Z/gas_pipeline/compare"
+    ],
+    "environment_overrides": {},
+    "log": "results/gpu_validation/20261108T105751Z/gas_pipeline_compare.log"
+  },
+  {
+    "case": "gas_pipeline_report",
+    "exit_code": 0,
+    "wall_seconds": 2.6734651810002106,
+    "command": [
+      "/home/abdur/Desktop/BPSO-AHDL-IDS/.venv/bin/python",
+      "-m",
+      "src.cli",
+      "report",
+      "--input",
+      "results/gpu_validation/20261108T105751Z/gas_pipeline/train",
+      "--output",
+      "results/gpu_validation/20261108T105751Z/gas_pipeline/reports"
+    ],
+    "environment_overrides": {},
+    "log": "results/gpu_validation/20261108T105751Z/gas_pipeline_report.log"
+  },
+  {
+    "case": "gas_pipeline_search_resume",
+    "exit_code": 0,
+    "wall_seconds": 2.2748340029993415,
+    "command": [
+      "/home/abdur/Desktop/BPSO-AHDL-IDS/.venv/bin/python",
+      "-m",
+      "src.cli",
+      "search",
+      "--config",
+      "results/gpu_validation/20261108T105751Z/gas_pipeline/config.json",
+      "--output",
+      "results/gpu_validation/20261108T105751Z/gas_pipeline/search"
+    ],
+    "environment_overrides": {},
+    "log": "results/gpu_validation/20261108T105751Z/gas_pipeline_search_resume.log"
+  },
+  {
+    "case": "gas_pipeline_selected_train",
+    "exit_code": 0,
+    "wall_seconds": 21.527114536000227,
+    "command": [
+      "/home/abdur/Desktop/BPSO-AHDL-IDS/.venv/bin/python",
+      "-m",
+      "src.cli",
+      "train",
+      "--config",
+      "results/gpu_validation/20261108T105751Z/gas_pipeline/config.json",
+      "--architecture",
+      "results/gpu_validation/20261108T105751Z/gas_pipeline/search/best_architecture.json",
+      "--output",
+      "results/gpu_validation/20261108T105751Z/gas_pipeline/selected_train"
+    ],
+    "environment_overrides": {},
+    "log": "results/gpu_validation/20261108T105751Z/gas_pipeline_selected_train.log"
+  },
+  {
+    "case": "gas_pipeline_train_resume",
+    "exit_code": 0,
+    "wall_seconds": 3.474657262000619,
+    "command": [
+      "/home/abdur/Desktop/BPSO-AHDL-IDS/.venv/bin/python",
+      "-m",
+      "src.cli",
+      "train",
+      "--config",
+      "results/gpu_validation/20261108T105751Z/gas_pipeline/config.json",
+      "--output",
+      "results/gpu_validation/20261108T105751Z/gas_pipeline/train"
+    ],
+    "environment_overrides": {},
+    "log": "results/gpu_validation/20261108T105751Z/gas_pipeline_train_resume.log"
+  },
+  {
+    "case": "ton_iot_prepare",
+    "exit_code": 0,
+    "wall_seconds": 2.4218194659988512,
+    "command": [
+      "/home/abdur/Desktop/BPSO-AHDL-IDS/.venv/bin/python",
+      "-m",
+      "src.cli",
+      "prepare",
+      "--config",
+      "results/gpu_validation/20261108T105751Z/ton_iot/config.json"
+    ],
+    "environment_overrides": {},
+    "log": "results/gpu_validation/20261108T105751Z/ton_iot_prepare.log"
+  },
+  {
+    "case": "ton_iot_train",
+    "exit_code": 0,
+    "wall_seconds": 3.575261922000209,
+    "command": [
+      "/home/abdur/Desktop/BPSO-AHDL-IDS/.venv/bin/python",
+      "-m",
+      "src.cli",
+      "train",
+      "--config",
+      "results/gpu_validation/20261108T105751Z/ton_iot/config.json",
+      "--output",
+      "results/gpu_validation/20261108T105751Z/ton_iot/train"
+    ],
+    "environment_overrides": {},
+    "log": "results/gpu_validation/20261108T105751Z/ton_iot_train.log"
+  },
+  {
+    "case": "ton_iot_search",
+    "exit_code": 0,
+    "wall_seconds": 4.727070539998749,
+    "command": [
+      "/home/abdur/Desktop/BPSO-AHDL-IDS/.venv/bin/python",
+      "-m",
+      "src.cli",
+      "search",
+      "--config",
+      "results/gpu_validation/20261108T105751Z/ton_iot/config.json",
+      "--output",
+      "results/gpu_validation/20261108T105751Z/ton_iot/search"
+    ],
+    "environment_overrides": {},
+    "log": "results/gpu_validation/20261108T105751Z/ton_iot_search.log"
+  },
+  {
+    "case": "ton_iot_diagnostics",
+    "exit_code": 0,
+    "wall_seconds": 5.731561021999369,
+    "command": [
+      "/home/abdur/Desktop/BPSO-AHDL-IDS/.venv/bin/python",
+      "-m",
+      "src.cli",
+      "diagnostics",
+      "--config",
+      "results/gpu_validation/20261108T105751Z/ton_iot/diagnostic_config.json",
+      "--output",
+      "results/gpu_validation/20261108T105751Z/ton_iot/diagnostics"
+    ],
+    "environment_overrides": {},
+    "log": "results/gpu_validation/20261108T105751Z/ton_iot_diagnostics.log"
+  },
+  {
+    "case": "ton_iot_compare",
+    "exit_code": 0,
+    "wall_seconds": 15.81303306799964,
+    "command": [
+      "/home/abdur/Desktop/BPSO-AHDL-IDS/.venv/bin/python",
+      "-m",
+      "src.cli",
+      "compare",
+      "--config",
+      "results/gpu_validation/20261108T105751Z/ton_iot/config.json",
+      "--output",
+      "results/gpu_validation/20261108T105751Z/ton_iot/compare"
+    ],
+    "environment_overrides": {},
+    "log": "results/gpu_validation/20261108T105751Z/ton_iot_compare.log"
+  },
+  {
+    "case": "ton_iot_report",
+    "exit_code": 0,
+    "wall_seconds": 2.77319319200069,
+    "command": [
+      "/home/abdur/Desktop/BPSO-AHDL-IDS/.venv/bin/python",
+      "-m",
+      "src.cli",
+      "report",
+      "--input",
+      "results/gpu_validation/20261108T105751Z/ton_iot/train",
+      "--output",
+      "results/gpu_validation/20261108T105751Z/ton_iot/reports"
+    ],
+    "environment_overrides": {},
+    "log": "results/gpu_validation/20261108T105751Z/ton_iot_report.log"
+  },
+  {
+    "case": "ton_iot_search_resume",
+    "exit_code": 0,
+    "wall_seconds": 2.220237432999056,
+    "command": [
+      "/home/abdur/Desktop/BPSO-AHDL-IDS/.venv/bin/python",
+      "-m",
+      "src.cli",
+      "search",
+      "--config",
+      "results/gpu_validation/20261108T105751Z/ton_iot/config.json",
+      "--output",
+      "results/gpu_validation/20261108T105751Z/ton_iot/search"
+    ],
+    "environment_overrides": {},
+    "log": "results/gpu_validation/20261108T105751Z/ton_iot_search_resume.log"
+  },
+  {
+    "case": "ton_iot_selected_train",
+    "exit_code": 0,
+    "wall_seconds": 4.226660274000096,
+    "command": [
+      "/home/abdur/Desktop/BPSO-AHDL-IDS/.venv/bin/python",
+      "-m",
+      "src.cli",
+      "train",
+      "--config",
+      "results/gpu_validation/20261108T105751Z/ton_iot/config.json",
+      "--architecture",
+      "results/gpu_validation/20261108T105751Z/ton_iot/search/best_architecture.json",
+      "--output",
+      "results/gpu_validation/20261108T105751Z/ton_iot/selected_train"
+    ],
+    "environment_overrides": {},
+    "log": "results/gpu_validation/20261108T105751Z/ton_iot_selected_train.log"
+  },
+  {
+    "case": "ton_iot_train_resume",
+    "exit_code": 0,
+    "wall_seconds": 3.3248617210010707,
+    "command": [
+      "/home/abdur/Desktop/BPSO-AHDL-IDS/.venv/bin/python",
+      "-m",
+      "src.cli",
+      "train",
+      "--config",
+      "results/gpu_validation/20261108T105751Z/ton_iot/config.json",
+      "--output",
+      "results/gpu_validation/20261108T105751Z/ton_iot/train"
+    ],
+    "environment_overrides": {},
+    "log": "results/gpu_validation/20261108T105751Z/ton_iot_train_resume.log"
+  },
+  {
+    "case": "bot_iot_prepare",
+    "exit_code": 0,
+    "wall_seconds": 2.2717938280002272,
+    "command": [
+      "/home/abdur/Desktop/BPSO-AHDL-IDS/.venv/bin/python",
+      "-m",
+      "src.cli",
+      "prepare",
+      "--config",
+      "results/gpu_validation/20261108T105751Z/bot_iot/config.json"
+    ],
+    "environment_overrides": {},
+    "log": "results/gpu_validation/20261108T105751Z/bot_iot_prepare.log"
+  },
+  {
+    "case": "bot_iot_train",
+    "exit_code": 0,
+    "wall_seconds": 3.5757654490007553,
+    "command": [
+      "/home/abdur/Desktop/BPSO-AHDL-IDS/.venv/bin/python",
+      "-m",
+      "src.cli",
+      "train",
+      "--config",
+      "results/gpu_validation/20261108T105751Z/bot_iot/config.json",
+      "--output",
+      "results/gpu_validation/20261108T105751Z/bot_iot/train"
+    ],
+    "environment_overrides": {},
+    "log": "results/gpu_validation/20261108T105751Z/bot_iot_train.log"
+  },
+  {
+    "case": "bot_iot_search",
+    "exit_code": 0,
+    "wall_seconds": 4.828762687000562,
+    "command": [
+      "/home/abdur/Desktop/BPSO-AHDL-IDS/.venv/bin/python",
+      "-m",
+      "src.cli",
+      "search",
+      "--config",
+      "results/gpu_validation/20261108T105751Z/bot_iot/config.json",
+      "--output",
+      "results/gpu_validation/20261108T105751Z/bot_iot/search"
+    ],
+    "environment_overrides": {},
+    "log": "results/gpu_validation/20261108T105751Z/bot_iot_search.log"
+  },
+  {
+    "case": "bot_iot_diagnostics",
+    "exit_code": 0,
+    "wall_seconds": 5.580852212999162,
+    "command": [
+      "/home/abdur/Desktop/BPSO-AHDL-IDS/.venv/bin/python",
+      "-m",
+      "src.cli",
+      "diagnostics",
+      "--config",
+      "results/gpu_validation/20261108T105751Z/bot_iot/diagnostic_config.json",
+      "--output",
+      "results/gpu_validation/20261108T105751Z/bot_iot/diagnostics"
+    ],
+    "environment_overrides": {},
+    "log": "results/gpu_validation/20261108T105751Z/bot_iot_diagnostics.log"
+  },
+  {
+    "case": "bot_iot_compare",
+    "exit_code": 0,
+    "wall_seconds": 14.303233907001413,
+    "command": [
+      "/home/abdur/Desktop/BPSO-AHDL-IDS/.venv/bin/python",
+      "-m",
+      "src.cli",
+      "compare",
+      "--config",
+      "results/gpu_validation/20261108T105751Z/bot_iot/config.json",
+      "--output",
+      "results/gpu_validation/20261108T105751Z/bot_iot/compare"
+    ],
+    "environment_overrides": {},
+    "log": "results/gpu_validation/20261108T105751Z/bot_iot_compare.log"
+  },
+  {
+    "case": "bot_iot_report",
+    "exit_code": 0,
+    "wall_seconds": 2.523591656999997,
+    "command": [
+      "/home/abdur/Desktop/BPSO-AHDL-IDS/.venv/bin/python",
+      "-m",
+      "src.cli",
+      "report",
+      "--input",
+      "results/gpu_validation/20261108T105751Z/bot_iot/train",
+      "--output",
+      "results/gpu_validation/20261108T105751Z/bot_iot/reports"
+    ],
+    "environment_overrides": {},
+    "log": "results/gpu_validation/20261108T105751Z/bot_iot_report.log"
+  },
+  {
+    "case": "bot_iot_search_resume",
+    "exit_code": 0,
+    "wall_seconds": 2.270774110000275,
+    "command": [
+      "/home/abdur/Desktop/BPSO-AHDL-IDS/.venv/bin/python",
+      "-m",
+      "src.cli",
+      "search",
+      "--config",
+      "results/gpu_validation/20261108T105751Z/bot_iot/config.json",
+      "--output",
+      "results/gpu_validation/20261108T105751Z/bot_iot/search"
+    ],
+    "environment_overrides": {},
+    "log": "results/gpu_validation/20261108T105751Z/bot_iot_search_resume.log"
+  },
+  {
+    "case": "bot_iot_selected_train",
+    "exit_code": 0,
+    "wall_seconds": 4.232228512000802,
+    "command": [
+      "/home/abdur/Desktop/BPSO-AHDL-IDS/.venv/bin/python",
+      "-m",
+      "src.cli",
+      "train",
+      "--config",
+      "results/gpu_validation/20261108T105751Z/bot_iot/config.json",
+      "--architecture",
+      "results/gpu_validation/20261108T105751Z/bot_iot/search/best_architecture.json",
+      "--output",
+      "results/gpu_validation/20261108T105751Z/bot_iot/selected_train"
+    ],
+    "environment_overrides": {},
+    "log": "results/gpu_validation/20261108T105751Z/bot_iot_selected_train.log"
+  },
+  {
+    "case": "bot_iot_train_resume",
+    "exit_code": 0,
+    "wall_seconds": 3.375257267000052,
+    "command": [
+      "/home/abdur/Desktop/BPSO-AHDL-IDS/.venv/bin/python",
+      "-m",
+      "src.cli",
+      "train",
+      "--config",
+      "results/gpu_validation/20261108T105751Z/bot_iot/config.json",
+      "--output",
+      "results/gpu_validation/20261108T105751Z/bot_iot/train"
+    ],
+    "environment_overrides": {},
+    "log": "results/gpu_validation/20261108T105751Z/bot_iot_train_resume.log"
+  },
+  {
+    "case": "swat_prepare",
+    "exit_code": 0,
+    "wall_seconds": 2.3212294519998977,
+    "command": [
+      "/home/abdur/Desktop/BPSO-AHDL-IDS/.venv/bin/python",
+      "-m",
+      "src.cli",
+      "prepare",
+      "--config",
+      "results/gpu_validation/20261108T105751Z/swat/config.json"
+    ],
+    "environment_overrides": {},
+    "log": "results/gpu_validation/20261108T105751Z/swat_prepare.log"
+  },
+  {
+    "case": "swat_train",
+    "exit_code": 0,
+    "wall_seconds": 3.5758388790000026,
+    "command": [
+      "/home/abdur/Desktop/BPSO-AHDL-IDS/.venv/bin/python",
+      "-m",
+      "src.cli",
+      "train",
+      "--config",
+      "results/gpu_validation/20261108T105751Z/swat/config.json",
+      "--output",
+      "results/gpu_validation/20261108T105751Z/swat/train"
+    ],
+    "environment_overrides": {},
+    "log": "results/gpu_validation/20261108T105751Z/swat_train.log"
+  },
+  {
+    "case": "swat_search",
+    "exit_code": 0,
+    "wall_seconds": 4.629940038999848,
+    "command": [
+      "/home/abdur/Desktop/BPSO-AHDL-IDS/.venv/bin/python",
+      "-m",
+      "src.cli",
+      "search",
+      "--config",
+      "results/gpu_validation/20261108T105751Z/swat/config.json",
+      "--output",
+      "results/gpu_validation/20261108T105751Z/swat/search"
+    ],
+    "environment_overrides": {},
+    "log": "results/gpu_validation/20261108T105751Z/swat_search.log"
+  },
+  {
+    "case": "swat_diagnostics",
+    "exit_code": 0,
+    "wall_seconds": 5.580342129998826,
+    "command": [
+      "/home/abdur/Desktop/BPSO-AHDL-IDS/.venv/bin/python",
+      "-m",
+      "src.cli",
+      "diagnostics",
+      "--config",
+      "results/gpu_validation/20261108T105751Z/swat/diagnostic_config.json",
+      "--output",
+      "results/gpu_validation/20261108T105751Z/swat/diagnostics"
+    ],
+    "environment_overrides": {},
+    "log": "results/gpu_validation/20261108T105751Z/swat_diagnostics.log"
+  },
+  {
+    "case": "swat_compare",
+    "exit_code": 0,
+    "wall_seconds": 13.899448428999676,
+    "command": [
+      "/home/abdur/Desktop/BPSO-AHDL-IDS/.venv/bin/python",
+      "-m",
+      "src.cli",
+      "compare",
+      "--config",
+      "results/gpu_validation/20261108T105751Z/swat/config.json",
+      "--output",
+      "results/gpu_validation/20261108T105751Z/swat/compare"
+    ],
+    "environment_overrides": {},
+    "log": "results/gpu_validation/20261108T105751Z/swat_compare.log"
+  },
+  {
+    "case": "swat_report",
+    "exit_code": 0,
+    "wall_seconds": 2.5755806069992104,
+    "command": [
+      "/home/abdur/Desktop/BPSO-AHDL-IDS/.venv/bin/python",
+      "-m",
+      "src.cli",
+      "report",
+      "--input",
+      "results/gpu_validation/20261108T105751Z/swat/train",
+      "--output",
+      "results/gpu_validation/20261108T105751Z/swat/reports"
+    ],
+    "environment_overrides": {},
+    "log": "results/gpu_validation/20261108T105751Z/swat_report.log"
+  },
+  {
+    "case": "swat_search_resume",
+    "exit_code": 0,
+    "wall_seconds": 2.2721306149996963,
+    "command": [
+      "/home/abdur/Desktop/BPSO-AHDL-IDS/.venv/bin/python",
+      "-m",
+      "src.cli",
+      "search",
+      "--config",
+      "results/gpu_validation/20261108T105751Z/swat/config.json",
+      "--output",
+      "results/gpu_validation/20261108T105751Z/swat/search"
+    ],
+    "environment_overrides": {},
+    "log": "results/gpu_validation/20261108T105751Z/swat_search_resume.log"
+  },
+  {
+    "case": "swat_selected_train",
+    "exit_code": 0,
+    "wall_seconds": 4.12620810000044,
+    "command": [
+      "/home/abdur/Desktop/BPSO-AHDL-IDS/.venv/bin/python",
+      "-m",
+      "src.cli",
+      "train",
+      "--config",
+      "results/gpu_validation/20261108T105751Z/swat/config.json",
+      "--architecture",
+      "results/gpu_validation/20261108T105751Z/swat/search/best_architecture.json",
+      "--output",
+      "results/gpu_validation/20261108T105751Z/swat/selected_train"
+    ],
+    "environment_overrides": {},
+    "log": "results/gpu_validation/20261108T105751Z/swat_selected_train.log"
+  },
+  {
+    "case": "swat_train_resume",
+    "exit_code": 0,
+    "wall_seconds": 3.328139014000044,
+    "command": [
+      "/home/abdur/Desktop/BPSO-AHDL-IDS/.venv/bin/python",
+      "-m",
+      "src.cli",
+      "train",
+      "--config",
+      "results/gpu_validation/20261108T105751Z/swat/config.json",
+      "--output",
+      "results/gpu_validation/20261108T105751Z/swat/train"
+    ],
+    "environment_overrides": {},
+    "log": "results/gpu_validation/20261108T105751Z/swat_train_resume.log"
+  }
+]

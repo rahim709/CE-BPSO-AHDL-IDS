@@ -1,0 +1,18 @@
+extends: gas_pipeline.yaml
+data:
+  features: null
+  name: swat
+  files: [datasets/raw/swat/*.csv]
+  target: Normal/Attack
+  processed: datasets/processed/swat
+  normal_label: Normal
+  normalization: minmax
+  split: chronological
+  time_column: Timestamp
+  # Set read_options and a sortable timestamp column for your official release.
+  # A normal-only official training partition cannot support supervised attack classes.
+  drop_columns: [Timestamp]
+search:
+  population: 30
+  generations: 20
+# architecture inherited from Gas is a sanity model, NOT the SWaT paper winner.

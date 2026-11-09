@@ -1,0 +1,15 @@
+extends: learning_sanity.yaml
+# Frozen validation-only extension. No held-out fitting, selection or evaluation.
+# The dedicated runner uses extension.budgets/long_epochs and explicit presets;
+# inherited CLI search-space, search-schedule and final_epochs fields are unused.
+extension:
+  seeds: [42, 43, 44]
+  budgets: [3, 10, 30]
+  normalizations: [column_l2, minmax, row_l2]
+  component_families: [mlp, cnn, gru]
+  long_epochs: 200
+  long_column_seeds: [42, 43, 44]
+  long_minmax_seeds: [42]
+training:
+  class_weighting: balanced
+  prediction_epochs: [3, 10, 30, 200]

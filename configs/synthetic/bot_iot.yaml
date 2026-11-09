@@ -1,0 +1,12 @@
+extends: ton_iot.yaml
+# SYNTHETIC SOFTWARE FIXTURE; not original Bot-IoT or research evidence.
+data:
+  name: bot_iot
+  synthetic: true
+  files: [datasets/synthetic/bot_iot/SYNTHETIC_train.csv]
+  test_files: [datasets/synthetic/bot_iot/SYNTHETIC_test.csv]
+  provenance_file: datasets/synthetic/bot_iot/SYNTHETIC_MANIFEST.json
+  target: category
+  processed: datasets/processed/synthetic/bot_iot
+  normal_label: Normal
+  drop_columns: [attack, subcategory, pkSeqID, seq, stime, ltime, saddr, daddr]

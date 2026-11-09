@@ -1,0 +1,100 @@
+{
+  "finalists": [
+    {
+      "architecture": {
+        "batch_size": 1024,
+        "optimizer": "momentum",
+        "learning_rate": 0.01,
+        "cnn": [
+          {
+            "padding": "same",
+            "filters": 8,
+            "kernel": 2,
+            "pool": 1,
+            "activation": "relu"
+          }
+        ],
+        "rnn": [
+          {
+            "kind": "simrnn",
+            "units": 16,
+            "activation": "tanh",
+            "regularization": "l2",
+            "dropout": 0.2
+          },
+          {
+            "kind": "gru",
+            "units": 64,
+            "activation": "relu",
+            "regularization": "l2",
+            "dropout": 0.1
+          }
+        ]
+      },
+      "fitness": 0.1097651401131249,
+      "completed_budget": 30,
+      "replicate_seeds": [
+        603
+      ],
+      "observed_seed_fitness": [
+        0.1097651401131249
+      ]
+    },
+    {
+      "architecture": {
+        "batch_size": 1024,
+        "optimizer": "adagrad",
+        "learning_rate": 5e-05,
+        "cnn": [
+          {
+            "padding": "same",
+            "filters": 64,
+            "kernel": 5,
+            "pool": 2,
+            "activation": "tanh"
+          },
+          {
+            "padding": "same",
+            "filters": 128,
+            "kernel": 5,
+            "pool": 2,
+            "activation": "relu"
+          },
+          {
+            "padding": "valid",
+            "filters": 256,
+            "kernel": 4,
+            "pool": 1,
+            "activation": "none"
+          },
+          {
+            "padding": "valid",
+            "filters": 16,
+            "kernel": 3,
+            "pool": 3,
+            "activation": "tanh"
+          }
+        ],
+        "rnn": [
+          {
+            "kind": "linear",
+            "units": 128,
+            "activation": "none",
+            "regularization": "none",
+            "dropout": 0.0
+          }
+        ]
+      },
+      "fitness": 0.01441686453134338,
+      "completed_budget": 30,
+      "replicate_seeds": [
+        603
+      ],
+      "observed_seed_fitness": [
+        0.01441686453134338
+      ]
+    }
+  ],
+  "prediction_seconds": 0.05182863000300131,
+  "scheduler_inclusive_seconds_this_invocation": 8.678194562999124
+}

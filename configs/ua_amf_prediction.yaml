@@ -1,0 +1,26 @@
+extends: ua_amf.yaml
+# Fit this bundle with scripts.amf_reliability and scripts.amf_fit_predictor.
+data:
+  processed: results/ua_amf_prediction_20261108/data
+  normalization: minmax
+training:
+  device: cuda
+  class_weighting: balanced
+  gradient_clip: 1.0
+  prediction_epochs: [3, 10, 30]
+search:
+  promotion_policy: learning_curve
+  predictor_bundle: results/ua_amf_prediction_20261108/curve_predictor.joblib
+  replicate_offsets: [0]
+  population: 6
+  budgets: [3, 10, 30]
+  epochs: 30
+  uncertainty_beta: 1.0
+  cost_weight: 0.05
+  cost_unit_seconds: 60.0
+compute:
+  max_epochs: 1000000
+  max_seconds: 30
+  max_gpu_seconds: 30
+comparison:
+  final_train: false

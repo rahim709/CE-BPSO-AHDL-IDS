@@ -1,0 +1,400 @@
+[
+  {
+    "generation": 0,
+    "architecture": {
+      "batch_size": 2048,
+      "optimizer": "adadelta",
+      "learning_rate": 0.0005,
+      "cnn": [
+        {
+          "padding": "valid",
+          "filters": 64,
+          "kernel": 3,
+          "pool": 2,
+          "activation": "none"
+        },
+        {
+          "padding": "valid",
+          "filters": 8,
+          "kernel": 3,
+          "pool": 1,
+          "activation": "relu"
+        }
+      ],
+      "rnn": [
+        {
+          "kind": "linear",
+          "units": 32,
+          "activation": "relu",
+          "regularization": "none",
+          "dropout": 0.2
+        }
+      ]
+    },
+    "budget": 3,
+    "next_budget": 10,
+    "action": "promote",
+    "prediction": 0.04678350885602263,
+    "radius": 0.06845170651596413,
+    "upper": 0.11523521537198676,
+    "expected_remaining_seconds": 0.47020374696876394,
+    "priority": -6.115461160908359e-05
+  },
+  {
+    "generation": 0,
+    "architecture": {
+      "batch_size": 2048,
+      "optimizer": "adadelta",
+      "learning_rate": 0.0005,
+      "cnn": [
+        {
+          "padding": "valid",
+          "filters": 64,
+          "kernel": 3,
+          "pool": 2,
+          "activation": "none"
+        },
+        {
+          "padding": "valid",
+          "filters": 8,
+          "kernel": 3,
+          "pool": 1,
+          "activation": "relu"
+        }
+      ],
+      "rnn": [
+        {
+          "kind": "linear",
+          "units": 32,
+          "activation": "relu",
+          "regularization": "none",
+          "dropout": 0.2
+        }
+      ]
+    },
+    "budget": 10,
+    "next_budget": 30,
+    "action": "promote",
+    "prediction": 0.03864679410673854,
+    "radius": 0.060548036352761486,
+    "upper": 0.09919483045950003,
+    "expected_remaining_seconds": 0.35734054198110243,
+    "priority": 0.0020165867390211298
+  },
+  {
+    "generation": 0,
+    "architecture": {
+      "batch_size": 512,
+      "optimizer": "adam",
+      "learning_rate": 0.005,
+      "cnn": [
+        {
+          "padding": "valid",
+          "filters": 384,
+          "kernel": 4,
+          "pool": 4,
+          "activation": "tanh"
+        },
+        {
+          "padding": "same",
+          "filters": 16,
+          "kernel": 3,
+          "pool": 3,
+          "activation": "tanh"
+        },
+        {
+          "padding": "valid",
+          "filters": 512,
+          "kernel": 2,
+          "pool": 3,
+          "activation": "none"
+        },
+        {
+          "padding": "valid",
+          "filters": 8,
+          "kernel": 2,
+          "pool": 4,
+          "activation": "relu"
+        }
+      ],
+      "rnn": [
+        {
+          "kind": "gru",
+          "units": 16,
+          "activation": "none",
+          "regularization": "l1",
+          "dropout": 0.2
+        },
+        {
+          "kind": "linear",
+          "units": 16,
+          "activation": "sigmoid",
+          "regularization": "l1_l2",
+          "dropout": 0.0
+        }
+      ]
+    },
+    "budget": 3,
+    "next_budget": 10,
+    "action": "promote",
+    "prediction": 0.33648663908091936,
+    "radius": 0.5043291828793374,
+    "upper": 0.8408158219602567,
+    "expected_remaining_seconds": 3.5447999880343564,
+    "priority": 0.16120330130902644
+  },
+  {
+    "generation": 0,
+    "architecture": {
+      "batch_size": 512,
+      "optimizer": "adam",
+      "learning_rate": 0.005,
+      "cnn": [
+        {
+          "padding": "valid",
+          "filters": 384,
+          "kernel": 4,
+          "pool": 4,
+          "activation": "tanh"
+        },
+        {
+          "padding": "same",
+          "filters": 16,
+          "kernel": 3,
+          "pool": 3,
+          "activation": "tanh"
+        },
+        {
+          "padding": "valid",
+          "filters": 512,
+          "kernel": 2,
+          "pool": 3,
+          "activation": "none"
+        },
+        {
+          "padding": "valid",
+          "filters": 8,
+          "kernel": 2,
+          "pool": 4,
+          "activation": "relu"
+        }
+      ],
+      "rnn": [
+        {
+          "kind": "gru",
+          "units": 16,
+          "activation": "none",
+          "regularization": "l1",
+          "dropout": 0.2
+        },
+        {
+          "kind": "linear",
+          "units": 16,
+          "activation": "sigmoid",
+          "regularization": "l1_l2",
+          "dropout": 0.0
+        }
+      ]
+    },
+    "budget": 10,
+    "next_budget": 30,
+    "action": "promote",
+    "prediction": 0.2982641592423512,
+    "radius": 0.5705976197535084,
+    "upper": 0.8688617789958597,
+    "expected_remaining_seconds": 2.5864050630025304,
+    "priority": 0.15318276944038245
+  },
+  {
+    "generation": 0,
+    "architecture": {
+      "batch_size": 512,
+      "optimizer": "adam",
+      "learning_rate": 0.005,
+      "cnn": [
+        {
+          "padding": "valid",
+          "filters": 16,
+          "kernel": 3,
+          "pool": 3,
+          "activation": "tanh"
+        },
+        {
+          "padding": "valid",
+          "filters": 128,
+          "kernel": 3,
+          "pool": 4,
+          "activation": "tanh"
+        }
+      ],
+      "rnn": [
+        {
+          "kind": "simrnn",
+          "units": 32,
+          "activation": "sigmoid",
+          "regularization": "l1_l2",
+          "dropout": 0.2
+        }
+      ]
+    },
+    "budget": 3,
+    "next_budget": 10,
+    "action": "promote",
+    "prediction": 0.2207658571412385,
+    "radius": 0.43137412490142213,
+    "upper": 0.6521399820426607,
+    "expected_remaining_seconds": 1.058538660985505,
+    "priority": 0.1451969957719818
+  },
+  {
+    "generation": 0,
+    "architecture": {
+      "batch_size": 512,
+      "optimizer": "adam",
+      "learning_rate": 0.005,
+      "cnn": [
+        {
+          "padding": "valid",
+          "filters": 16,
+          "kernel": 3,
+          "pool": 3,
+          "activation": "tanh"
+        },
+        {
+          "padding": "valid",
+          "filters": 128,
+          "kernel": 3,
+          "pool": 4,
+          "activation": "tanh"
+        }
+      ],
+      "rnn": [
+        {
+          "kind": "simrnn",
+          "units": 32,
+          "activation": "sigmoid",
+          "regularization": "l1_l2",
+          "dropout": 0.2
+        }
+      ]
+    },
+    "budget": 10,
+    "next_budget": 30,
+    "action": "promote",
+    "prediction": 0.4659695332703877,
+    "radius": 0.5187146513100898,
+    "upper": 0.9846841845804775,
+    "expected_remaining_seconds": 0.8019203489984648,
+    "priority": 0.4059727597491593
+  },
+  {
+    "generation": 0,
+    "architecture": {
+      "batch_size": 512,
+      "optimizer": "adamax",
+      "learning_rate": 0.05,
+      "cnn": [
+        {
+          "padding": "same",
+          "filters": 64,
+          "kernel": 5,
+          "pool": 3,
+          "activation": "relu"
+        },
+        {
+          "padding": "same",
+          "filters": 64,
+          "kernel": 5,
+          "pool": 4,
+          "activation": "tanh"
+        },
+        {
+          "padding": "valid",
+          "filters": 64,
+          "kernel": 3,
+          "pool": 2,
+          "activation": "tanh"
+        },
+        {
+          "padding": "same",
+          "filters": 32,
+          "kernel": 5,
+          "pool": 1,
+          "activation": "relu"
+        }
+      ],
+      "rnn": [
+        {
+          "kind": "lstm",
+          "units": 256,
+          "activation": "relu",
+          "regularization": "l2",
+          "dropout": 0.2
+        }
+      ]
+    },
+    "budget": 3,
+    "next_budget": 10,
+    "action": "promote",
+    "prediction": 0.1951791175739448,
+    "radius": 0.5113844901835529,
+    "upper": 0.7065636077574977,
+    "expected_remaining_seconds": 1.9754323719971578,
+    "priority": 0.07398574273542287
+  },
+  {
+    "generation": 0,
+    "architecture": {
+      "batch_size": 512,
+      "optimizer": "adamax",
+      "learning_rate": 0.05,
+      "cnn": [
+        {
+          "padding": "same",
+          "filters": 64,
+          "kernel": 5,
+          "pool": 3,
+          "activation": "relu"
+        },
+        {
+          "padding": "same",
+          "filters": 64,
+          "kernel": 5,
+          "pool": 4,
+          "activation": "tanh"
+        },
+        {
+          "padding": "valid",
+          "filters": 64,
+          "kernel": 3,
+          "pool": 2,
+          "activation": "tanh"
+        },
+        {
+          "padding": "same",
+          "filters": 32,
+          "kernel": 5,
+          "pool": 1,
+          "activation": "relu"
+        }
+      ],
+      "rnn": [
+        {
+          "kind": "lstm",
+          "units": 256,
+          "activation": "relu",
+          "regularization": "l2",
+          "dropout": 0.2
+        }
+      ]
+    },
+    "budget": 10,
+    "next_budget": 30,
+    "action": "promote",
+    "prediction": 0.28029019771863384,
+    "radius": 0.6365202096545668,
+    "upper": 0.9168104073732006,
+    "expected_remaining_seconds": 1.4678102425059478,
+    "priority": 0.18263658394611215
+  }
+]

@@ -1,0 +1,173 @@
+{
+  "config": {
+    "name": "gas_pipeline",
+    "files": [
+      "datasets/raw/gas_pipeline/gas_final.arff"
+    ],
+    "target": "result",
+    "processed": "datasets/processed/gas_pipeline",
+    "normal_label": "0",
+    "normalization": "minmax",
+    "split": "stratified",
+    "split_seed": 1729,
+    "test_fraction": 0.2,
+    "validation_fraction": 0.2,
+    "features": [
+      "command_address",
+      "response_address",
+      "command_memory",
+      "response_memory",
+      "command_memory_count",
+      "response_memory_count",
+      "comm_read_function",
+      "comm_write_fun",
+      "resp_read_fun",
+      "resp_write_fun",
+      "sub_function",
+      "command_length",
+      "resp_length",
+      "gain",
+      "reset",
+      "deadband",
+      "cycletime",
+      "rate",
+      "setpoint",
+      "control_mode",
+      "control_scheme",
+      "pump",
+      "solenoid",
+      "crc_rate",
+      "measurement",
+      "time"
+    ],
+    "drop_columns": [
+      "binary result",
+      "specific result",
+      "class"
+    ]
+  },
+  "sources": [
+    {
+      "path": "/home/abdur/Desktop/BPSO-AHDL-IDS/datasets/raw/gas_pipeline/gas_final.arff",
+      "sha256": "bfe14cf8656f58e7840a2d8b366febb0da7593d2af262ab936ec8029e505695a",
+      "rows": 97019
+    }
+  ],
+  "classes": [
+    "0",
+    "1",
+    "2",
+    "3",
+    "4",
+    "5",
+    "6",
+    "7"
+  ],
+  "features": [
+    "command_address",
+    "response_address",
+    "command_memory",
+    "response_memory",
+    "command_memory_count",
+    "response_memory_count",
+    "comm_read_function",
+    "comm_write_fun",
+    "resp_read_fun",
+    "resp_write_fun",
+    "sub_function",
+    "command_length",
+    "resp_length",
+    "gain",
+    "reset",
+    "deadband",
+    "cycletime",
+    "rate",
+    "setpoint",
+    "control_mode",
+    "control_scheme",
+    "pump",
+    "solenoid",
+    "crc_rate",
+    "measurement",
+    "time"
+  ],
+  "encoded_features": [
+    "numeric__command_address",
+    "numeric__response_address",
+    "numeric__command_memory",
+    "numeric__response_memory",
+    "numeric__command_memory_count",
+    "numeric__response_memory_count",
+    "numeric__comm_read_function",
+    "numeric__comm_write_fun",
+    "numeric__resp_read_fun",
+    "numeric__resp_write_fun",
+    "numeric__sub_function",
+    "numeric__command_length",
+    "numeric__resp_length",
+    "numeric__gain",
+    "numeric__reset",
+    "numeric__deadband",
+    "numeric__cycletime",
+    "numeric__rate",
+    "numeric__setpoint",
+    "numeric__control_mode",
+    "numeric__control_scheme",
+    "numeric__pump",
+    "numeric__solenoid",
+    "numeric__crc_rate",
+    "numeric__measurement",
+    "numeric__time"
+  ],
+  "normalization": "minmax",
+  "splits": {
+    "train": {
+      "rows": 58211,
+      "classes": {
+        "0": 36694,
+        "2": 9280,
+        "4": 4582,
+        "7": 4083,
+        "1": 1657,
+        "6": 1102,
+        "3": 469,
+        "5": 344
+      },
+      "ids_hash": "015f200af0604d929c6c466b78beb5e20717637fadf6f5792dc433b9ec3b1e8c"
+    },
+    "val": {
+      "rows": 19404,
+      "classes": {
+        "0": 12231,
+        "2": 3093,
+        "4": 1527,
+        "7": 1361,
+        "1": 553,
+        "6": 368,
+        "3": 157,
+        "5": 114
+      },
+      "ids_hash": "d7c16c66e1226e3be769e3ce2672478f0854d1436e29ab3be50f86800b47097b"
+    },
+    "test": {
+      "rows": 19404,
+      "classes": {
+        "0": 12231,
+        "2": 3093,
+        "4": 1528,
+        "7": 1361,
+        "1": 553,
+        "6": 367,
+        "3": 156,
+        "5": 115
+      },
+      "ids_hash": "3d570d2432ecb01edf721e9ce1c05dcebde6fcf461cf32c5e2cacd5d23a73d39"
+    }
+  },
+  "extension": {
+    "source_fingerprint": "d75648658a62ed3cadcd311ddc6e0052177ad5c5c75b64f084b1c84a448e781d",
+    "test_array_available": false,
+    "normalization_fit": "training only; original fitted imputer retained"
+  },
+  "fingerprint": "a4646a82ff80df44b586c4a0399fcd0d9a3581833ba9c56e9b99f6ab2561e043"
+}

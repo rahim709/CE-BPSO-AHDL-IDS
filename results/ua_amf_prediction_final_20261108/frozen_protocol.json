@@ -1,0 +1,252 @@
+{
+  "selection": [
+    {
+      "variant": "bpso",
+      "search_seed": 501,
+      "architecture": {
+        "batch_size": 1024,
+        "optimizer": "nesterov",
+        "learning_rate": 0.05,
+        "cnn": [
+          {
+            "padding": "valid",
+            "filters": 32,
+            "kernel": 3,
+            "pool": 1,
+            "activation": "relu"
+          },
+          {
+            "padding": "valid",
+            "filters": 64,
+            "kernel": 5,
+            "pool": 3,
+            "activation": "relu"
+          },
+          {
+            "padding": "valid",
+            "filters": 384,
+            "kernel": 4,
+            "pool": 2,
+            "activation": "tanh"
+          }
+        ],
+        "rnn": [
+          {
+            "kind": "simrnn",
+            "units": 8,
+            "activation": "sigmoid",
+            "regularization": "l2",
+            "dropout": 0.0
+          }
+        ]
+      },
+      "selection_validation_f1": 0.4547792295504783
+    },
+    {
+      "variant": "bpso",
+      "search_seed": 502,
+      "architecture": {
+        "batch_size": 1024,
+        "optimizer": "adamax",
+        "learning_rate": 0.001,
+        "cnn": [
+          {
+            "padding": "valid",
+            "filters": 16,
+            "kernel": 2,
+            "pool": 2,
+            "activation": "relu"
+          },
+          {
+            "padding": "same",
+            "filters": 128,
+            "kernel": 4,
+            "pool": 3,
+            "activation": "tanh"
+          }
+        ],
+        "rnn": [
+          {
+            "kind": "gru",
+            "units": 512,
+            "activation": "tanh",
+            "regularization": "none",
+            "dropout": 0.2
+          }
+        ]
+      },
+      "selection_validation_f1": 0.6755098757705237
+    },
+    {
+      "variant": "bpso",
+      "search_seed": 503,
+      "architecture": {
+        "batch_size": 256,
+        "optimizer": "adagrad",
+        "learning_rate": 0.01,
+        "cnn": [
+          {
+            "padding": "valid",
+            "filters": 16,
+            "kernel": 4,
+            "pool": 2,
+            "activation": "sigmoid"
+          },
+          {
+            "padding": "same",
+            "filters": 16,
+            "kernel": 3,
+            "pool": 4,
+            "activation": "relu"
+          }
+        ],
+        "rnn": [
+          {
+            "kind": "linear",
+            "units": 16,
+            "activation": "none",
+            "regularization": "none",
+            "dropout": 0.1
+          },
+          {
+            "kind": "simrnn",
+            "units": 512,
+            "activation": "relu",
+            "regularization": "none",
+            "dropout": 0.1
+          }
+        ]
+      },
+      "selection_validation_f1": 0.34435621306595726
+    },
+    {
+      "variant": "ua_amf_bpso",
+      "search_seed": 501,
+      "architecture": {
+        "batch_size": 256,
+        "optimizer": "rmsprop",
+        "learning_rate": 0.0005,
+        "cnn": [
+          {
+            "padding": "valid",
+            "filters": 256,
+            "kernel": 5,
+            "pool": 3,
+            "activation": "none"
+          }
+        ],
+        "rnn": [
+          {
+            "kind": "linear",
+            "units": 16,
+            "activation": "none",
+            "regularization": "none",
+            "dropout": 0.2
+          },
+          {
+            "kind": "lstm",
+            "units": 128,
+            "activation": "tanh",
+            "regularization": "l1",
+            "dropout": 0.0
+          }
+        ]
+      },
+      "selection_validation_f1": 0.6824820591395429
+    },
+    {
+      "variant": "ua_amf_bpso",
+      "search_seed": 502,
+      "architecture": {
+        "batch_size": 1024,
+        "optimizer": "adamax",
+        "learning_rate": 0.001,
+        "cnn": [
+          {
+            "padding": "valid",
+            "filters": 16,
+            "kernel": 2,
+            "pool": 2,
+            "activation": "relu"
+          },
+          {
+            "padding": "same",
+            "filters": 128,
+            "kernel": 4,
+            "pool": 3,
+            "activation": "tanh"
+          }
+        ],
+        "rnn": [
+          {
+            "kind": "gru",
+            "units": 512,
+            "activation": "tanh",
+            "regularization": "none",
+            "dropout": 0.2
+          }
+        ]
+      },
+      "selection_validation_f1": 0.6755098757705237
+    },
+    {
+      "variant": "ua_amf_bpso",
+      "search_seed": 503,
+      "architecture": {
+        "batch_size": 256,
+        "optimizer": "momentum",
+        "learning_rate": 0.001,
+        "cnn": [
+          {
+            "padding": "same",
+            "filters": 384,
+            "kernel": 3,
+            "pool": 3,
+            "activation": "tanh"
+          },
+          {
+            "padding": "valid",
+            "filters": 256,
+            "kernel": 3,
+            "pool": 2,
+            "activation": "relu"
+          }
+        ],
+        "rnn": [
+          {
+            "kind": "gru",
+            "units": 16,
+            "activation": "tanh",
+            "regularization": "l2",
+            "dropout": 0.3
+          }
+        ]
+      },
+      "selection_validation_f1": 0.5426153686286774
+    }
+  ],
+  "training_seeds": [
+    1501,
+    1502,
+    1503
+  ],
+  "epochs": 30,
+  "training": {
+    "device": "cuda",
+    "threads": 1,
+    "l1": 1e-05,
+    "l2": 1e-05,
+    "prediction_epochs": [
+      3,
+      10,
+      30
+    ],
+    "class_weighting": "balanced",
+    "gradient_clip": 1.0
+  },
+  "train_data": "results/ua_amf_prediction_20261108/data",
+  "max_stage_seconds": 180,
+  "test_status": "previously examined historical Gas Pipeline test split; not a blind independent test",
+  "choice_rule": "highest actually observed 30-epoch validation macro-F1 completed within 30 search wall seconds; stable event tie break",
+  "contextual_baselines": "existing MLP/CNN/GRU/CNN-GRU results preserved; different training-row/budget protocols are not matched comparisons"
+}

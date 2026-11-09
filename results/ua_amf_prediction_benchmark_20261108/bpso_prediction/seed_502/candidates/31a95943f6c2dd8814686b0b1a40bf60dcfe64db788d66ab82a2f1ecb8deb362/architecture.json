@@ -1,0 +1,30 @@
+{
+  "batch_size": 512,
+  "optimizer": "momentum",
+  "learning_rate": 5e-05,
+  "cnn": [
+    {
+      "padding": "valid",
+      "filters": 32,
+      "kernel": 3,
+      "pool": 4,
+      "activation": "relu"
+    },
+    {
+      "padding": "same",
+      "filters": 256,
+      "kernel": 4,
+      "pool": 4,
+      "activation": "tanh"
+    }
+  ],
+  "rnn": [
+    {
+      "kind": "simrnn",
+      "units": 64,
+      "activation": "sigmoid",
+      "regularization": "l2",
+      "dropout": 0.1
+    }
+  ]
+}

@@ -1,0 +1,99 @@
+{
+  "seeds": [
+    601,
+    602,
+    603
+  ],
+  "quality_targets": [
+    0.4,
+    0.5,
+    0.6
+  ],
+  "gpu_cap": 8.0,
+  "wall_safety_cap": 20.0,
+  "fixed_compute_gpu_limits": [
+    2.0,
+    4.0,
+    8.0
+  ],
+  "fidelity": [
+    3,
+    10,
+    30
+  ],
+  "population": 6,
+  "variants": {
+    "bpso": [
+      "bpso",
+      {}
+    ],
+    "bpso_sh": [
+      "bpso_sh",
+      {}
+    ],
+    "prediction_only": [
+      "ua_amf_bpso",
+      {
+        "uncertainty_beta": 0.0,
+        "cost_weight": 0.0
+      }
+    ],
+    "ua_no_cost": [
+      "ua_amf_bpso",
+      {
+        "uncertainty_beta": 0.1,
+        "cost_weight": 0.0
+      }
+    ],
+    "ua_no_uncertainty": [
+      "ua_amf_bpso",
+      {
+        "uncertainty_beta": 0.0,
+        "cost_weight": 0.2
+      }
+    ],
+    "ua_full": [
+      "ua_amf_bpso",
+      {
+        "uncertainty_beta": 0.1,
+        "cost_weight": 0.2
+      }
+    ],
+    "hyperband": [
+      "hyperband",
+      {}
+    ],
+    "dehb": [
+      "dehb",
+      {}
+    ],
+    "fixed_prediction": [
+      "ua_amf_bpso",
+      {
+        "promotion_policy": "learning_curve",
+        "uncertainty_beta": 0.0,
+        "cost_weight": 0.0
+      }
+    ]
+  },
+  "runtime": {
+    "vectorized": true,
+    "resident": true,
+    "cache_data": true,
+    "cache_model": true,
+    "defer_scalar_sync": true,
+    "validation_epochs": [
+      3,
+      10,
+      30
+    ]
+  },
+  "minimum_acceptable_f1_difference": -0.02,
+  "coefficient_source": "frozen_development.json; coefficients fixed before fresh benchmark seeds",
+  "model_sha256": "c8867fb11f995ecece7dbc60c4cac7fd10248727fdde9276f31f115a54877c85",
+  "censoring": "Every seed retained; misses censored at common cap. Restricted time includes misses; do not average successes alone.",
+  "historical_archive_gpu_seconds": 403.8190207847874,
+  "total_new_search_gpu_cap": 864.0,
+  "final_model_rule": "Freeze full and SH strict-cap winners from compute study; independent seed1601 at30 epochs; no tuning on test.",
+  "order": "Seeded permutation per experiment/target/seed, serial GPU jobs. AMP not used."
+}

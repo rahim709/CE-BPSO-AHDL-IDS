@@ -1,0 +1,193 @@
+{
+  "config": {
+    "seed": 42,
+    "space": "debug",
+    "final_epochs": 200,
+    "final_seed": 10042,
+    "data": {
+      "name": "gas_pipeline",
+      "files": [
+        "datasets/raw/gas_pipeline/gas_final.arff"
+      ],
+      "target": "result",
+      "processed": "datasets/processed/gas_pipeline",
+      "normal_label": "0",
+      "normalization": "minmax",
+      "split": "stratified",
+      "split_seed": 1729,
+      "test_fraction": 0.2,
+      "validation_fraction": 0.2,
+      "features": [
+        "command_address",
+        "response_address",
+        "command_memory",
+        "response_memory",
+        "command_memory_count",
+        "response_memory_count",
+        "comm_read_function",
+        "comm_write_fun",
+        "resp_read_fun",
+        "resp_write_fun",
+        "sub_function",
+        "command_length",
+        "resp_length",
+        "gain",
+        "reset",
+        "deadband",
+        "cycletime",
+        "rate",
+        "setpoint",
+        "control_mode",
+        "control_scheme",
+        "pump",
+        "solenoid",
+        "crc_rate",
+        "measurement",
+        "time"
+      ],
+      "drop_columns": [
+        "binary result",
+        "specific result",
+        "class"
+      ]
+    },
+    "training": {
+      "device": "cuda",
+      "threads": 1,
+      "l1": 1e-05,
+      "l2": 1e-05,
+      "prediction_epochs": [
+        3,
+        10,
+        30,
+        200
+      ],
+      "gradient_clip": 1.0,
+      "class_weighting": "balanced"
+    },
+    "search": {
+      "method": "bpso",
+      "population": 3,
+      "generations": 2,
+      "epochs": 2,
+      "min_epochs": 1,
+      "eta": 3,
+      "w_max": 0.8,
+      "w_min": 0.4,
+      "v_max": 10.0,
+      "v_min": -10.0,
+      "c1": 1.5,
+      "c2": 1.5,
+      "candidates": 8,
+      "brackets": 1
+    },
+    "compute": {
+      "max_epochs": 12
+    },
+    "diagnostics": {
+      "candidates": 4,
+      "cohort_seed": 1729,
+      "seeds": [
+        42
+      ],
+      "epochs": [
+        1,
+        2
+      ],
+      "long_epochs": 3,
+      "shortlist": 1,
+      "audit_rejected": 1,
+      "top_k": 1
+    },
+    "comparison": {
+      "seeds": [
+        42
+      ],
+      "methods": [
+        "bpso",
+        "bpso_reduced",
+        "bpso_sh",
+        "hyperband",
+        "dehb",
+        "random"
+      ],
+      "final_train": true
+    },
+    "architecture": {
+      "batch_size": 256,
+      "optimizer": "adam",
+      "learning_rate": 0.001,
+      "cnn": [
+        {
+          "padding": "same",
+          "filters": 16,
+          "kernel": 3,
+          "pool": 2,
+          "activation": "relu"
+        }
+      ],
+      "rnn": [
+        {
+          "kind": "gru",
+          "units": 32,
+          "activation": "tanh",
+          "regularization": "none",
+          "dropout": 0.1
+        }
+      ]
+    },
+    "extension": {
+      "seeds": [
+        42,
+        43,
+        44
+      ],
+      "budgets": [
+        3,
+        10,
+        30
+      ],
+      "normalizations": [
+        "column_l2",
+        "minmax",
+        "row_l2"
+      ],
+      "component_families": [
+        "mlp",
+        "cnn",
+        "gru"
+      ],
+      "long_epochs": 200,
+      "long_column_seeds": [
+        42,
+        43,
+        44
+      ],
+      "long_minmax_seeds": [
+        42
+      ]
+    },
+    "evaluation": {
+      "seeds": [
+        10042,
+        10043,
+        10044
+      ]
+    }
+  },
+  "candidates": [
+    "none",
+    "sqrt_balanced"
+  ],
+  "validation_seed": 42,
+  "epochs": 200,
+  "maximum_validation_fpr": 0.01,
+  "minimum_validation_attack_recall": 0.9,
+  "selection": "highest validation macro-F1 among feasible candidates; no final test if none feasible",
+  "final_seeds": [
+    10042,
+    10043,
+    10044
+  ],
+  "limitation": "exploratory correction motivated by known historical test errors; no blind generalization claim"
+}

@@ -1,0 +1,23 @@
+{
+  "batch_size": 1024,
+  "optimizer": "momentum",
+  "learning_rate": 0.001,
+  "cnn": [
+    {
+      "padding": "same",
+      "filters": 64,
+      "kernel": 2,
+      "pool": 4,
+      "activation": "sigmoid"
+    }
+  ],
+  "rnn": [
+    {
+      "kind": "simrnn",
+      "units": 64,
+      "activation": "none",
+      "regularization": "l1",
+      "dropout": 0.2
+    }
+  ]
+}

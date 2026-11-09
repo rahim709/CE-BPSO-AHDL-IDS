@@ -1,0 +1,23 @@
+{
+  "batch_size": 2048,
+  "optimizer": "momentum",
+  "learning_rate": 0.001,
+  "cnn": [
+    {
+      "padding": "valid",
+      "filters": 16,
+      "kernel": 4,
+      "pool": 2,
+      "activation": "none"
+    }
+  ],
+  "rnn": [
+    {
+      "kind": "simrnn",
+      "units": 16,
+      "activation": "tanh",
+      "regularization": "l2",
+      "dropout": 0.3
+    }
+  ]
+}

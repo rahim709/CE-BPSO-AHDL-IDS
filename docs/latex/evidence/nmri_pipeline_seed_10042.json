@@ -1,0 +1,45 @@
+{
+  "seed": 10042,
+  "checkpoint": "results/false_alarm_optimization/final_20261108/seed_10042/last.pt",
+  "specialist": "results/nmri_tradeoff/final_20261108/specialist.joblib",
+  "preprocessor": "results/submission_final_evaluation/20261108/processed/preprocessor.joblib",
+  "features": 26,
+  "classes": [
+    "0",
+    "1",
+    "2",
+    "3",
+    "4",
+    "5",
+    "6",
+    "7"
+  ],
+  "architecture": {
+    "batch_size": 256,
+    "optimizer": "adam",
+    "learning_rate": 0.001,
+    "cnn": [
+      {
+        "padding": "same",
+        "filters": 16,
+        "kernel": 3,
+        "pool": 2,
+        "activation": "relu"
+      }
+    ],
+    "rnn": [
+      {
+        "kind": "gru",
+        "units": 32,
+        "activation": "tanh",
+        "regularization": "none",
+        "dropout": 0.1
+      }
+    ]
+  },
+  "threshold": 0.7182859089491074,
+  "note": "Exploratory fixed pipeline; weak NMRI recall remains; trusted local artifacts only. Paths relative to repository root.",
+  "checkpoint_sha256": "d10e3e91a32c5b4da9d80e5f4e5579d39dce8f802c8339cc3aa14fcb3ee5a7af",
+  "specialist_sha256": "b23009f5ff62d0d53c983f4622c67b3760da312646d90a5025ca336aa6e5de8a",
+  "preprocessor_sha256": "bc30629b3eb8d1731bd0dd87c11b8a0316820573a020888e2557d3e67262c77b"
+}

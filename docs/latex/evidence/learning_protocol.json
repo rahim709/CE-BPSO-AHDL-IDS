@@ -1,0 +1,70 @@
+{
+  "epochs": 10,
+  "seed": 42,
+  "architectures": {
+    "tiny": {
+      "batch_size": 256,
+      "optimizer": "adam",
+      "learning_rate": 0.001,
+      "cnn": [
+        {
+          "padding": "same",
+          "filters": 4,
+          "kernel": 2,
+          "pool": 1,
+          "activation": "relu"
+        }
+      ],
+      "rnn": [
+        {
+          "kind": "gru",
+          "units": 4,
+          "activation": "tanh",
+          "regularization": "none",
+          "dropout": 0.0
+        }
+      ]
+    },
+    "reference": {
+      "batch_size": 256,
+      "optimizer": "adam",
+      "learning_rate": 0.001,
+      "cnn": [
+        {
+          "padding": "same",
+          "filters": 16,
+          "kernel": 3,
+          "pool": 2,
+          "activation": "relu"
+        }
+      ],
+      "rnn": [
+        {
+          "kind": "gru",
+          "units": 32,
+          "activation": "tanh",
+          "regularization": "none",
+          "dropout": 0.1
+        }
+      ]
+    }
+  },
+  "training": {
+    "device": "cpu",
+    "threads": 1,
+    "l1": 1e-05,
+    "l2": 1e-05,
+    "prediction_epochs": [
+      2,
+      10
+    ],
+    "gradient_clip": 1.0,
+    "class_weighting": "none"
+  },
+  "weightings": [
+    "none",
+    "balanced"
+  ],
+  "test_access": false,
+  "interpretation": "Learning sanity comparison only. Different model sizes have different compute costs."
+}

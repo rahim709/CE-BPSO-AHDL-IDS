@@ -1,0 +1,30 @@
+{
+  "batch_size": 1024,
+  "optimizer": "sgd",
+  "learning_rate": 5e-05,
+  "cnn": [
+    {
+      "padding": "same",
+      "filters": 16,
+      "kernel": 5,
+      "pool": 1,
+      "activation": "tanh"
+    },
+    {
+      "padding": "valid",
+      "filters": 16,
+      "kernel": 3,
+      "pool": 4,
+      "activation": "tanh"
+    }
+  ],
+  "rnn": [
+    {
+      "kind": "lstm",
+      "units": 128,
+      "activation": "relu",
+      "regularization": "l1_l2",
+      "dropout": 0.1
+    }
+  ]
+}

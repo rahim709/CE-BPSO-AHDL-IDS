@@ -1,0 +1,14 @@
+extends: ua_amf.yaml
+# Planned full-data equal-time study. Run only after informative-learning gate.
+search:
+  generations: 100000
+  candidates: 1000000
+  brackets: 100000
+compute:
+  max_epochs: 1000000000
+  max_seconds: 1800
+  max_gpu_seconds: 1500
+comparison:
+  seeds: [42, 43, 44]
+  methods: [bpso, bpso_sh, random, hyperband, dehb, ua_amf_bpso]
+  final_train: false

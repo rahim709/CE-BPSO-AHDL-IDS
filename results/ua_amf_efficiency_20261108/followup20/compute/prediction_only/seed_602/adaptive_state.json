@@ -1,0 +1,39 @@
+{
+  "finalists": [
+    {
+      "architecture": {
+        "batch_size": 256,
+        "optimizer": "rmsprop",
+        "learning_rate": 0.001,
+        "cnn": [
+          {
+            "padding": "same",
+            "filters": 512,
+            "kernel": 3,
+            "pool": 1,
+            "activation": "sigmoid"
+          }
+        ],
+        "rnn": [
+          {
+            "kind": "gru",
+            "units": 384,
+            "activation": "relu",
+            "regularization": "l1",
+            "dropout": 0.3
+          }
+        ]
+      },
+      "fitness": 0.13001672240802675,
+      "completed_budget": 30,
+      "replicate_seeds": [
+        602
+      ],
+      "observed_seed_fitness": [
+        0.13001672240802675
+      ]
+    }
+  ],
+  "prediction_seconds": 0.020994248996430542,
+  "scheduler_inclusive_seconds_this_invocation": 12.281870561000687
+}

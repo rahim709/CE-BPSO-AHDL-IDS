@@ -1,0 +1,30 @@
+{
+  "batch_size": 512,
+  "optimizer": "adamax",
+  "learning_rate": 0.0005,
+  "cnn": [
+    {
+      "padding": "valid",
+      "filters": 16,
+      "kernel": 2,
+      "pool": 4,
+      "activation": "tanh"
+    }
+  ],
+  "rnn": [
+    {
+      "kind": "linear",
+      "units": 32,
+      "activation": "sigmoid",
+      "regularization": "l1_l2",
+      "dropout": 0.2
+    },
+    {
+      "kind": "linear",
+      "units": 8,
+      "activation": "relu",
+      "regularization": "none",
+      "dropout": 0.1
+    }
+  ]
+}

@@ -1,0 +1,124 @@
+{
+  "finalists": [
+    {
+      "architecture": {
+        "batch_size": 256,
+        "optimizer": "rmsprop",
+        "learning_rate": 0.0005,
+        "cnn": [
+          {
+            "padding": "valid",
+            "filters": 256,
+            "kernel": 5,
+            "pool": 3,
+            "activation": "none"
+          }
+        ],
+        "rnn": [
+          {
+            "kind": "linear",
+            "units": 16,
+            "activation": "none",
+            "regularization": "none",
+            "dropout": 0.2
+          },
+          {
+            "kind": "lstm",
+            "units": 128,
+            "activation": "tanh",
+            "regularization": "l1",
+            "dropout": 0.0
+          }
+        ]
+      },
+      "fitness": 0.6824820591395429,
+      "completed_budget": 30,
+      "replicate_seeds": [
+        501
+      ],
+      "observed_seed_fitness": [
+        0.6824820591395429
+      ],
+      "search_wall_seconds": 9.866998178000358
+    },
+    {
+      "architecture": {
+        "batch_size": 1024,
+        "optimizer": "adamax",
+        "learning_rate": 0.05,
+        "cnn": [
+          {
+            "padding": "same",
+            "filters": 64,
+            "kernel": 5,
+            "pool": 4,
+            "activation": "relu"
+          }
+        ],
+        "rnn": [
+          {
+            "kind": "lstm",
+            "units": 8,
+            "activation": "none",
+            "regularization": "none",
+            "dropout": 0.0
+          },
+          {
+            "kind": "lstm",
+            "units": 8,
+            "activation": "sigmoid",
+            "regularization": "none",
+            "dropout": 0.3
+          }
+        ]
+      },
+      "fitness": 0.5306432668876039,
+      "completed_budget": 30,
+      "replicate_seeds": [
+        501
+      ],
+      "observed_seed_fitness": [
+        0.5306432668876039
+      ],
+      "search_wall_seconds": 15.722059502000775
+    },
+    {
+      "architecture": {
+        "batch_size": 256,
+        "optimizer": "sgd",
+        "learning_rate": 0.01,
+        "cnn": [
+          {
+            "padding": "valid",
+            "filters": 64,
+            "kernel": 3,
+            "pool": 3,
+            "activation": "tanh"
+          }
+        ],
+        "rnn": [
+          {
+            "kind": "lstm",
+            "units": 64,
+            "activation": "relu",
+            "regularization": "l1",
+            "dropout": 0.2
+          }
+        ]
+      },
+      "fitness": 0.2008020176422466,
+      "completed_budget": 30,
+      "replicate_seeds": [
+        501
+      ],
+      "observed_seed_fitness": [
+        0.2008020176422466
+      ],
+      "search_wall_seconds": 23.39558323700112
+    }
+  ],
+  "predictor_load_seconds": 0.008900770000764169,
+  "prediction_seconds": 0.13442328099699807,
+  "predictor_fit_charged_separately": true,
+  "scheduler_inclusive_seconds_this_invocation": 30.00433517199781
+}

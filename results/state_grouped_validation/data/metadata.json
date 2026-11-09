@@ -1,0 +1,124 @@
+{
+  "classes": [
+    "0",
+    "1",
+    "2",
+    "3",
+    "4",
+    "5",
+    "6",
+    "7"
+  ],
+  "sources": [
+    {
+      "path": "/home/abdur/Desktop/BPSO-AHDL-IDS/datasets/raw/gas_pipeline/gas_final.arff",
+      "sha256": "bfe14cf8656f58e7840a2d8b366febb0da7593d2af262ab936ec8029e505695a",
+      "rows": 97019
+    }
+  ],
+  "features": [
+    "command_address",
+    "response_address",
+    "command_memory",
+    "response_memory",
+    "command_memory_count",
+    "response_memory_count",
+    "comm_read_function",
+    "comm_write_fun",
+    "resp_read_fun",
+    "resp_write_fun",
+    "sub_function",
+    "command_length",
+    "resp_length",
+    "gain",
+    "reset",
+    "deadband",
+    "cycletime",
+    "rate",
+    "setpoint",
+    "control_mode",
+    "control_scheme",
+    "pump",
+    "solenoid",
+    "crc_rate",
+    "measurement",
+    "time"
+  ],
+  "normalization": "minmax",
+  "config": {
+    "name": "gas_pipeline",
+    "files": [
+      "datasets/raw/gas_pipeline/gas_final.arff"
+    ],
+    "target": "result",
+    "processed": "datasets/processed/gas_pipeline",
+    "normal_label": "0",
+    "normalization": "minmax",
+    "split": "non_time_state_grouped",
+    "split_seed": 1729,
+    "test_fraction": 0.2,
+    "validation_fraction": 0.2,
+    "features": [
+      "command_address",
+      "response_address",
+      "command_memory",
+      "response_memory",
+      "command_memory_count",
+      "response_memory_count",
+      "comm_read_function",
+      "comm_write_fun",
+      "resp_read_fun",
+      "resp_write_fun",
+      "sub_function",
+      "command_length",
+      "resp_length",
+      "gain",
+      "reset",
+      "deadband",
+      "cycletime",
+      "rate",
+      "setpoint",
+      "control_mode",
+      "control_scheme",
+      "pump",
+      "solenoid",
+      "crc_rate",
+      "measurement",
+      "time"
+    ],
+    "drop_columns": [
+      "binary result",
+      "specific result",
+      "class"
+    ]
+  },
+  "splits": {
+    "train": {
+      "rows": 62198,
+      "classes": {
+        "0": 36140,
+        "2": 10985,
+        "7": 6614,
+        "4": 4871,
+        "1": 1630,
+        "6": 1118,
+        "3": 444,
+        "5": 396
+      }
+    },
+    "val": {
+      "rows": 14462,
+      "classes": {
+        "0": 8589,
+        "4": 2456,
+        "2": 2222,
+        "1": 505,
+        "6": 316,
+        "3": 187,
+        "7": 101,
+        "5": 86
+      }
+    }
+  },
+  "fingerprint": "afcae253ddd0879f42155e900507f342a0b1300d9a23444324511f3c104ecbbc"
+}

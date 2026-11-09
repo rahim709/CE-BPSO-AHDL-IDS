@@ -1,0 +1,30 @@
+{
+  "batch_size": 512,
+  "optimizer": "sgd",
+  "learning_rate": 0.001,
+  "cnn": [
+    {
+      "padding": "valid",
+      "filters": 32,
+      "kernel": 2,
+      "pool": 4,
+      "activation": "none"
+    }
+  ],
+  "rnn": [
+    {
+      "kind": "lstm",
+      "units": 512,
+      "activation": "none",
+      "regularization": "none",
+      "dropout": 0.0
+    },
+    {
+      "kind": "gru",
+      "units": 512,
+      "activation": "none",
+      "regularization": "l1_l2",
+      "dropout": 0.3
+    }
+  ]
+}

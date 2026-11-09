@@ -1,0 +1,37 @@
+{
+  "batch_size": 512,
+  "optimizer": "adam",
+  "learning_rate": 0.001,
+  "cnn": [
+    {
+      "padding": "valid",
+      "filters": 128,
+      "kernel": 2,
+      "pool": 3,
+      "activation": "tanh"
+    },
+    {
+      "padding": "same",
+      "filters": 256,
+      "kernel": 4,
+      "pool": 2,
+      "activation": "tanh"
+    }
+  ],
+  "rnn": [
+    {
+      "kind": "gru",
+      "units": 16,
+      "activation": "relu",
+      "regularization": "none",
+      "dropout": 0.3
+    },
+    {
+      "kind": "simrnn",
+      "units": 8,
+      "activation": "relu",
+      "regularization": "l1_l2",
+      "dropout": 0.2
+    }
+  ]
+}

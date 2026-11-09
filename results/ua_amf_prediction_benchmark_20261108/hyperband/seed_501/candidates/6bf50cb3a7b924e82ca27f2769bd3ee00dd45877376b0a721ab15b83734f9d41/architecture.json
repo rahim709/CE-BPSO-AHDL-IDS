@@ -1,0 +1,30 @@
+{
+  "batch_size": 1024,
+  "optimizer": "adagrad",
+  "learning_rate": 0.05,
+  "cnn": [
+    {
+      "padding": "same",
+      "filters": 384,
+      "kernel": 3,
+      "pool": 4,
+      "activation": "none"
+    },
+    {
+      "padding": "same",
+      "filters": 384,
+      "kernel": 4,
+      "pool": 1,
+      "activation": "tanh"
+    }
+  ],
+  "rnn": [
+    {
+      "kind": "gru",
+      "units": 32,
+      "activation": "sigmoid",
+      "regularization": "none",
+      "dropout": 0.2
+    }
+  ]
+}

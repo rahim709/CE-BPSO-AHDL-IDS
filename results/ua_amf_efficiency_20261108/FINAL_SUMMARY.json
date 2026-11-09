@@ -1,0 +1,106 @@
+{
+  "cpu_tests": {
+    "tests": 105,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "cuda_targeted_tests": {
+    "tests": 50,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "initial_searches": 108,
+  "charged_continuations": 54,
+  "continuations_are_not_new_independent_replications": true,
+  "seeds": [
+    601,
+    602,
+    603
+  ],
+  "initial_quality_targets": [
+    0.4,
+    0.5,
+    0.6
+  ],
+  "followup_primary_target": 0.6,
+  "budgets": [
+    8.0,
+    20.0
+  ],
+  "final_model_references": 27,
+  "unique_final_models": 15,
+  "prediction_audits": [
+    {
+      "verified_prediction_archives": 1184,
+      "all_match": true,
+      "searches": 108,
+      "all_jobs_started_within_gpu_cap": true,
+      "max_single_epoch_gpu_overrun": 0.573937046003266
+    },
+    {
+      "verified_prediction_archives": 1069,
+      "all_match": true,
+      "searches": 54,
+      "all_jobs_started_within_gpu_cap": true,
+      "max_single_epoch_gpu_overrun": 0.42191768799966667
+    },
+    {
+      "unique_test_archives_verified": 15,
+      "completed_model_references": 27,
+      "planned_model_references": 27,
+      "all_metrics_match": true,
+      "limitation": "One dedicated training seed1601 per selected architecture; three search seeds share historical test rows."
+    }
+  ],
+  "conclusion": {
+    "full_quality_gpu_saving_vs_bpso_percent": 24.723728224164535,
+    "full_quality_gpu_saving_vs_sh_percent": -5.784340162690415,
+    "full_target_hits": 2,
+    "bpso_target_hits": 1,
+    "sh_target_hits": 2,
+    "dehb_target_hits": 3,
+    "full_fixed_compute_f1": 0.539130191163022,
+    "sh_fixed_compute_f1": 0.5030373329353485,
+    "dehb_fixed_compute_f1": 0.7355864762674559,
+    "full_f1_gap_vs_strongest_control": -0.19645628510443391,
+    "engineering_aggregate_gpu_saving_percent": 19.465013325355585,
+    "historical_archive_gpu_seconds": 403.8190207847874,
+    "new_predictor_archive_gpu_seconds": 0.0,
+    "net_single_search_gpu_saving_including_archive": false,
+    "full_uncertainty_bonus_f1_difference": 0.0,
+    "cost_term_f1_difference": 0.03198782856418625,
+    "best_free_control_fixed_compute": "dehb",
+    "statistical_superiority_claimed": false,
+    "accept_full_as_best_optimizer": false,
+    "reason": "Full UA has a finite-horizon online saving versus BPSO but is slower than SH, well below DEHB quality, and archive cost removes net saving."
+  },
+  "resources": {
+    "pilot_gpu_seconds": 815.998656948068,
+    "followup_incremental_gpu_seconds": 474.95782979493015,
+    "followup_imported_gpu_seconds_not_double_counted": 418.80791623298137,
+    "profile_gpu_seconds": 180.53264182798375,
+    "trace_gpu_seconds": 2.181349070997385,
+    "continuation_mechanism_check_gpu_seconds": 7.742840803006402,
+    "new_final_training_gpu_seconds": 85.01670703302807,
+    "new_measured_experiment_gpu_elapsed_total": 1566.4300254780137,
+    "pilot_epochs": 7955,
+    "followup_incremental_epochs": 3475,
+    "final_unique_epochs": 450,
+    "historical_archive_gpu_seconds": 403.8190207847874,
+    "new_archive_gpu_seconds": 0.0,
+    "scope": "Sum of measured training/validation elapsed, same definition as benchmarks. GPU warmups/setup/inference, tests and publication-generation work are not kernel-profiled here; stage wall and inference latency are recorded separately."
+  },
+  "all_runtime_sources_match_frozen_benchmark": true,
+  "new_archive_neural_training_gpu_seconds": 0.0,
+  "numerical_or_memory_search_failures": 0,
+  "unfinished_experiments": [
+    "More than three search seeds",
+    "More than one independent final-training seed per selected architecture",
+    "Full-training-row rather than8192-row NAS comparison",
+    "Independent capture/release evaluation"
+  ],
+  "profile_interruption": "Last combined trial resumed under explicit30-second allowance; prior partial results preserved; resumed wall is invocation-only.",
+  "manuscript_backup": "results/ua_amf_efficiency_20261108/manuscript_before"
+}

@@ -1,0 +1,78 @@
+{
+  "raw_sha256": "bfe14cf8656f58e7840a2d8b366febb0da7593d2af262ab936ec8029e505695a",
+  "classes": {
+    "0": {
+      "abbreviation": "Normal",
+      "name": "Normal operation",
+      "count": 61156
+    },
+    "1": {
+      "abbreviation": "NMRI",
+      "name": "Naive malicious response injection",
+      "count": 2763
+    },
+    "2": {
+      "abbreviation": "CMRI",
+      "name": "Complex malicious response injection",
+      "count": 15466
+    },
+    "3": {
+      "abbreviation": "MSCI",
+      "name": "Malicious state command injection",
+      "count": 782
+    },
+    "4": {
+      "abbreviation": "MPCI",
+      "name": "Malicious parameter command injection",
+      "count": 7637
+    },
+    "5": {
+      "abbreviation": "MFCI",
+      "name": "Malicious function command injection",
+      "count": 573
+    },
+    "6": {
+      "abbreviation": "DoS",
+      "name": "Denial of service",
+      "count": 1837
+    },
+    "7": {
+      "abbreviation": "Recon",
+      "name": "Reconnaissance",
+      "count": 6805
+    }
+  },
+  "primary_source": {
+    "title": "Industrial Control System Traffic Data Sets for Intrusion Detection Research",
+    "authors": [
+      "Thomas Morris",
+      "Wei Gao"
+    ],
+    "year": 2014,
+    "doi": "10.1007/978-3-662-45355-1_5",
+    "mapping_location": "Table VII, author-manuscript p. 16 (publisher chapter pp. 65-78)",
+    "publisher_url": "https://link.springer.com/chapter/10.1007/978-3-662-45355-1_5",
+    "author_manuscript_url": "https://www.researchgate.net/publication/288978356_Industrial_Control_System_Traffic_Data_Sets_for_Intrusion_Detection_Research",
+    "time_definition_location": "Section 5.2, Table III and author-manuscript pp. 13-14"
+  },
+  "corroborating_source": {
+    "title": "Project Report - SCADA Anomaly Detection",
+    "authors": [
+      "Jeff Hsu",
+      "David Mudd",
+      "Zach Thornton"
+    ],
+    "year": 2014,
+    "url": "http://www.ece.uah.edu/~thm0009/icsdatasets/MSU_SCADA_Final_Report.pdf",
+    "sha256": "019bb563fd5150495aff2a7340b12bb8e747da5c7b1d8362c563d87cdd36e252",
+    "mapping_location": "Table 1, PDF pp. 2-3",
+    "owner_catalogue": "https://sites.google.com/a/uah.edu/tommy-morris-uah/ics-data-sets",
+    "owner_link": "Report on data set flaws"
+  },
+  "notes": [
+    "Class codes are presentation metadata only; saved numeric labels, checkpoints, partitions and scores were not changed.",
+    "MFCI is called malicious function command injection in the original chapter and malicious function code injection in the corroborating report.",
+    "Counts were recomputed by adding frozen training/validation/test counts; no new model evaluation was performed."
+  ],
+  "time_semantics": "MODBUS query-response interval, not an absolute acquisition timestamp; sorting time does not create chronological partitions."
+}

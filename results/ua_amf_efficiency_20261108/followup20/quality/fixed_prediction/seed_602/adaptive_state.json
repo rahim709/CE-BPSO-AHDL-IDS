@@ -1,0 +1,63 @@
+{
+  "finalists": [
+    {
+      "architecture": {
+        "batch_size": 256,
+        "optimizer": "rmsprop",
+        "learning_rate": 1e-05,
+        "cnn": [
+          {
+            "padding": "same",
+            "filters": 64,
+            "kernel": 3,
+            "pool": 2,
+            "activation": "sigmoid"
+          },
+          {
+            "padding": "valid",
+            "filters": 384,
+            "kernel": 4,
+            "pool": 2,
+            "activation": "tanh"
+          },
+          {
+            "padding": "same",
+            "filters": 384,
+            "kernel": 3,
+            "pool": 4,
+            "activation": "none"
+          },
+          {
+            "padding": "valid",
+            "filters": 128,
+            "kernel": 2,
+            "pool": 4,
+            "activation": "none"
+          }
+        ],
+        "rnn": [
+          {
+            "kind": "linear",
+            "units": 512,
+            "activation": "sigmoid",
+            "regularization": "l2",
+            "dropout": 0.0
+          }
+        ]
+      },
+      "fitness": 0.2259802081005855,
+      "completed_budget": 30,
+      "replicate_seeds": [
+        602
+      ],
+      "observed_seed_fitness": [
+        0.2259802081005855
+      ],
+      "search_wall_seconds": 9.17142297400278
+    }
+  ],
+  "predictor_load_seconds": 0.007957278001413215,
+  "prediction_seconds": 0.06942533500114223,
+  "predictor_fit_charged_separately": true,
+  "scheduler_inclusive_seconds_this_invocation": 12.83702934500252
+}

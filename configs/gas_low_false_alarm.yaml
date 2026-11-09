@@ -1,0 +1,7 @@
+extends: submission_evaluation.yaml
+# Validation-selected exploratory alternative; no guarantee of a 1% FPR.
+# Same hybrid, preprocessing and 200 epochs; only training loss weights change.
+data:
+  processed: datasets/processed/gas_low_false_alarm
+training:
+  class_weighting: sqrt_balanced

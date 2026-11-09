@@ -1,0 +1,37 @@
+{
+  "batch_size": 512,
+  "optimizer": "nesterov",
+  "learning_rate": 0.01,
+  "cnn": [
+    {
+      "padding": "same",
+      "filters": 32,
+      "kernel": 4,
+      "pool": 4,
+      "activation": "tanh"
+    },
+    {
+      "padding": "valid",
+      "filters": 256,
+      "kernel": 5,
+      "pool": 1,
+      "activation": "sigmoid"
+    }
+  ],
+  "rnn": [
+    {
+      "kind": "linear",
+      "units": 384,
+      "activation": "sigmoid",
+      "regularization": "l1_l2",
+      "dropout": 0.3
+    },
+    {
+      "kind": "lstm",
+      "units": 128,
+      "activation": "sigmoid",
+      "regularization": "l2",
+      "dropout": 0.2
+    }
+  ]
+}

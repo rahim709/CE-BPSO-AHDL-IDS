@@ -1,0 +1,11 @@
+\begin{tikzpicture}[node distance=3mm, font=\scriptsize,
+ block/.style={draw,rounded corners,align=center,text width=.87\linewidth,inner sep=4pt},
+ >={Stealth}]
+\node[block] (data) {Frozen raw files, explicit features, recorded split IDs};
+\node[block,below=of data] (prep) {Training-fitted imputation, encoding and normalization};
+\node[block,below=of prep] (model) {Tabular input $(N,F)\to(N,1,F)$\\Conv1d + activation + max pool $\to (N,L,C)$\\RNN/LSTM/GRU/linear blocks $\to$ last-position classifier};
+\node[block,below=of model] (search) {73-bit search controls; cumulative checkpoint training\\Validation macro-F1 fitness; isolated candidate caches};
+\node[block,below=of search] (final) {Selected fixed architecture + independent final seed\\Fixed training endpoint $\to$ held-out test report};
+\foreach \a/\b in {data/prep,prep/model,model/search,search/final}
+ \draw[->] (\a)--(\b);
+\end{tikzpicture}

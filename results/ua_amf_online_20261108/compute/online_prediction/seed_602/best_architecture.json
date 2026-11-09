@@ -1,0 +1,23 @@
+{
+  "batch_size": 256,
+  "optimizer": "rmsprop",
+  "learning_rate": 0.001,
+  "cnn": [
+    {
+      "padding": "same",
+      "filters": 512,
+      "kernel": 3,
+      "pool": 1,
+      "activation": "sigmoid"
+    }
+  ],
+  "rnn": [
+    {
+      "kind": "gru",
+      "units": 384,
+      "activation": "relu",
+      "regularization": "l1",
+      "dropout": 0.3
+    }
+  ]
+}

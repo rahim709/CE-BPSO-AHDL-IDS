@@ -1,0 +1,37 @@
+{
+  "batch_size": 1024,
+  "optimizer": "adam",
+  "learning_rate": 0.01,
+  "cnn": [
+    {
+      "padding": "valid",
+      "filters": 128,
+      "kernel": 4,
+      "pool": 2,
+      "activation": "none"
+    },
+    {
+      "padding": "valid",
+      "filters": 512,
+      "kernel": 5,
+      "pool": 2,
+      "activation": "none"
+    }
+  ],
+  "rnn": [
+    {
+      "kind": "linear",
+      "units": 32,
+      "activation": "relu",
+      "regularization": "l1",
+      "dropout": 0.3
+    },
+    {
+      "kind": "linear",
+      "units": 384,
+      "activation": "sigmoid",
+      "regularization": "l2",
+      "dropout": 0.1
+    }
+  ]
+}

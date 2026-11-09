@@ -1,0 +1,107 @@
+{
+  "finalists": [
+    {
+      "architecture": {
+        "batch_size": 2048,
+        "optimizer": "sgd",
+        "learning_rate": 1e-05,
+        "cnn": [
+          {
+            "padding": "valid",
+            "filters": 128,
+            "kernel": 3,
+            "pool": 3,
+            "activation": "none"
+          },
+          {
+            "padding": "valid",
+            "filters": 64,
+            "kernel": 5,
+            "pool": 4,
+            "activation": "none"
+          },
+          {
+            "padding": "valid",
+            "filters": 512,
+            "kernel": 5,
+            "pool": 3,
+            "activation": "sigmoid"
+          },
+          {
+            "padding": "same",
+            "filters": 64,
+            "kernel": 4,
+            "pool": 2,
+            "activation": "tanh"
+          }
+        ],
+        "rnn": [
+          {
+            "kind": "lstm",
+            "units": 16,
+            "activation": "sigmoid",
+            "regularization": "l1_l2",
+            "dropout": 0.3
+          },
+          {
+            "kind": "linear",
+            "units": 512,
+            "activation": "tanh",
+            "regularization": "l1",
+            "dropout": 0.3
+          }
+        ]
+      },
+      "fitness": 0.004671777671298514,
+      "completed_budget": 30,
+      "replicate_seeds": [
+        602
+      ],
+      "observed_seed_fitness": [
+        0.004671777671298514
+      ]
+    },
+    {
+      "architecture": {
+        "batch_size": 2048,
+        "optimizer": "adamax",
+        "learning_rate": 0.0001,
+        "cnn": [
+          {
+            "padding": "same",
+            "filters": 16,
+            "kernel": 4,
+            "pool": 1,
+            "activation": "none"
+          },
+          {
+            "padding": "same",
+            "filters": 8,
+            "kernel": 5,
+            "pool": 4,
+            "activation": "relu"
+          }
+        ],
+        "rnn": [
+          {
+            "kind": "gru",
+            "units": 32,
+            "activation": "sigmoid",
+            "regularization": "l2",
+            "dropout": 0.3
+          }
+        ]
+      },
+      "fitness": 0.006942796107286969,
+      "completed_budget": 30,
+      "replicate_seeds": [
+        602
+      ],
+      "observed_seed_fitness": [
+        0.006942796107286969
+      ]
+    }
+  ],
+  "prediction_seconds": 0.02940611299709417,
+  "scheduler_inclusive_seconds_this_invocation": 8.552000040999701
+}

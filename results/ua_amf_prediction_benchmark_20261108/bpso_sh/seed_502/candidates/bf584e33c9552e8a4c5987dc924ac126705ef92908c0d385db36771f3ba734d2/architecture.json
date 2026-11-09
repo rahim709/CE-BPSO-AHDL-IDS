@@ -1,0 +1,30 @@
+{
+  "batch_size": 2048,
+  "optimizer": "nesterov",
+  "learning_rate": 1e-05,
+  "cnn": [
+    {
+      "padding": "same",
+      "filters": 384,
+      "kernel": 4,
+      "pool": 2,
+      "activation": "relu"
+    },
+    {
+      "padding": "valid",
+      "filters": 128,
+      "kernel": 4,
+      "pool": 3,
+      "activation": "relu"
+    }
+  ],
+  "rnn": [
+    {
+      "kind": "linear",
+      "units": 384,
+      "activation": "none",
+      "regularization": "l2",
+      "dropout": 0.2
+    }
+  ]
+}

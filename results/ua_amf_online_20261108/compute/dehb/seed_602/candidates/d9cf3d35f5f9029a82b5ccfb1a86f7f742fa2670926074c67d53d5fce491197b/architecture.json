@@ -1,0 +1,30 @@
+{
+  "batch_size": 1024,
+  "optimizer": "rmsprop",
+  "learning_rate": 0.0005,
+  "cnn": [
+    {
+      "padding": "same",
+      "filters": 8,
+      "kernel": 4,
+      "pool": 2,
+      "activation": "none"
+    },
+    {
+      "padding": "valid",
+      "filters": 16,
+      "kernel": 5,
+      "pool": 1,
+      "activation": "tanh"
+    }
+  ],
+  "rnn": [
+    {
+      "kind": "linear",
+      "units": 384,
+      "activation": "none",
+      "regularization": "l1_l2",
+      "dropout": 0.0
+    }
+  ]
+}

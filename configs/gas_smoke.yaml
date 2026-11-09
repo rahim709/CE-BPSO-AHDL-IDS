@@ -1,0 +1,27 @@
+extends: debug.yaml
+# Small real-data software check, NOT the paper's search or final protocol.
+# Uses all official gas_final.arff rows and the saved train/validation/test split.
+space: debug
+final_epochs: 2
+architecture:
+  batch_size: 256
+search:
+  population: 2
+  generations: 1
+  epochs: 1
+  min_epochs: 1
+  candidates: 2
+  brackets: 1
+compute:
+  max_epochs: 12
+diagnostics:
+  candidates: 2
+  seeds: [42]
+  epochs: [1, 2]
+  long_epochs: 3
+  shortlist: 1
+  audit_rejected: 1
+  top_k: 1
+comparison:
+  seeds: [42]
+  final_train: false

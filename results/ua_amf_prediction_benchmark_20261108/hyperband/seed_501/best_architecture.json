@@ -1,0 +1,30 @@
+{
+  "batch_size": 256,
+  "optimizer": "adagrad",
+  "learning_rate": 0.001,
+  "cnn": [
+    {
+      "padding": "valid",
+      "filters": 32,
+      "kernel": 5,
+      "pool": 2,
+      "activation": "tanh"
+    },
+    {
+      "padding": "same",
+      "filters": 128,
+      "kernel": 3,
+      "pool": 4,
+      "activation": "tanh"
+    }
+  ],
+  "rnn": [
+    {
+      "kind": "lstm",
+      "units": 512,
+      "activation": "tanh",
+      "regularization": "l1_l2",
+      "dropout": 0.2
+    }
+  ]
+}

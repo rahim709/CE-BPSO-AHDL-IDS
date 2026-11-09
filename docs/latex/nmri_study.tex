@@ -1,0 +1,9 @@
+\subsection{Dedicated NMRI Specialist}
+A subsequent validation-selected normal/NMRI specialist increased mean NMRI test recall from 0.54\% to 16.82\%, while normal false alarms rose from 1.90\% to 2.60\%. Accuracy was 95.46\%, macro-F1 0.8854, and overall attack detection 92.23\%. This improves the observed trade-off, but most NMRI attacks are still missed. The same training-fitted specialist was shared across three hybrid seeds; these are not three independent specialist fits or independent-dataset replicates.
+
+The specialist was trained on normal/NMRI training rows and only reconsidered normal or NMRI hybrid predictions. Extra Trees, histogram gradient boosting and a GPU-trained neural specialist were compared on validation. No tested method achieved 50\% NMRI recall below 5\% false alarms. An explicitly revised exploratory criterion selected histogram gradient boosting by validation macro-F1 under 3\% false alarms, at least 10\% NMRI recall and 90\% overall attack detection. All three validation thresholds were fixed before new test predictions. Training-only analysis found 1,374 of 1,657 NMRI records shared their non-time predictor state with normal records. Duration was excluded, so this is evidence of overlap rather than a full-feature impossibility result.
+
+\begin{table}[htbp]\centering\small\setlength{\tabcolsep}{3pt}
+\input{tables/nmri_operating_points}
+\caption{Observed test operating points. NMRI denotes class recall, and FPR is the normal false-positive rate. Means use three hybrid seeds; the specialist is shared.}
+\end{table}

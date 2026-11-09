@@ -1,0 +1,132 @@
+[
+  {
+    "generation": 0,
+    "architecture": {
+      "batch_size": 2048,
+      "optimizer": "sgd",
+      "learning_rate": 1e-05,
+      "cnn": [
+        {
+          "padding": "valid",
+          "filters": 128,
+          "kernel": 3,
+          "pool": 3,
+          "activation": "none"
+        },
+        {
+          "padding": "valid",
+          "filters": 64,
+          "kernel": 5,
+          "pool": 4,
+          "activation": "none"
+        },
+        {
+          "padding": "valid",
+          "filters": 512,
+          "kernel": 5,
+          "pool": 3,
+          "activation": "sigmoid"
+        },
+        {
+          "padding": "same",
+          "filters": 64,
+          "kernel": 4,
+          "pool": 2,
+          "activation": "tanh"
+        }
+      ],
+      "rnn": [
+        {
+          "kind": "lstm",
+          "units": 16,
+          "activation": "sigmoid",
+          "regularization": "l1_l2",
+          "dropout": 0.3
+        },
+        {
+          "kind": "linear",
+          "units": 512,
+          "activation": "tanh",
+          "regularization": "l1",
+          "dropout": 0.3
+        }
+      ]
+    },
+    "budget": 3,
+    "next_budget": 10,
+    "action": "promote",
+    "prediction": 0.3047352048292822,
+    "radius": 0.5133700893561514,
+    "upper": 0.8181052941854335,
+    "expected_remaining_seconds": 2.3745183020182594,
+    "priority": 0.35607221376489734
+  },
+  {
+    "generation": 0,
+    "architecture": {
+      "batch_size": 256,
+      "optimizer": "rmsprop",
+      "learning_rate": 0.001,
+      "cnn": [
+        {
+          "padding": "same",
+          "filters": 512,
+          "kernel": 3,
+          "pool": 1,
+          "activation": "sigmoid"
+        }
+      ],
+      "rnn": [
+        {
+          "kind": "gru",
+          "units": 384,
+          "activation": "relu",
+          "regularization": "l1",
+          "dropout": 0.3
+        }
+      ]
+    },
+    "budget": 3,
+    "next_budget": 10,
+    "action": "promote",
+    "prediction": 0.1461365386015745,
+    "radius": 0.3127023969623756,
+    "upper": 0.4588389355639501,
+    "expected_remaining_seconds": 15.553891362003922,
+    "priority": 0.17740677829781207
+  },
+  {
+    "generation": 0,
+    "architecture": {
+      "batch_size": 256,
+      "optimizer": "rmsprop",
+      "learning_rate": 0.001,
+      "cnn": [
+        {
+          "padding": "same",
+          "filters": 512,
+          "kernel": 3,
+          "pool": 1,
+          "activation": "sigmoid"
+        }
+      ],
+      "rnn": [
+        {
+          "kind": "gru",
+          "units": 384,
+          "activation": "relu",
+          "regularization": "l1",
+          "dropout": 0.3
+        }
+      ]
+    },
+    "budget": 10,
+    "next_budget": 30,
+    "action": "promote",
+    "prediction": 0.42702373557893425,
+    "radius": 0.5266951436289665,
+    "upper": 0.9537188792079008,
+    "expected_remaining_seconds": 11.484868181993079,
+    "priority": 0.47969324994183093
+  }
+]

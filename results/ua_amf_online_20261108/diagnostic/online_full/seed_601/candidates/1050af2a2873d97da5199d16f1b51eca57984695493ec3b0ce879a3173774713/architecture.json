@@ -1,0 +1,30 @@
+{
+  "batch_size": 2048,
+  "optimizer": "nesterov",
+  "learning_rate": 0.05,
+  "cnn": [
+    {
+      "padding": "same",
+      "filters": 384,
+      "kernel": 4,
+      "pool": 2,
+      "activation": "sigmoid"
+    },
+    {
+      "padding": "valid",
+      "filters": 8,
+      "kernel": 3,
+      "pool": 4,
+      "activation": "tanh"
+    }
+  ],
+  "rnn": [
+    {
+      "kind": "simrnn",
+      "units": 16,
+      "activation": "none",
+      "regularization": "l1",
+      "dropout": 0.2
+    }
+  ]
+}

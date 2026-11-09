@@ -1,0 +1,57 @@
+{
+  "old_protocol": "All methods had high iteration ceilings and stopped at the same 30-second wall/GPU-charge limit; no target-reached stop condition.",
+  "gpu_seconds_range": [
+    27.75727724502576,
+    29.692836666974472
+  ],
+  "wall_seconds_range": [
+    30.00534425099977,
+    30.368970791998436
+  ],
+  "mean_predictor_call_seconds": 0.09996619533194462,
+  "mean_full_scheduler_setup_seconds": 0.15991778366393797,
+  "continuation_events": 137,
+  "actual_completed_training_epochs": 3798,
+  "cost_model_survivor_median_absolute_percentage_error": 0.01897568745654686,
+  "cost_model_survivor_mean_absolute_percentage_error": 0.023472429394785138,
+  "cost_scope": "Terminal survivors only, selection-biased.",
+  "causes": [
+    "Fixed-cap experiment exhausts all budgets rather than measuring time to a common quality.",
+    "Predictive scheduler always screens a full population before terminal evaluation and uses fixed floor(n/eta) promotions.",
+    "Uncertainty changed four logged decisions and hurt seed503; frozen cost penalty changed no decisions.",
+    "Repeated train_to calls resume optimizer/RNG correctly but reconstruct models/optimizers and reload data each rung.",
+    "Per-example DataLoader collation, synchronous per-batch loss/item checks, per-epoch validation and checkpoint serialization are potential execution overheads requiring profiling.",
+    "Forest prediction overhead is small; archive construction, not fitting/inference, dominates predictor cost.",
+    "Decoded architecture caching already prevents duplicate training; no evidence of restarting trained epochs."
+  ],
+  "source_hashes": {
+    "src/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "src/cli.py": "b3d209e95d7a015ae0af98b1485c5f06c2289ec538af86e08a7bc6fe720ffb75",
+    "src/models/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "src/models/hybrid.py": "cfd54b2957dbe13dcb0dca2f9d245b0663493e601f94cec81492fbea62f857b9",
+    "src/models/controls.py": "cc5eac39a8042bba37925249e9e9b901117b0e57109745831a49cb9e94325c9f",
+    "src/utils/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "src/utils/core.py": "312581e4d64422372f48a12e3355bdf1870525883110391cc5e9f067ddd7b9f7",
+    "src/evaluation/metrics.py": "9adbf40688579a40a101402e91e504b2b7331537f3907def46b522753362c9fe",
+    "src/evaluation/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "src/evaluation/ranking.py": "5aca53a4121dc43b99275797c33e6c448c567d5307033a8064d5b8f7f96b241b",
+    "src/evaluation/reporting.py": "74c311d453a541e729ff03bd1dfb7521f05477707eeececcf9f29b3919858018",
+    "src/evaluation/diagnostics.py": "ad56fd4ddc2ab765de6e4789788c76896a7cf1974b614236da4c288cca525419",
+    "src/evaluation/specialist.py": "b8a2d5603ff614e9dec8fd39f3c8464a1ed9e3f1116aaf7c489b9252143e9223",
+    "src/training/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "src/training/losses.py": "3f9507f31422b882ac027ee23356c53402f8e6299ca559951a2a6c151f5e7d1f",
+    "src/training/engine.py": "57aaaf5946ce2792f4d783413146f2d5b437c04d7d9d51d668b23491a1e4de85",
+    "src/optimization/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "src/optimization/encoding.py": "6e087a6b3bc258dce73cf88795b06b1c5035cfa18fab6cd02eb0436c89a067d4",
+    "src/optimization/search.py": "a25722e8014499f247c7b26b7a607a1bb31c931992d9181bd1b6b1a076036765",
+    "src/optimization/bpso.py": "df3a147be8fe01353f803edad7089146bbb7e84deff1ee45f4dcba6c6b12f408",
+    "src/optimization/evaluator.py": "46bd11c481e149941da0605dcacbcddd357b7821fd79d87a8934bc109ef0706b",
+    "src/optimization/predictive.py": "fd1d6ec84c4223a05aa4fc95e6272f1f319480e3f3ae0e9295f14c0ef5e7c584",
+    "src/optimization/curve_predictor.py": "6a246aec076e153414138c234bcbae3bcba042be9d422182edc61b2f65c66249",
+    "src/optimization/adaptive.py": "8d0219cd73c9b370beb4d9b27c750b7de4587e3611128b57857686fd1c75d0fa",
+    "src/optimization/interfaces.py": "92134d06b6b1ae41409497b39c708910a13bab6b1d057d5bcd001b743c76d9b5",
+    "src/data/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "src/data/synthetic.py": "c5f8e66f794a2dca9abe8b1e6629fa9e774ab1667b5c2d85992ca1cf12d0b8de",
+    "src/data/preprocessing.py": "2099610e19d1fb53072e93678777e00386d158aa3a52d078fa2fa3bea9044792"
+  }
+}

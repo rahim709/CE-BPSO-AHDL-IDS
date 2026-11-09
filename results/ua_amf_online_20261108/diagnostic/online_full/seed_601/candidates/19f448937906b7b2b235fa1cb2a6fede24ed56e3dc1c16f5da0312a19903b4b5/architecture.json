@@ -1,0 +1,30 @@
+{
+  "batch_size": 2048,
+  "optimizer": "adadelta",
+  "learning_rate": 5e-05,
+  "cnn": [
+    {
+      "padding": "same",
+      "filters": 64,
+      "kernel": 5,
+      "pool": 2,
+      "activation": "none"
+    },
+    {
+      "padding": "same",
+      "filters": 8,
+      "kernel": 2,
+      "pool": 4,
+      "activation": "tanh"
+    }
+  ],
+  "rnn": [
+    {
+      "kind": "lstm",
+      "units": 512,
+      "activation": "none",
+      "regularization": "l1",
+      "dropout": 0.2
+    }
+  ]
+}

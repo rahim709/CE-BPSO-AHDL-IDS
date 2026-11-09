@@ -1,0 +1,30 @@
+{
+  "batch_size": 512,
+  "optimizer": "adadelta",
+  "learning_rate": 0.0005,
+  "cnn": [
+    {
+      "padding": "same",
+      "filters": 32,
+      "kernel": 3,
+      "pool": 2,
+      "activation": "relu"
+    },
+    {
+      "padding": "same",
+      "filters": 32,
+      "kernel": 2,
+      "pool": 3,
+      "activation": "relu"
+    }
+  ],
+  "rnn": [
+    {
+      "kind": "linear",
+      "units": 16,
+      "activation": "sigmoid",
+      "regularization": "l1_l2",
+      "dropout": 0.2
+    }
+  ]
+}

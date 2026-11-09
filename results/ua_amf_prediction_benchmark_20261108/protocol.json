@@ -1,0 +1,71 @@
+{
+  "archive": "results/ua_amf_prediction_20261108",
+  "seeds": [
+    501,
+    502,
+    503
+  ],
+  "variants": {
+    "bpso": [
+      "bpso",
+      {}
+    ],
+    "bpso_sh": [
+      "bpso_sh",
+      {}
+    ],
+    "random": [
+      "random",
+      {}
+    ],
+    "hyperband": [
+      "hyperband",
+      {}
+    ],
+    "dehb": [
+      "dehb",
+      {}
+    ],
+    "bpso_prediction": [
+      "ua_amf_bpso",
+      {
+        "uncertainty_beta": 0.0,
+        "cost_weight": 0.0
+      }
+    ],
+    "bpso_prediction_uncertainty": [
+      "ua_amf_bpso",
+      {
+        "uncertainty_beta": 1.0,
+        "cost_weight": 0.0
+      }
+    ],
+    "ua_amf_bpso": [
+      "ua_amf_bpso",
+      {
+        "uncertainty_beta": 1.0,
+        "cost_weight": 0.05
+      }
+    ]
+  },
+  "budgets": [
+    3,
+    10,
+    30
+  ],
+  "max_seconds_per_run": 30,
+  "anytime_limits": [
+    10,
+    20,
+    30
+  ],
+  "f1_targets": [
+    0.2,
+    0.4,
+    0.6
+  ],
+  "predictor_sha256": "e5c41dce246aa68664f8bb5240ef85742f14dfc699e120e6e89593badd1e5689",
+  "variant_order": "seeded permutation, seed+991; serial methods and no concurrent GPU jobs",
+  "archive_cost": "separate one-time reliability GPU/wall plus predictor fitting cost; show unamortized totals",
+  "final_validation": "strict-30-second selected architecture; common30 epochs; seeds1501,1502,1503; no IDS test tuning/evaluation"
+}

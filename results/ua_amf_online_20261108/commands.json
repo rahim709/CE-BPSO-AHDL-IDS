@@ -1,0 +1,10 @@
+{
+  "primary": "MPLCONFIGDIR=/tmp/online-mpl .venv/bin/python -m scripts.archive_free_benchmark --output results/ua_amf_online_20261108",
+  "diagnostic": "MPLCONFIGDIR=/tmp/online-mpl .venv/bin/python -m scripts.archive_free_benchmark --output results/ua_amf_online_20261108 --diagnostic",
+  "analyze": "MPLCONFIGDIR=/tmp/online-mpl .venv/bin/python -m scripts.archive_free_analyze --input results/ua_amf_online_20261108",
+  "report": ".venv/bin/python -m scripts.archive_free_report --input results/ua_amf_online_20261108",
+  "tests_cpu": ".venv/bin/python -m pytest -q --junitxml=results/ua_amf_online_20261108/tests_cpu.xml",
+  "tests_cuda": "BPSO_TEST_DEVICE=cuda .venv/bin/python -m pytest -q tests/test_training_search.py tests/test_adaptive.py tests/test_curve_predictor.py tests/test_runtime_efficiency.py tests/test_efficiency_search.py tests/test_online_search.py",
+  "manuscript": "cd docs/latex; pdflatex -interaction=nonstopmode -halt-on-error manuscript.tex; bibtex manuscript; pdflatex -interaction=nonstopmode -halt-on-error manuscript.tex; pdflatex -interaction=nonstopmode -halt-on-error manuscript.tex",
+  "finalize": ".venv/bin/python -m scripts.archive_free_finalize --input results/ua_amf_online_20261108"
+}

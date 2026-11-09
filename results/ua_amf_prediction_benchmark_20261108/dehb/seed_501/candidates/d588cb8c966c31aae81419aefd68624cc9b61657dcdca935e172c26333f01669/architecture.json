@@ -1,0 +1,30 @@
+{
+  "batch_size": 512,
+  "optimizer": "adagrad",
+  "learning_rate": 0.001,
+  "cnn": [
+    {
+      "padding": "same",
+      "filters": 8,
+      "kernel": 3,
+      "pool": 2,
+      "activation": "relu"
+    },
+    {
+      "padding": "same",
+      "filters": 16,
+      "kernel": 4,
+      "pool": 1,
+      "activation": "none"
+    }
+  ],
+  "rnn": [
+    {
+      "kind": "gru",
+      "units": 16,
+      "activation": "none",
+      "regularization": "l2",
+      "dropout": 0.1
+    }
+  ]
+}

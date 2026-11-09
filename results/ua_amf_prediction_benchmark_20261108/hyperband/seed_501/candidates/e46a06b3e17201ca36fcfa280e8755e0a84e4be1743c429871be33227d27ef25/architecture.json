@@ -1,0 +1,30 @@
+{
+  "batch_size": 256,
+  "optimizer": "adam",
+  "learning_rate": 0.01,
+  "cnn": [
+    {
+      "padding": "same",
+      "filters": 128,
+      "kernel": 2,
+      "pool": 3,
+      "activation": "relu"
+    },
+    {
+      "padding": "same",
+      "filters": 16,
+      "kernel": 3,
+      "pool": 1,
+      "activation": "tanh"
+    }
+  ],
+  "rnn": [
+    {
+      "kind": "simrnn",
+      "units": 384,
+      "activation": "relu",
+      "regularization": "l1",
+      "dropout": 0.1
+    }
+  ]
+}

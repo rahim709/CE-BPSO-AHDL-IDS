@@ -1,0 +1,32 @@
+{
+  "offline_paths": [
+    {
+      "path": "src/optimization/dynamic.py",
+      "dependency": "Loads predictor_bundle and uses its archive IDs and calibrated forests."
+    },
+    {
+      "path": "src/optimization/predictive.py",
+      "dependency": "Loads the offline bundle; fixed-quota predictions require its fit/calibration labels."
+    },
+    {
+      "path": "src/optimization/curve_predictor.py",
+      "dependency": "CurvePredictor.fit consumes labeled architecture records; load deserializes an offline bundle. Pure feature helpers themselves read no archive."
+    },
+    {
+      "path": "scripts/efficiency_development.py",
+      "dependency": "Reads historical cohort endpoints/trajectories for sparse fitting and coefficient CV."
+    },
+    {
+      "path": "scripts/amf_fit_predictor.py",
+      "dependency": "Fits architecture-disjoint historical terminal targets and calibration residuals."
+    },
+    {
+      "path": "configs/ua_amf_prediction.yaml and configs/ua_amf_efficient.yaml",
+      "dependency": "Contain historical predictor path/hash; the efficient variant also retains historically selected beta/lambda."
+    }
+  ],
+  "new_method": "src/optimization/online.py has no bundle loading, historical observation loading, offline parameter fitting or historical coefficient lookup.",
+  "data_exception": "The identical processed train/validation view remains under results/ua_amf_prediction_20261108/data. Those arrays and metadata are common dataset inputs, not a predictor-label archive.",
+  "online_settings": "Fixed before new runs; CPU random forest, architecture-hash partitions, prequential held-out forecasts, SH fallback.",
+  "cost_rule": "All terminal labels are normal search evaluations, charged once to the current evaluator. CPU preparation is in search wall; external archive GPU is exactly zero for the new method."
+}

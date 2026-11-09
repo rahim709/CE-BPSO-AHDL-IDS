@@ -1,0 +1,26 @@
+extends: ua_amf_prediction.yaml
+# Frozen from development data. Shared runtime must also be used by controls.
+runtime:
+  vectorized: true
+  resident: true
+  cache_data: true
+  cache_model: true
+  defer_scalar_sync: true
+  validation_epochs: [3, 10, 30]
+search:
+  promotion_policy: dynamic
+  predictor_bundle: results/ua_amf_efficiency_20261108/sparse_predictor.joblib
+  predictor_sha256: c8867fb11f995ecece7dbc60c4cac7fd10248727fdde9276f31f115a54877c85
+  initial_probes: 2
+  probe_interval: 2
+  min_improvement: 0.01
+  uncertainty_beta: 0.1
+  cost_weight: 0.2
+  population: 6
+  generations: 100000
+  stop_f1: 0.6
+compute:
+  max_epochs: 1000000
+  max_seconds: 50
+  max_gpu_seconds: 20
+  gpu_budget_mode: execution

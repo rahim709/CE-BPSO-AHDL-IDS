@@ -1,0 +1,30 @@
+{
+  "batch_size": 512,
+  "optimizer": "adam",
+  "learning_rate": 5e-05,
+  "cnn": [
+    {
+      "padding": "same",
+      "filters": 512,
+      "kernel": 2,
+      "pool": 3,
+      "activation": "none"
+    }
+  ],
+  "rnn": [
+    {
+      "kind": "lstm",
+      "units": 512,
+      "activation": "none",
+      "regularization": "l1_l2",
+      "dropout": 0.1
+    },
+    {
+      "kind": "lstm",
+      "units": 512,
+      "activation": "sigmoid",
+      "regularization": "l2",
+      "dropout": 0.1
+    }
+  ]
+}

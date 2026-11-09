@@ -1,0 +1,51 @@
+{
+  "batch_size": 1024,
+  "optimizer": "rmsprop",
+  "learning_rate": 0.0005,
+  "cnn": [
+    {
+      "padding": "same",
+      "filters": 64,
+      "kernel": 5,
+      "pool": 2,
+      "activation": "sigmoid"
+    },
+    {
+      "padding": "same",
+      "filters": 256,
+      "kernel": 3,
+      "pool": 2,
+      "activation": "none"
+    },
+    {
+      "padding": "valid",
+      "filters": 8,
+      "kernel": 3,
+      "pool": 3,
+      "activation": "relu"
+    },
+    {
+      "padding": "same",
+      "filters": 32,
+      "kernel": 4,
+      "pool": 4,
+      "activation": "none"
+    }
+  ],
+  "rnn": [
+    {
+      "kind": "lstm",
+      "units": 128,
+      "activation": "tanh",
+      "regularization": "none",
+      "dropout": 0.0
+    },
+    {
+      "kind": "simrnn",
+      "units": 8,
+      "activation": "tanh",
+      "regularization": "l2",
+      "dropout": 0.2
+    }
+  ]
+}

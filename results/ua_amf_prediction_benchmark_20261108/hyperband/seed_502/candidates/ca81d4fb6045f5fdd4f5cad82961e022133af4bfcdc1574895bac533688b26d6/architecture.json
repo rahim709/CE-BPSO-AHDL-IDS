@@ -1,0 +1,37 @@
+{
+  "batch_size": 1024,
+  "optimizer": "adadelta",
+  "learning_rate": 0.01,
+  "cnn": [
+    {
+      "padding": "same",
+      "filters": 384,
+      "kernel": 3,
+      "pool": 3,
+      "activation": "relu"
+    },
+    {
+      "padding": "same",
+      "filters": 16,
+      "kernel": 3,
+      "pool": 2,
+      "activation": "tanh"
+    },
+    {
+      "padding": "valid",
+      "filters": 512,
+      "kernel": 2,
+      "pool": 3,
+      "activation": "tanh"
+    }
+  ],
+  "rnn": [
+    {
+      "kind": "lstm",
+      "units": 256,
+      "activation": "relu",
+      "regularization": "none",
+      "dropout": 0.1
+    }
+  ]
+}

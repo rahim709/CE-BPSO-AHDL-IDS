@@ -1,0 +1,30 @@
+{
+  "batch_size": 512,
+  "optimizer": "nesterov",
+  "learning_rate": 1e-05,
+  "cnn": [
+    {
+      "padding": "same",
+      "filters": 256,
+      "kernel": 4,
+      "pool": 2,
+      "activation": "relu"
+    },
+    {
+      "padding": "same",
+      "filters": 384,
+      "kernel": 3,
+      "pool": 3,
+      "activation": "relu"
+    }
+  ],
+  "rnn": [
+    {
+      "kind": "gru",
+      "units": 384,
+      "activation": "sigmoid",
+      "regularization": "none",
+      "dropout": 0.1
+    }
+  ]
+}

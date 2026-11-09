@@ -1,0 +1,13 @@
+extends: gas_smoke.yaml
+# Real-data command verification only; deliberately tiny, shared resource caps.
+# Validation-only results cannot be interpreted as a paper-scale method comparison.
+search:
+  epochs: 2
+  min_epochs: 1
+  eta: 2
+compute:
+  max_epochs: 4
+comparison:
+  seeds: [42]
+  methods: [bpso, bpso_reduced, bpso_sh, hyperband, dehb, random, surrogate]
+  final_train: false

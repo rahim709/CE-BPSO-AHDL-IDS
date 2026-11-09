@@ -1,0 +1,37 @@
+{
+  "batch_size": 512,
+  "optimizer": "adamax",
+  "learning_rate": 1e-05,
+  "cnn": [
+    {
+      "padding": "same",
+      "filters": 256,
+      "kernel": 2,
+      "pool": 4,
+      "activation": "sigmoid"
+    },
+    {
+      "padding": "same",
+      "filters": 64,
+      "kernel": 4,
+      "pool": 4,
+      "activation": "relu"
+    },
+    {
+      "padding": "valid",
+      "filters": 256,
+      "kernel": 2,
+      "pool": 4,
+      "activation": "none"
+    }
+  ],
+  "rnn": [
+    {
+      "kind": "simrnn",
+      "units": 16,
+      "activation": "tanh",
+      "regularization": "l1_l2",
+      "dropout": 0.2
+    }
+  ]
+}

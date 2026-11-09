@@ -1,0 +1,51 @@
+{
+  "batch_size": 512,
+  "optimizer": "adamax",
+  "learning_rate": 0.0005,
+  "cnn": [
+    {
+      "padding": "same",
+      "filters": 384,
+      "kernel": 4,
+      "pool": 1,
+      "activation": "relu"
+    },
+    {
+      "padding": "valid",
+      "filters": 256,
+      "kernel": 5,
+      "pool": 2,
+      "activation": "sigmoid"
+    },
+    {
+      "padding": "valid",
+      "filters": 8,
+      "kernel": 2,
+      "pool": 1,
+      "activation": "tanh"
+    },
+    {
+      "padding": "valid",
+      "filters": 64,
+      "kernel": 4,
+      "pool": 1,
+      "activation": "none"
+    }
+  ],
+  "rnn": [
+    {
+      "kind": "linear",
+      "units": 16,
+      "activation": "relu",
+      "regularization": "none",
+      "dropout": 0.0
+    },
+    {
+      "kind": "gru",
+      "units": 512,
+      "activation": "sigmoid",
+      "regularization": "l1_l2",
+      "dropout": 0.0
+    }
+  ]
+}

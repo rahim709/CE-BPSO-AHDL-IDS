@@ -1,0 +1,14 @@
+extends: learning_sanity.yaml
+# Matched10-epoch/batch/optimizer/seed control for the balanced reference.
+final_epochs: 10
+final_seed: 10042
+architecture:
+  batch_size: 256
+  optimizer: adam
+  learning_rate: 0.001
+  cnn:
+    - {padding: same, filters: 4, kernel: 2, pool: 1, activation: relu}
+  rnn:
+    - {kind: gru, units: 4, activation: tanh, regularization: none, dropout: 0.0}
+training:
+  class_weighting: none

@@ -1,0 +1,23 @@
+{
+  "batch_size": 256,
+  "optimizer": "sgd",
+  "learning_rate": 0.005,
+  "cnn": [
+    {
+      "padding": "same",
+      "filters": 64,
+      "kernel": 5,
+      "pool": 2,
+      "activation": "tanh"
+    }
+  ],
+  "rnn": [
+    {
+      "kind": "linear",
+      "units": 32,
+      "activation": "sigmoid",
+      "regularization": "l1_l2",
+      "dropout": 0.0
+    }
+  ]
+}

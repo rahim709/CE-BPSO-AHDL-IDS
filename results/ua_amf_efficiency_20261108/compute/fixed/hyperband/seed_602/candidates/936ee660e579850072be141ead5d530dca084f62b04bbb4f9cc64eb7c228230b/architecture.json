@@ -1,0 +1,30 @@
+{
+  "batch_size": 256,
+  "optimizer": "adadelta",
+  "learning_rate": 0.01,
+  "cnn": [
+    {
+      "padding": "same",
+      "filters": 384,
+      "kernel": 4,
+      "pool": 3,
+      "activation": "none"
+    }
+  ],
+  "rnn": [
+    {
+      "kind": "simrnn",
+      "units": 128,
+      "activation": "none",
+      "regularization": "l1_l2",
+      "dropout": 0.1
+    },
+    {
+      "kind": "linear",
+      "units": 256,
+      "activation": "sigmoid",
+      "regularization": "none",
+      "dropout": 0.3
+    }
+  ]
+}

@@ -1,0 +1,101 @@
+{
+  "seed": 42,
+  "space": "debug",
+  "final_epochs": 2,
+  "final_seed": 10042,
+  "data": {
+    "name": "gas_pipeline",
+    "files": [
+      "results/software_validation/20261107T153722628842Z/ARTIFICIAL_SOFTWARE_FIXTURE.csv"
+    ],
+    "target": "class",
+    "synthetic": true,
+    "normalization": "minmax",
+    "processed": "results/software_validation/20261107T153722628842Z/processed",
+    "split_seed": 381
+  },
+  "training": {
+    "device": "cpu",
+    "threads": 1,
+    "l1": 1e-05,
+    "l2": 1e-05,
+    "prediction_epochs": [
+      3,
+      10,
+      30,
+      200
+    ]
+  },
+  "search": {
+    "method": "bpso",
+    "population": 3,
+    "generations": 2,
+    "epochs": 2,
+    "min_epochs": 1,
+    "eta": 3,
+    "w_max": 0.8,
+    "w_min": 0.4,
+    "v_max": 10.0,
+    "v_min": -10.0,
+    "c1": 1.5,
+    "c2": 1.5,
+    "candidates": 8,
+    "brackets": 1
+  },
+  "compute": {
+    "max_epochs": 12
+  },
+  "diagnostics": {
+    "candidates": 4,
+    "cohort_seed": 1729,
+    "seeds": [
+      42
+    ],
+    "epochs": [
+      1,
+      2
+    ],
+    "long_epochs": 3,
+    "shortlist": 1,
+    "audit_rejected": 1,
+    "top_k": 1
+  },
+  "comparison": {
+    "seeds": [
+      42
+    ],
+    "methods": [
+      "bpso",
+      "bpso_reduced",
+      "bpso_sh",
+      "hyperband",
+      "dehb",
+      "random",
+      "surrogate"
+    ],
+    "final_train": true
+  },
+  "architecture": {
+    "batch_size": 8,
+    "optimizer": "adam",
+    "learning_rate": 0.001,
+    "cnn": [
+      {
+        "padding": "same",
+        "filters": 4,
+        "kernel": 2,
+        "pool": 1,
+        "activation": "relu"
+      }
+    ],
+    "rnn": [
+      {
+        "kind": "gru",
+        "units": 4,
+        "activation": "tanh",
+        "regularization": "none",
+        "dropout": 0.0
+      }
+    ]
+  }
+}

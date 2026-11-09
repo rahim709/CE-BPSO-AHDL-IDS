@@ -1,0 +1,145 @@
+{
+  "finalists": [
+    {
+      "architecture": {
+        "batch_size": 1024,
+        "optimizer": "adamax",
+        "learning_rate": 0.001,
+        "cnn": [
+          {
+            "padding": "valid",
+            "filters": 16,
+            "kernel": 2,
+            "pool": 2,
+            "activation": "relu"
+          },
+          {
+            "padding": "same",
+            "filters": 128,
+            "kernel": 4,
+            "pool": 3,
+            "activation": "tanh"
+          }
+        ],
+        "rnn": [
+          {
+            "kind": "gru",
+            "units": 512,
+            "activation": "tanh",
+            "regularization": "none",
+            "dropout": 0.2
+          }
+        ]
+      },
+      "fitness": 0.6755098757705237,
+      "completed_budget": 30,
+      "replicate_seeds": [
+        502
+      ],
+      "observed_seed_fitness": [
+        0.6755098757705237
+      ],
+      "search_wall_seconds": 7.849293589999434
+    },
+    {
+      "architecture": {
+        "batch_size": 2048,
+        "optimizer": "adadelta",
+        "learning_rate": 0.0005,
+        "cnn": [
+          {
+            "padding": "same",
+            "filters": 16,
+            "kernel": 2,
+            "pool": 3,
+            "activation": "sigmoid"
+          },
+          {
+            "padding": "same",
+            "filters": 512,
+            "kernel": 5,
+            "pool": 2,
+            "activation": "none"
+          },
+          {
+            "padding": "valid",
+            "filters": 512,
+            "kernel": 2,
+            "pool": 1,
+            "activation": "tanh"
+          }
+        ],
+        "rnn": [
+          {
+            "kind": "gru",
+            "units": 64,
+            "activation": "sigmoid",
+            "regularization": "l1",
+            "dropout": 0.3
+          },
+          {
+            "kind": "gru",
+            "units": 256,
+            "activation": "relu",
+            "regularization": "l1_l2",
+            "dropout": 0.0
+          }
+        ]
+      },
+      "fitness": 0.0966606768493561,
+      "completed_budget": 30,
+      "replicate_seeds": [
+        502
+      ],
+      "observed_seed_fitness": [
+        0.0966606768493561
+      ],
+      "search_wall_seconds": 20.311903739999252
+    },
+    {
+      "architecture": {
+        "batch_size": 512,
+        "optimizer": "adadelta",
+        "learning_rate": 0.0001,
+        "cnn": [
+          {
+            "padding": "same",
+            "filters": 16,
+            "kernel": 4,
+            "pool": 3,
+            "activation": "tanh"
+          }
+        ],
+        "rnn": [
+          {
+            "kind": "linear",
+            "units": 64,
+            "activation": "sigmoid",
+            "regularization": "l1",
+            "dropout": 0.1
+          },
+          {
+            "kind": "simrnn",
+            "units": 256,
+            "activation": "sigmoid",
+            "regularization": "l1_l2",
+            "dropout": 0.0
+          }
+        ]
+      },
+      "fitness": 0.0966606768493561,
+      "completed_budget": 30,
+      "replicate_seeds": [
+        502
+      ],
+      "observed_seed_fitness": [
+        0.0966606768493561
+      ],
+      "search_wall_seconds": 29.35539820300255
+    }
+  ],
+  "predictor_load_seconds": 0.008949146998929791,
+  "prediction_seconds": 0.10440324598312145,
+  "predictor_fit_charged_separately": true,
+  "scheduler_inclusive_seconds_this_invocation": 30.107041309001943
+}

@@ -1,0 +1,30 @@
+{
+  "batch_size": 256,
+  "optimizer": "sgd",
+  "learning_rate": 0.01,
+  "cnn": [
+    {
+      "padding": "valid",
+      "filters": 64,
+      "kernel": 5,
+      "pool": 3,
+      "activation": "sigmoid"
+    }
+  ],
+  "rnn": [
+    {
+      "kind": "gru",
+      "units": 32,
+      "activation": "tanh",
+      "regularization": "l2",
+      "dropout": 0.2
+    },
+    {
+      "kind": "simrnn",
+      "units": 8,
+      "activation": "relu",
+      "regularization": "l1",
+      "dropout": 0.1
+    }
+  ]
+}

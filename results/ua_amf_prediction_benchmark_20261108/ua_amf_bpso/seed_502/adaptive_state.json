@@ -1,0 +1,104 @@
+{
+  "finalists": [
+    {
+      "architecture": {
+        "batch_size": 1024,
+        "optimizer": "adamax",
+        "learning_rate": 0.001,
+        "cnn": [
+          {
+            "padding": "valid",
+            "filters": 16,
+            "kernel": 2,
+            "pool": 2,
+            "activation": "relu"
+          },
+          {
+            "padding": "same",
+            "filters": 128,
+            "kernel": 4,
+            "pool": 3,
+            "activation": "tanh"
+          }
+        ],
+        "rnn": [
+          {
+            "kind": "gru",
+            "units": 512,
+            "activation": "tanh",
+            "regularization": "none",
+            "dropout": 0.2
+          }
+        ]
+      },
+      "fitness": 0.6755098757705237,
+      "completed_budget": 30,
+      "replicate_seeds": [
+        502
+      ],
+      "observed_seed_fitness": [
+        0.6755098757705237
+      ],
+      "search_wall_seconds": 7.92118161399776
+    },
+    {
+      "architecture": {
+        "batch_size": 2048,
+        "optimizer": "adadelta",
+        "learning_rate": 0.0005,
+        "cnn": [
+          {
+            "padding": "same",
+            "filters": 16,
+            "kernel": 2,
+            "pool": 3,
+            "activation": "sigmoid"
+          },
+          {
+            "padding": "same",
+            "filters": 512,
+            "kernel": 5,
+            "pool": 2,
+            "activation": "none"
+          },
+          {
+            "padding": "valid",
+            "filters": 512,
+            "kernel": 2,
+            "pool": 1,
+            "activation": "tanh"
+          }
+        ],
+        "rnn": [
+          {
+            "kind": "gru",
+            "units": 64,
+            "activation": "sigmoid",
+            "regularization": "l1",
+            "dropout": 0.3
+          },
+          {
+            "kind": "gru",
+            "units": 256,
+            "activation": "relu",
+            "regularization": "l1_l2",
+            "dropout": 0.0
+          }
+        ]
+      },
+      "fitness": 0.0966606768493561,
+      "completed_budget": 30,
+      "replicate_seeds": [
+        502
+      ],
+      "observed_seed_fitness": [
+        0.0966606768493561
+      ],
+      "search_wall_seconds": 20.672323064998636
+    }
+  ],
+  "predictor_load_seconds": 0.008495186000800459,
+  "prediction_seconds": 0.10385383799439296,
+  "predictor_fit_charged_separately": true,
+  "scheduler_inclusive_seconds_this_invocation": 30.36805304399968
+}

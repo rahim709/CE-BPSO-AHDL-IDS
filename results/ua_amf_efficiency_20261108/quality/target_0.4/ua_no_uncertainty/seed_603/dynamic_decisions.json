@@ -1,0 +1,525 @@
+[
+  {
+    "generation": 0,
+    "architecture": {
+      "batch_size": 1024,
+      "optimizer": "momentum",
+      "learning_rate": 0.01,
+      "cnn": [
+        {
+          "padding": "same",
+          "filters": 8,
+          "kernel": 2,
+          "pool": 1,
+          "activation": "relu"
+        }
+      ],
+      "rnn": [
+        {
+          "kind": "simrnn",
+          "units": 16,
+          "activation": "tanh",
+          "regularization": "l2",
+          "dropout": 0.2
+        },
+        {
+          "kind": "gru",
+          "units": 64,
+          "activation": "relu",
+          "regularization": "l2",
+          "dropout": 0.1
+        }
+      ]
+    },
+    "budget": 3,
+    "next_budget": 10,
+    "action": "promote",
+    "prediction": 0.351656154324216,
+    "radius": 0.5432448358213091,
+    "upper": 0.8949009901455252,
+    "expected_remaining_seconds": 1.3045581600272271,
+    "priority": 0.17636489038665518
+  },
+  {
+    "generation": 0,
+    "architecture": {
+      "batch_size": 1024,
+      "optimizer": "momentum",
+      "learning_rate": 0.01,
+      "cnn": [
+        {
+          "padding": "same",
+          "filters": 8,
+          "kernel": 2,
+          "pool": 1,
+          "activation": "relu"
+        }
+      ],
+      "rnn": [
+        {
+          "kind": "simrnn",
+          "units": 16,
+          "activation": "tanh",
+          "regularization": "l2",
+          "dropout": 0.2
+        },
+        {
+          "kind": "gru",
+          "units": 64,
+          "activation": "relu",
+          "regularization": "l2",
+          "dropout": 0.1
+        }
+      ]
+    },
+    "budget": 10,
+    "next_budget": 30,
+    "action": "promote",
+    "prediction": 0.22694929948683915,
+    "radius": 0.5096324087411793,
+    "upper": 0.7365817082280185,
+    "expected_remaining_seconds": 0.9560127575041406,
+    "priority": 0.08145668519226351
+  },
+  {
+    "generation": 0,
+    "architecture": {
+      "batch_size": 1024,
+      "optimizer": "sgd",
+      "learning_rate": 5e-05,
+      "cnn": [
+        {
+          "padding": "same",
+          "filters": 16,
+          "kernel": 5,
+          "pool": 1,
+          "activation": "tanh"
+        },
+        {
+          "padding": "valid",
+          "filters": 16,
+          "kernel": 3,
+          "pool": 4,
+          "activation": "tanh"
+        }
+      ],
+      "rnn": [
+        {
+          "kind": "lstm",
+          "units": 128,
+          "activation": "relu",
+          "regularization": "l1_l2",
+          "dropout": 0.1
+        }
+      ]
+    },
+    "budget": 3,
+    "next_budget": 10,
+    "action": "promote",
+    "prediction": 0.03699168787089223,
+    "radius": 0.09408573455868209,
+    "upper": 0.13107742242957432,
+    "expected_remaining_seconds": 1.6723344259989972,
+    "priority": -0.09567831147350327
+  },
+  {
+    "generation": 0,
+    "architecture": {
+      "batch_size": 1024,
+      "optimizer": "sgd",
+      "learning_rate": 5e-05,
+      "cnn": [
+        {
+          "padding": "same",
+          "filters": 16,
+          "kernel": 5,
+          "pool": 1,
+          "activation": "tanh"
+        },
+        {
+          "padding": "valid",
+          "filters": 16,
+          "kernel": 3,
+          "pool": 4,
+          "activation": "tanh"
+        }
+      ],
+      "rnn": [
+        {
+          "kind": "lstm",
+          "units": 128,
+          "activation": "relu",
+          "regularization": "l1_l2",
+          "dropout": 0.1
+        }
+      ]
+    },
+    "budget": 10,
+    "action": "prune_upper_bound",
+    "upper": 0.11076198908249842,
+    "incumbent": 0.1097651401131249
+  },
+  {
+    "generation": 0,
+    "architecture": {
+      "batch_size": 2048,
+      "optimizer": "momentum",
+      "learning_rate": 5e-05,
+      "cnn": [
+        {
+          "padding": "same",
+          "filters": 384,
+          "kernel": 3,
+          "pool": 3,
+          "activation": "relu"
+        },
+        {
+          "padding": "valid",
+          "filters": 8,
+          "kernel": 4,
+          "pool": 3,
+          "activation": "none"
+        },
+        {
+          "padding": "valid",
+          "filters": 512,
+          "kernel": 2,
+          "pool": 3,
+          "activation": "relu"
+        },
+        {
+          "padding": "same",
+          "filters": 16,
+          "kernel": 2,
+          "pool": 2,
+          "activation": "relu"
+        }
+      ],
+      "rnn": [
+        {
+          "kind": "simrnn",
+          "units": 512,
+          "activation": "sigmoid",
+          "regularization": "none",
+          "dropout": 0.2
+        },
+        {
+          "kind": "lstm",
+          "units": 8,
+          "activation": "tanh",
+          "regularization": "l1_l2",
+          "dropout": 0.1
+        }
+      ]
+    },
+    "budget": 3,
+    "next_budget": 10,
+    "action": "promote",
+    "prediction": 0.056709438562448415,
+    "radius": 0.3360340810279085,
+    "upper": 0.3927435195903569,
+    "expected_remaining_seconds": 3.369753263043094,
+    "priority": -0.1432905614375516
+  },
+  {
+    "generation": 0,
+    "architecture": {
+      "batch_size": 2048,
+      "optimizer": "momentum",
+      "learning_rate": 5e-05,
+      "cnn": [
+        {
+          "padding": "same",
+          "filters": 384,
+          "kernel": 3,
+          "pool": 3,
+          "activation": "relu"
+        },
+        {
+          "padding": "valid",
+          "filters": 8,
+          "kernel": 4,
+          "pool": 3,
+          "activation": "none"
+        },
+        {
+          "padding": "valid",
+          "filters": 512,
+          "kernel": 2,
+          "pool": 3,
+          "activation": "relu"
+        },
+        {
+          "padding": "same",
+          "filters": 16,
+          "kernel": 2,
+          "pool": 2,
+          "activation": "relu"
+        }
+      ],
+      "rnn": [
+        {
+          "kind": "simrnn",
+          "units": 512,
+          "activation": "sigmoid",
+          "regularization": "none",
+          "dropout": 0.2
+        },
+        {
+          "kind": "lstm",
+          "units": 8,
+          "activation": "tanh",
+          "regularization": "l1_l2",
+          "dropout": 0.1
+        }
+      ]
+    },
+    "budget": 10,
+    "action": "prune_upper_bound",
+    "upper": 0.10679950994044626,
+    "incumbent": 0.1097651401131249
+  },
+  {
+    "generation": 0,
+    "architecture": {
+      "batch_size": 2048,
+      "optimizer": "sgd",
+      "learning_rate": 5e-05,
+      "cnn": [
+        {
+          "padding": "valid",
+          "filters": 16,
+          "kernel": 4,
+          "pool": 2,
+          "activation": "tanh"
+        },
+        {
+          "padding": "same",
+          "filters": 512,
+          "kernel": 4,
+          "pool": 4,
+          "activation": "none"
+        }
+      ],
+      "rnn": [
+        {
+          "kind": "lstm",
+          "units": 128,
+          "activation": "sigmoid",
+          "regularization": "l1_l2",
+          "dropout": 0.0
+        }
+      ]
+    },
+    "budget": 3,
+    "next_budget": 10,
+    "action": "promote",
+    "prediction": 0.04541258971675362,
+    "radius": 0.21129856652055107,
+    "upper": 0.25671115623730467,
+    "expected_remaining_seconds": 2.846430633981072,
+    "priority": -0.1545874102832464
+  },
+  {
+    "generation": 0,
+    "architecture": {
+      "batch_size": 2048,
+      "optimizer": "sgd",
+      "learning_rate": 5e-05,
+      "cnn": [
+        {
+          "padding": "valid",
+          "filters": 16,
+          "kernel": 4,
+          "pool": 2,
+          "activation": "tanh"
+        },
+        {
+          "padding": "same",
+          "filters": 512,
+          "kernel": 4,
+          "pool": 4,
+          "activation": "none"
+        }
+      ],
+      "rnn": [
+        {
+          "kind": "lstm",
+          "units": 128,
+          "activation": "sigmoid",
+          "regularization": "l1_l2",
+          "dropout": 0.0
+        }
+      ]
+    },
+    "budget": 10,
+    "action": "prune_upper_bound",
+    "upper": 0.09781108054800347,
+    "incumbent": 0.1097651401131249
+  },
+  {
+    "generation": 0,
+    "architecture": {
+      "batch_size": 1024,
+      "optimizer": "adagrad",
+      "learning_rate": 5e-05,
+      "cnn": [
+        {
+          "padding": "same",
+          "filters": 64,
+          "kernel": 5,
+          "pool": 2,
+          "activation": "tanh"
+        },
+        {
+          "padding": "same",
+          "filters": 128,
+          "kernel": 5,
+          "pool": 2,
+          "activation": "relu"
+        },
+        {
+          "padding": "valid",
+          "filters": 256,
+          "kernel": 4,
+          "pool": 1,
+          "activation": "none"
+        },
+        {
+          "padding": "valid",
+          "filters": 16,
+          "kernel": 3,
+          "pool": 3,
+          "activation": "tanh"
+        }
+      ],
+      "rnn": [
+        {
+          "kind": "linear",
+          "units": 128,
+          "activation": "none",
+          "regularization": "none",
+          "dropout": 0.0
+        }
+      ]
+    },
+    "budget": 3,
+    "next_budget": 10,
+    "action": "promote",
+    "prediction": 0.1985517297928958,
+    "radius": 0.48747207646160756,
+    "upper": 0.6860238062545033,
+    "expected_remaining_seconds": 1.9773254669926243,
+    "priority": -0.0014482702071042242
+  },
+  {
+    "generation": 0,
+    "architecture": {
+      "batch_size": 1024,
+      "optimizer": "adagrad",
+      "learning_rate": 5e-05,
+      "cnn": [
+        {
+          "padding": "same",
+          "filters": 64,
+          "kernel": 5,
+          "pool": 2,
+          "activation": "tanh"
+        },
+        {
+          "padding": "same",
+          "filters": 128,
+          "kernel": 5,
+          "pool": 2,
+          "activation": "relu"
+        },
+        {
+          "padding": "valid",
+          "filters": 256,
+          "kernel": 4,
+          "pool": 1,
+          "activation": "none"
+        },
+        {
+          "padding": "valid",
+          "filters": 16,
+          "kernel": 3,
+          "pool": 3,
+          "activation": "tanh"
+        }
+      ],
+      "rnn": [
+        {
+          "kind": "linear",
+          "units": 128,
+          "activation": "none",
+          "regularization": "none",
+          "dropout": 0.0
+        }
+      ]
+    },
+    "budget": 10,
+    "next_budget": 30,
+    "action": "promote",
+    "prediction": 0.12951680421390402,
+    "radius": 0.5498278949767702,
+    "upper": 0.6793446991906742,
+    "expected_remaining_seconds": 1.4592226660097367,
+    "priority": -0.07048319578609599
+  },
+  {
+    "generation": 0,
+    "architecture": {
+      "batch_size": 2048,
+      "optimizer": "sgd",
+      "learning_rate": 0.0005,
+      "cnn": [
+        {
+          "padding": "valid",
+          "filters": 64,
+          "kernel": 2,
+          "pool": 4,
+          "activation": "relu"
+        },
+        {
+          "padding": "valid",
+          "filters": 384,
+          "kernel": 4,
+          "pool": 2,
+          "activation": "relu"
+        },
+        {
+          "padding": "valid",
+          "filters": 512,
+          "kernel": 4,
+          "pool": 1,
+          "activation": "relu"
+        },
+        {
+          "padding": "same",
+          "filters": 512,
+          "kernel": 2,
+          "pool": 1,
+          "activation": "relu"
+        }
+      ],
+      "rnn": [
+        {
+          "kind": "simrnn",
+          "units": 128,
+          "activation": "relu",
+          "regularization": "l2",
+          "dropout": 0.1
+        }
+      ]
+    },
+    "budget": 3,
+    "next_budget": 10,
+    "action": "promote",
+    "prediction": 0.2929916876738945,
+    "radius": 0.5461856964578867,
+    "upper": 0.8391773841317812,
+    "expected_remaining_seconds": 3.9560556949982124,
+    "priority": 0.09299168767389449
+  }
+]

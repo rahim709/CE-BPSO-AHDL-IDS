@@ -1,0 +1,36 @@
+{
+  "reason": "8-second target0.4 pilot had low attainment in standard/SH controls; exploratory feasibility extension, not a confirmatory replication.",
+  "seeds": [
+    601,
+    602,
+    603
+  ],
+  "variants": [
+    "bpso",
+    "bpso_sh",
+    "prediction_only",
+    "ua_no_cost",
+    "ua_no_uncertainty",
+    "ua_full",
+    "hyperband",
+    "dehb",
+    "fixed_prediction"
+  ],
+  "gpu_cap_total": 20.0,
+  "wall_cap_total": 50.0,
+  "quality_target": 0.6,
+  "phases": [
+    "quality",
+    "compute"
+  ],
+  "max_additional_gpu_seconds": 648.0,
+  "unchanged": [
+    "algorithm",
+    "coefficients",
+    "training",
+    "data",
+    "seeds",
+    "initial swarm"
+  ],
+  "accounting": "All original epochs/GPU/wall retained. No resetting spent compute. Original outputs remain read-only."
+}

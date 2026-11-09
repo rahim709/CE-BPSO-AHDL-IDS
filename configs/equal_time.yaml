@@ -1,0 +1,9 @@
+extends: gas_pipeline.yaml
+compute:
+  max_epochs: 1000000000
+  max_seconds: 3600
+search:
+  # High ceilings let the shared time cap stop all methods.
+  generations: 100000
+  candidates: 1000000
+  brackets: 100000

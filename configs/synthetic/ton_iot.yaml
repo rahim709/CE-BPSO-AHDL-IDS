@@ -1,0 +1,36 @@
+extends: ../debug.yaml
+# SYNTHETIC SOFTWARE FIXTURE; not original ToN-IoT or research evidence.
+data:
+  name: ton_iot
+  synthetic: true
+  files: [datasets/synthetic/ton_iot/SYNTHETIC_train.csv]
+  test_files: [datasets/synthetic/ton_iot/SYNTHETIC_test.csv]
+  provenance_file: datasets/synthetic/ton_iot/SYNTHETIC_MANIFEST.json
+  target: type
+  features: null
+  processed: datasets/processed/synthetic/ton_iot
+  normal_label: normal
+  normalization: minmax
+  drop_columns: [label, src_ip, dst_ip]
+architecture:
+  batch_size: 64
+search:
+  population: 2
+  generations: 1
+  epochs: 2
+  min_epochs: 1
+  eta: 2
+  candidates: 2
+compute:
+  max_epochs: 4
+diagnostics:
+  candidates: 2
+  seeds: [42]
+  epochs: [1, 2]
+  long_epochs: 3
+  shortlist: 1
+  audit_rejected: 1
+comparison:
+  seeds: [42]
+  methods: [bpso, bpso_reduced, bpso_sh, hyperband, dehb, random, surrogate]
+  final_train: false

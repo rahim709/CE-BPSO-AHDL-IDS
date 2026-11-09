@@ -1,0 +1,354 @@
+{
+  "cpu_tests": {
+    "tests": 96,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "cuda_targeted_tests": {
+    "tests": 41,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "reliability": {
+    "requested_architectures": 25,
+    "requested_seeds": [
+      42,
+      43,
+      44
+    ],
+    "requested_budgets": [
+      3,
+      10,
+      30
+    ],
+    "completed_30_epoch_trajectories": 61,
+    "requested_terminal_trajectories": 75,
+    "charged_epochs": 1830,
+    "wall_seconds": 420.7223319799996,
+    "gpu_seconds": 403.8190207847874,
+    "rankings": [
+      {
+        "seed": 42,
+        "early_budget": 3,
+        "reference_budget": 30,
+        "cohort_complete": true,
+        "n": 25,
+        "k": 5,
+        "kept": 8,
+        "ranking_informative": true,
+        "spearman": 0.3631609229885818,
+        "kendall": 0.285736061887917,
+        "top_k_overlap": 0.4,
+        "premature_elimination_rate": 0.4,
+        "selection_regret": 0.1370533847435954,
+        "selection_regret_range": [
+          0.1370533847435954,
+          0.1370533847435954
+        ],
+        "incorrectly_rejected_indices": [
+          1,
+          14
+        ],
+        "early_top_k_boundary_tied": false,
+        "late_top_k_boundary_tied": false,
+        "promotion_boundary_tied": false,
+        "deterministic_tie_break": {
+          "policy": "stable candidate index; descriptive only",
+          "top_k_overlap": 0.4,
+          "premature_elimination_rate": 0.4,
+          "selection_regret": 0.1370533847435954
+        },
+        "early_ties": 12,
+        "late_ties": 9
+      },
+      {
+        "seed": 42,
+        "early_budget": 10,
+        "reference_budget": 30,
+        "cohort_complete": true,
+        "n": 25,
+        "k": 5,
+        "kept": 8,
+        "ranking_informative": true,
+        "spearman": 0.913422445953612,
+        "kendall": 0.8097743570853834,
+        "top_k_overlap": 0.6,
+        "premature_elimination_rate": null,
+        "selection_regret": 0.019911928560805592,
+        "selection_regret_range": [
+          0.019911928560805592,
+          0.019911928560805592
+        ],
+        "incorrectly_rejected_indices": null,
+        "early_top_k_boundary_tied": false,
+        "late_top_k_boundary_tied": false,
+        "promotion_boundary_tied": true,
+        "deterministic_tie_break": {
+          "policy": "stable candidate index; descriptive only",
+          "top_k_overlap": 0.6,
+          "premature_elimination_rate": 0.2,
+          "selection_regret": 0.019911928560805592
+        },
+        "early_ties": 10,
+        "late_ties": 9
+      },
+      {
+        "seed": 43,
+        "early_budget": 3,
+        "reference_budget": 30,
+        "cohort_complete": true,
+        "n": 25,
+        "k": 5,
+        "kept": 8,
+        "ranking_informative": true,
+        "spearman": 0.8047872451415544,
+        "kendall": 0.6525351630658942,
+        "top_k_overlap": 0.8,
+        "premature_elimination_rate": null,
+        "selection_regret": 0.2565072604401872,
+        "selection_regret_range": [
+          0.2565072604401872,
+          0.2565072604401872
+        ],
+        "incorrectly_rejected_indices": null,
+        "early_top_k_boundary_tied": false,
+        "late_top_k_boundary_tied": false,
+        "promotion_boundary_tied": true,
+        "deterministic_tie_break": {
+          "policy": "stable candidate index; descriptive only",
+          "top_k_overlap": 0.8,
+          "premature_elimination_rate": 0.2,
+          "selection_regret": 0.2565072604401872
+        },
+        "early_ties": 11,
+        "late_ties": 8
+      },
+      {
+        "seed": 43,
+        "early_budget": 10,
+        "reference_budget": 30,
+        "cohort_complete": true,
+        "n": 25,
+        "k": 5,
+        "kept": 8,
+        "ranking_informative": true,
+        "spearman": 0.8052705628843909,
+        "kendall": 0.6809195668044882,
+        "top_k_overlap": 0.8,
+        "premature_elimination_rate": 0.0,
+        "selection_regret": 0.06251545446623819,
+        "selection_regret_range": [
+          0.06251545446623819,
+          0.06251545446623819
+        ],
+        "incorrectly_rejected_indices": [],
+        "early_top_k_boundary_tied": false,
+        "late_top_k_boundary_tied": false,
+        "promotion_boundary_tied": false,
+        "deterministic_tie_break": {
+          "policy": "stable candidate index; descriptive only",
+          "top_k_overlap": 0.8,
+          "premature_elimination_rate": 0.0,
+          "selection_regret": 0.06251545446623819
+        },
+        "early_ties": 9,
+        "late_ties": 8
+      },
+      {
+        "seed": 44,
+        "early_budget": 3,
+        "reference_budget": 30,
+        "cohort_complete": false,
+        "n": 11,
+        "k": 5,
+        "kept": 3,
+        "ranking_informative": true,
+        "spearman": 0.6424285906850927,
+        "kendall": 0.5017452060042545,
+        "top_k_overlap": 0.8,
+        "premature_elimination_rate": null,
+        "selection_regret": null,
+        "selection_regret_range": [
+          0.15410323682819405,
+          0.5377324418480193
+        ],
+        "incorrectly_rejected_indices": null,
+        "early_top_k_boundary_tied": false,
+        "late_top_k_boundary_tied": false,
+        "promotion_boundary_tied": true,
+        "deterministic_tie_break": {
+          "policy": "stable candidate index; descriptive only",
+          "top_k_overlap": 0.8,
+          "premature_elimination_rate": 0.6,
+          "selection_regret": 0.15410323682819405
+        },
+        "early_ties": 5,
+        "late_ties": 3
+      },
+      {
+        "seed": 44,
+        "early_budget": 10,
+        "reference_budget": 30,
+        "cohort_complete": false,
+        "n": 11,
+        "k": 5,
+        "kept": 3,
+        "ranking_informative": true,
+        "spearman": 0.9115908275771468,
+        "kendall": 0.8131249357707345,
+        "top_k_overlap": 1.0,
+        "premature_elimination_rate": null,
+        "selection_regret": 0.0,
+        "selection_regret_range": [
+          0.0,
+          0.0
+        ],
+        "incorrectly_rejected_indices": null,
+        "early_top_k_boundary_tied": false,
+        "late_top_k_boundary_tied": false,
+        "promotion_boundary_tied": true,
+        "deterministic_tie_break": {
+          "policy": "stable candidate index; descriptive only",
+          "top_k_overlap": 1.0,
+          "premature_elimination_rate": 0.4,
+          "selection_regret": 0.0
+        },
+        "early_ties": 6,
+        "late_ties": 3
+      }
+    ],
+    "failed_evaluations": 0,
+    "scope": "Prespecified 8192/4096 real-data pilot, full 73-bit space; parent training-fitted MinMax and balanced loss. No test array."
+  },
+  "predictor_heldout_calibration": [
+    {
+      "budget": 3,
+      "test_architectures": 7,
+      "test_seed_observations": 14,
+      "nominal_coverage": 0.8,
+      "empirical_observation_coverage": 1.0,
+      "empirical_architecture_all_seeds_coverage": 1.0,
+      "mean_interval_width": 0.69919227934703,
+      "mae": 0.12608737145583554,
+      "rmse": 0.17041472241678157,
+      "fit_architectures": 12,
+      "calibration_architectures": 6
+    },
+    {
+      "budget": 10,
+      "test_architectures": 7,
+      "test_seed_observations": 14,
+      "nominal_coverage": 0.8,
+      "empirical_observation_coverage": 1.0,
+      "empirical_architecture_all_seeds_coverage": 1.0,
+      "mean_interval_width": 0.3942005480011481,
+      "mae": 0.08163338959138901,
+      "rmse": 0.13144505674196216,
+      "fit_architectures": 12,
+      "calibration_architectures": 6
+    }
+  ],
+  "completed_benchmark_searches": 24,
+  "search_seeds": [
+    501,
+    502,
+    503
+  ],
+  "full_method_online_gpu_saving_percent": -0.00589484335625971,
+  "full_method_online_wall_saving_percent": -0.40513217143461117,
+  "full_validation_mean": 0.633535767846248,
+  "standard_validation_mean": 0.49154843946231974,
+  "ordinary_halving_validation_mean": 0.6831670028298293,
+  "predictive_uncertainty_component_f1_difference": -0.04963123498358135,
+  "cost_component_f1_difference": 0.0,
+  "unamortized_full_gpu_seconds": 432.58344270512197,
+  "final_test": {
+    "bpso": {
+      "accuracy": {
+        "mean": 0.39778167159119543,
+        "sd_across_search_seed_means": 0.09995629278004581
+      },
+      "macro_precision": {
+        "mean": 0.5657279917236595,
+        "sd_across_search_seed_means": 0.16998997080434197
+      },
+      "macro_recall": {
+        "mean": 0.7017471008517294,
+        "sd_across_search_seed_means": 0.16487549757589348
+      },
+      "macro_f1": {
+        "mean": 0.5416228622380708,
+        "sd_across_search_seed_means": 0.15198823789624263
+      },
+      "normal_fpr": {
+        "mean": 0.9036600986564195,
+        "sd_across_search_seed_means": 0.12176988509073225
+      }
+    },
+    "ua_amf_bpso": {
+      "accuracy": {
+        "mean": 0.45755170755170765,
+        "sd_across_search_seed_means": 0.0902378505494706
+      },
+      "macro_precision": {
+        "mean": 0.660351329529595,
+        "sd_across_search_seed_means": 0.11221466562511567
+      },
+      "macro_recall": {
+        "mean": 0.8089152647437036,
+        "sd_across_search_seed_means": 0.05917118532545345
+      },
+      "macro_f1": {
+        "mean": 0.625947364609441,
+        "sd_across_search_seed_means": 0.09458697525427229
+      },
+      "normal_fpr": {
+        "mean": 0.8403601050154889,
+        "sd_across_search_seed_means": 0.13832103695727893
+      }
+    }
+  },
+  "final_test_status": "historical, previously examined; not blind independent data",
+  "final_model_references_completed": 18,
+  "unique_final_models": 15,
+  "verified_predictions": {
+    "cohort": 183,
+    "benchmark": 485,
+    "final_unique": 15
+  },
+  "all_runtime_sources_match_freeze": true,
+  "manuscript_table_matches_seed_results": true,
+  "max_search_wall_overrun_seconds": 0.36897079199843574,
+  "remaining_incomplete": [
+    "14 third-seed reliability terminal trajectories",
+    "full-training rather than reduced-row comparisons",
+    "larger architecture calibration/holdout",
+    "independent capture/test",
+    "more search seeds and formal noninferiority study"
+  ],
+  "research_conclusion": "No demonstrated full-method GPU saving or benefit beyond successive halving; uncertainty hurt one seed; cost term gave no terminal-score benefit. No net end-to-end savings including archive cost, no established novelty/superiority, and final false-alarm rates are unacceptable.",
+  "files_created_or_modified_by_task": [
+    "src/optimization/curve_predictor.py",
+    "src/optimization/predictive.py",
+    "src/optimization/search.py",
+    "configs/ua_amf_prediction.yaml",
+    "tests/test_curve_predictor.py",
+    "scripts/amf_reliability.py",
+    "scripts/amf_fit_predictor.py",
+    "scripts/amf_benchmark.py",
+    "scripts/amf_analyze.py",
+    "scripts/amf_final_evaluation.py",
+    "scripts/amf_write_report.py",
+    "scripts/amf_finalize.py",
+    "docs/ua_amf_prediction_study.md",
+    "docs/latex/amf_efficiency.tex",
+    "docs/latex/manuscript_body.tex",
+    "docs/latex/references.bib",
+    "docs/latex/manuscript.pdf",
+    "README.md",
+    "docs/latex/README.md"
+  ],
+  "prior_manuscript_backup": "results/ua_amf_prediction_20261108/manuscript_before"
+}

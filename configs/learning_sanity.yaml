@@ -1,0 +1,18 @@
+extends: debug.yaml
+# Conventional learning sanity check, not a new optimizer or paper reproduction.
+# The runner applies each architecture and weighting at the same batch/epoch budget.
+final_epochs: 10
+architecture:
+  batch_size: 256
+  optimizer: adam
+  learning_rate: 0.001
+  cnn:
+    - {padding: same, filters: 16, kernel: 3, pool: 2, activation: relu}
+  rnn:
+    - {kind: gru, units: 32, activation: tanh, regularization: none, dropout: 0.1}
+training:
+  device: cpu
+  threads: 1
+  gradient_clip: 1.0
+  class_weighting: none
+  prediction_epochs: [2, 10]

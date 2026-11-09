@@ -1,0 +1,62 @@
+{
+  "overlaps": {
+    "all_features": {
+      "policy": "report; use group/chronological splits for correlated records",
+      "count_unit": "unique pandas content hashes; not affected row counts",
+      "exact_row_overlap_train_val": 0,
+      "predictor_overlap_train_val": 0,
+      "exact_row_overlap_train_test": 0,
+      "predictor_overlap_train_test": 0,
+      "exact_row_overlap_val_test": 0,
+      "predictor_overlap_val_test": 0,
+      "predictor_hashes_with_conflicting_labels": 0
+    },
+    "without_time": {
+      "policy": "report; use group/chronological splits for correlated records",
+      "count_unit": "unique pandas content hashes; not affected row counts",
+      "exact_row_overlap_train_val": 2051,
+      "predictor_overlap_train_val": 2033,
+      "exact_row_overlap_train_test": 2102,
+      "predictor_overlap_train_test": 2087,
+      "exact_row_overlap_val_test": 1462,
+      "predictor_overlap_val_test": 1448,
+      "predictor_hashes_with_conflicting_labels": 105
+    }
+  },
+  "time_sorted_class_coverage": {
+    "train": {
+      "0": 34905,
+      "2": 8821,
+      "7": 6805,
+      "4": 4354,
+      "1": 1523,
+      "6": 1017,
+      "3": 453,
+      "5": 333
+    },
+    "val": {
+      "0": 13094,
+      "2": 3356,
+      "4": 1651,
+      "1": 615,
+      "6": 405,
+      "3": 163,
+      "5": 120
+    },
+    "test": {
+      "0": 13157,
+      "2": 3289,
+      "4": 1632,
+      "1": 625,
+      "6": 415,
+      "3": 166,
+      "5": 120
+    }
+  },
+  "note": "Coverage audit only; time meaning and capture groups unverified; no chronological training was run.",
+  "followup_correction": {
+    "source": "Morris and Gao (2014), Sec. 5.2 and Tables III/VII",
+    "time_semantics": "MODBUS query-response interval, not an absolute acquisition timestamp; sorting time does not create chronological partitions.",
+    "interpretation": "Historical time_sorted_class_coverage is interval-sorted coverage, not chronological coverage; recorded counts and overlaps are unchanged."
+  }
+}

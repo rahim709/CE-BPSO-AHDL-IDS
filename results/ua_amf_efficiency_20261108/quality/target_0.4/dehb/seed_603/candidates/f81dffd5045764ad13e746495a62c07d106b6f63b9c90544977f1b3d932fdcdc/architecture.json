@@ -1,0 +1,23 @@
+{
+  "batch_size": 1024,
+  "optimizer": "momentum",
+  "learning_rate": 5e-05,
+  "cnn": [
+    {
+      "padding": "same",
+      "filters": 256,
+      "kernel": 3,
+      "pool": 2,
+      "activation": "none"
+    }
+  ],
+  "rnn": [
+    {
+      "kind": "lstm",
+      "units": 16,
+      "activation": "none",
+      "regularization": "l1",
+      "dropout": 0.1
+    }
+  ]
+}

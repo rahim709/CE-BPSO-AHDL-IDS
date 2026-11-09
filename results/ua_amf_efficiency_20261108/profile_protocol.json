@@ -1,0 +1,49 @@
+{
+  "development_indices": [
+    0,
+    7,
+    10
+  ],
+  "seed": 982,
+  "epochs": 30,
+  "profiles": {
+    "legacy": null,
+    "vectorized": {
+      "vectorized": true
+    },
+    "resident": {
+      "vectorized": true,
+      "resident": true
+    },
+    "sparse_validation": {
+      "validation_epochs": [
+        3,
+        10,
+        30
+      ]
+    },
+    "deferred_scalars": {
+      "defer_scalar_sync": true
+    },
+    "pinned": {
+      "pin_memory": true
+    },
+    "amp": {
+      "amp": true
+    },
+    "combined": {
+      "vectorized": true,
+      "resident": true,
+      "validation_epochs": [
+        3,
+        10,
+        30
+      ],
+      "defer_scalar_sync": true,
+      "cache_data": true,
+      "cache_model": true
+    }
+  },
+  "wall_cap": 180,
+  "selection_rule": "Choose fastest finite FP32 combined profile only if final model tensors exactly equal legacy for all three development architectures; AMP rejected if drift >.01 or failure."
+}
