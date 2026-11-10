@@ -1,4 +1,7 @@
-### 5.7 Dedicated NMRI specialist and remaining ambiguity
+### V.F Dedicated NMRI specialist and remaining ambiguity
+
+This addendum retains the detailed historical measurements. The [current research report](CE-BPSO-AHDL-IDS.md) contains the reviewed paper prose.
+
 
 Further validation experiments compared the existing hybrid score with Extra Trees, histogram gradient boosting and a neural specialist. The specialists were fitted only on normal and NMRI training records. The neural specialist used GPU training for 100 epochs; the tree methods used CPU. Only predictions assigned to normal or NMRI by the fixed hybrid were reconsidered; other attack decisions were preserved. Threshold calibration included false alarms already assigned to other classes, and threshold ties remained normal.
 

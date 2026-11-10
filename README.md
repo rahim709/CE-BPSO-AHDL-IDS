@@ -4,7 +4,7 @@
 
 **Institution:** Indian Institute of Information Technology, Design and Manufacturing, Kancheepuram
 
-This course project implements binary particle swarm optimization (BPSO) for hybrid neural architecture search and evaluates training-budget allocation for IoT intrusion detection. It includes CNN/GRU models, Successive Halving (SH), Hyperband, DEHB, predictive allocation variants, execution optimizations and an archive-free policy with SH fallback. Research experiments use the official Gas Pipeline dataset. ToN-IoT, Bot-IoT and SWaT adapters are included; their generated fixtures verify software only.
+This course project implements binary particle swarm optimization (BPSO) for hybrid neural architecture search and evaluates compute allocation for IoT intrusion detection. It includes CNN/GRU models, Successive Halving (SH), Hyperband, DEHB, predictive allocation variants, execution optimizations and an archive-free policy with SH fallback. Research experiments use the official Gas Pipeline dataset. ToN-IoT, Bot-IoT and SWaT adapters are included; their generated fixtures verify software only.
 
 ## Results
 
@@ -36,9 +36,9 @@ The matched experiment uses seeds 601–603, 8,192 training and 4,096 validation
 | Online prediction | 11.919 | 2/3 | 0.5030 ± 0.3231 |
 | Online + uncertainty | 11.950 | 2/3 | 0.5030 ± 0.3231 |
 
-Archive-free full consumed **28.99% less online GPU time than BPSO**, but made **zero predictive promotion decisions** in the primary trials and used SH fallback. Its 0.47% timing difference from SH is execution variation, not evidence of a learning advantage. DEHB was the strongest measured control. Offline UA also requires a historical predictor archive costing **403.819 GPU seconds**, which is excluded from the online-time column above; its standalone target-or-cap total is 416.450 GPU seconds. The archive-free modes require zero separately trained GPU archive jobs.
+Archive-free full consumed **28.99% less online GPU time than BPSO**, but made **zero predictive promotion decisions** in the primary trials and used SH fallback. Its 0.47% timing difference from SH is execution variation, not evidence of a learning advantage. DEHB was the strongest baseline. Offline UA also requires a historical predictor archive costing **403.819 GPU seconds**, which is excluded from the online-time column above; its standalone target-or-cap total is 416.450 GPU seconds. The archive-free modes require zero separately trained GPU archive jobs.
 
-The final study contains 42 matched runs and one separate 120-second cold-start diagnostic. The diagnostic matured 16 terminal architectures, fitted one CPU predictor and applied no predictive promotions. It is not a matched superiority comparison. Timing is synchronized training/validation elapsed, including host stalls; it is not pure kernel time or energy. Final epochs may overrun the cap, while strict-budget score checks exclude observations beyond the horizon.
+The final study contains 42 matched runs and one separate 120-second cold-start diagnostic. The diagnostic matured 16 terminal architectures, fitted one CPU predictor and applied no predictive promotions. It is not a matched superiority comparison. Timing is synchronized training/validation elapsed, including host stalls; it is not pure kernel time or energy. Final epochs may overrun the cap, while score checks under the strict compute limit exclude observations beyond the horizon.
 
 Evidence: [complete final report](results/ua_amf_online_20261108/REPORT.md), [comparison CSV](results/ua_amf_online_20261108/comparison.csv), [per-seed measurements](results/ua_amf_online_20261108/seed_results.csv), [anytime measurements](results/ua_amf_online_20261108/anytime.csv), [campaign costs](results/ua_amf_online_20261108/campaign_costs.csv), and [method description](docs/archive_free_ua_amf.md).
 
@@ -46,7 +46,7 @@ Evidence: [complete final report](results/ua_amf_online_20261108/REPORT.md), [co
 
 Vectorized batches, resident data, bounded caches and deferred scalar synchronization reduced aggregate GPU elapsed across three development architectures from **25.059 to 20.182 seconds (19.47%)**, with identical final parameter tensors. AMP exceeded the development tolerance and was rejected. The continuation check reduced model constructions from three to one and checkpoint loads from two to zero while retaining exact weights.
 
-The earlier offline adaptive study used a charged continuation from an 8-second pilot to a 20-second budget. It is an exploratory continuation, not an independent replication:
+The earlier offline adaptive study used a charged continuation from an 8-second pilot to a 20-GPU-second limit. It is an exploratory continuation, not an independent replication:
 
 | Method | Target-or-cap GPU seconds | Target reached | 20-second validation macro-F1 |
 |---|---|---|---|
@@ -66,7 +66,7 @@ Evidence: [efficiency report](results/ua_amf_efficiency_20261108/REPORT.md), [co
 
 ### Historical-test evaluation of search-selected models
 
-The preceding offline-efficiency study evaluated selected architectures using one dedicated final training seed per selection and the same historical test rows. Three search seeds can select the same trained architecture; these are not three independent detector fits. These results use different budgets and data views from the full-data reference above and cannot establish matched detector superiority.
+The preceding offline-efficiency study evaluated selected architectures using one dedicated final training seed per selection and the same historical test rows. Three search seeds can select the same trained architecture; these are not three independent detector fits. These results use different compute allocations and data views from the full-data reference above and cannot establish matched detector superiority.
 
 | Selected method | Historical-test macro-F1 | Accuracy | Normal false alarms |
 |---|---|---|---|
@@ -301,17 +301,19 @@ CSV inputs are transformed with the saved training-fitted preprocessor. NPZ inpu
 - [Technical report in Markdown](docs/reports/CE-BPSO-AHDL-IDS-Implementation-Report.md)
 - [LaTeX build guide](docs/latex/README.md)
 - [References](docs/latex/references.bib)
+- [Paper review and notation clarification](docs/latex/review_report.md)
 
 With pdfLaTeX, BibTeX and the TeX packages listed in the build guide installed:
 
 ```bash
-python scripts/compile_submission.py
+python3 scripts/compile_submission.py
+python3 -m scripts.build_submission_documents
 ```
 
-This builds both main PDFs from their bundled tables, figures and final search-result dependencies. The separate course submission also contains a self-contained `overleaf/` project with `main.tex`, `references.bib`, `images/` and the required IEEE style/license files. Select `main.tex` and pdfLaTeX in Overleaf. Scientific limitations and uncompleted evaluations remain documented in [REMAINING_ACTIONS.md](docs/latex/REMAINING_ACTIONS.md).
+The first command compiles both PDFs from their current LaTeX sources and bundled assets. The second synchronizes both Markdown reports from those same sources without rerunning experiments. The implementation report includes the pilot, exploratory continuation and fresh archive-free comparison. Older study-specific prose generators describe historical stages and should not be used to replace the reviewed text. The separate course submission also contains a self-contained `overleaf/` project with `main.tex`, `references.bib`, `images/` and the required IEEE style/license files. Select `main.tex` and pdfLaTeX in Overleaf. The [paper review](docs/latex/review_report.md) records the current checks and resolved notation question. [REMAINING_ACTIONS.md](docs/latex/REMAINING_ACTIONS.md) is an earlier planning record; its pending-comparison statements predate the completed compute-limited studies.
 
 ## Included and local-only artifacts
 
 Final metrics, per-seed measurements, comparison tables, trajectories, prediction archives, graph inputs, CPU/GPU test XML, environment records and frozen protocols are included. Supporting earlier studies remain where the final paper depends on them. `.gitignore` excludes credentials, environments, raw/processed datasets, trained model exports, caches and document intermediates while retaining the exported results and graphs. Source backups, manuscript backups, debug-only runs are omitted.
 
-The contribution is an implemented and measured architecture-search framework, execution optimizations and a controlled assessment of budget allocation. Neither a novel optimizer nor statistically established search superiority, exact reproduction of the source paper's numerical scores, or independent-release detector performance has been demonstrated.
+The contribution is an implemented and measured architecture-search framework, execution optimizations and a controlled assessment of compute allocation. Neither a novel optimizer nor statistically established search superiority, exact reproduction of the source paper's numerical scores, or independent-release detector performance has been demonstrated.

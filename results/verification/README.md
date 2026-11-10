@@ -14,3 +14,5 @@ The package CPU suite was rerun from this exported source. GPU records are prese
 Saved predictions, metric ledgers and feature cutoffs were checked from the exported files: 43 archive-free runs / 948 predictions, 108 efficiency pilot runs / 1,184 predictions, and 54 continuation runs / 1,069 predictions. All checks passed.
 
 The standalone Overleaf project compiled with pdfLaTeX and BibTeX, with no unresolved references or overfull text boxes. Final comparison plots rebuilt from the included measurements.
+
+The report and README editorial update did not rerun these suites. Its separate checks are recorded in [documentation checks](../../docs/reports/documentation_checks.json).

@@ -1,4 +1,7 @@
-### 5.6 Validation-selected correction of false alarms
+### V.E Validation-selected correction of false alarms
+
+This addendum retains the detailed historical measurements. The [current research report](CE-BPSO-AHDL-IDS.md) contains the reviewed paper prose.
+
 
 The balanced-loss reference falsely flagged 42.70% of normal test records. An exploratory follow-up compared unweighted and square-root inverse-frequency weighting using the same hybrid architecture, Min–Max preprocessing, Adam settings and a fixed 200-epoch endpoint. Candidate training used seed 42 and directories containing only training and validation arrays. Unweighted and square-root-weighted loss produced validation false-positive rates of 2.0685% and 2.0930%, with attack detection of 90.9104% and 91.3007%, respectively. Square-root weighting had the higher validation macro-F1, 0.8552 versus 0.8480.
 

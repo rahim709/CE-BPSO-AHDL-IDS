@@ -8,7 +8,7 @@ These runnable configurations inherit the canonical settings in `configs/` so da
 | `gas_pipeline.yaml` | Paper-informed BPSO search and fixed model |
 | `gas_low_false_alarm.yaml` | Square-root-weighted hybrid |
 | `submission_evaluation.yaml` | Fixed 200-epoch reference evaluation |
-| `research_extension.yaml` | Training-budget and model controls |
+| `research_extension.yaml` | Training-duration and model controls |
 | `ua_amf.yaml` | Initial adaptive multi-fidelity variant |
 | `ua_amf_prediction.yaml` | Predictive allocation study |
 | `ua_amf_efficient.yaml` | Execution efficiency study |

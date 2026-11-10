@@ -9,7 +9,7 @@ The folders retain their experiment names so the analysis and graph scripts can 
 | `nmri_tradeoff/` | Final specialist predictions, thresholds, protocols and measurements |
 | `false_alarm_optimization/` | Weighted-hybrid validation and final evaluation |
 | `submission_final_evaluation/` | Three fixed-endpoint hybrid reference evaluations |
-| `ua_amf_online_20261108/` | Final archive-free comparison, CPU/GPU records, prediction and budget audits |
+| `ua_amf_online_20261108/` | Final archive-free comparison, CPU/GPU records, prediction and compute-limit audits |
 | `ua_amf_efficiency_20261108/` | Execution profiles, target/fixed-compute comparisons and charged continuation |
 | `ua_amf_prediction_20261108/` | Predictor development and reliability records |
 | `ua_amf_prediction_benchmark_20261108/` | Matched predictive-allocation comparisons |

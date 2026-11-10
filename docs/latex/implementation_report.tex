@@ -2,6 +2,9 @@
 \usepackage[margin=25mm]{geometry}
 \usepackage{lmodern}
 \input{common}
+\ifdefined\pdfinterwordspaceon
+  \pdfinterwordspaceon
+\fi
 \input{authors}
 \input{extended_macros}
 \input{final_macros}
@@ -50,7 +53,7 @@ Gosala Buela & CS23I1007
 \vspace*{5mm}
 \end{titlepage}
 \begin{abstract}
-This report presents the implementation and experimental evaluation of budget-constrained hybrid neural architecture search for intrusion detection. The framework includes train-fitted preprocessing, a 73-bit BPSO representation, seven search controls, cumulative checkpoint training and fixed-endpoint evaluation. Real Gas Pipeline data contain 97,019 records, 26 predictors and eight verified classes. Validation experiments evaluated a four-preset cohort at 3/10/30 epochs across three seeds, three normalization choices, MLP/CNN/GRU baselines, four reference continuations to 200 epochs and a predictor-state-grouped split. At 30 epochs, reference validation macro-F1 was \ExtColumnThirty{} with column L2 and \ExtMinmaxThirty{} with Min--Max. State-grouped hybrid validation reached \ExtGroupedHybrid{}. Three separately initialized reference models then achieved test macro-F1 \FinalTestFOne{} $\pm$ \FinalTestFOneSD{} after exactly 200 epochs on the existing split. Each CPU and CUDA-configured software suite passed 74 tests, and bounded workflow checks exercised all experiment stages. The reference evaluation is not a full-budget BPSO result or an independent blinded test. Matched-resource search comparisons and independent evaluation remain future work.
+Neural architecture search for intrusion detection requires useful evaluation under limited compute. This report documents a 73-bit BPSO CNN--RNN framework and investigates multi-fidelity allocation on real Gas Pipeline data. An earlier archive-based uncertainty-aware (UA) method reduced online GPU use but required 403.82 GPU seconds of predictor observations, eliminating end-to-end savings. We implement an archive-free candidate that begins as BPSO with successive halving (SH). It learns only from search-generated observations using architecture-disjoint, prequentially checked CPU prediction. In 42 fresh compute-limited runs across three seeds, the full archive-free method used 11.947 GPU seconds on average. This is the mean time to reach a validation macro-F1 of 0.6 or to exhaust the cap. Standard BPSO used 16.824 GPU seconds, giving a reduction of 28.99\% in total GPU computation. Targets were attained in 2/3 versus 1/3 seeds. However, predictive promotion never activated in the short searches. Results matched ordinary halving, so the measured saving is attributable to multi-fidelity fallback rather than online uncertainty learning. DEHB, the strongest baseline, reached 3/3 targets using 6.778 GPU seconds. Existing test results use a historical split already known during development. The work supports reproducible engineering and removal of archive overhead; superiority or novelty of uncertainty-aware optimization remains unsupported. The technical chapters retain the implementation details and earlier validation records; the final recorded search suite passed 110 CPU and 55 targeted CUDA-configured tests.
 \end{abstract}
 \tableofcontents
 \listoffigures
@@ -58,14 +61,14 @@ This report presents the implementation and experimental evaluation of budget-co
 
 \chapter{Research problem, scope, and evidence rules}
 \section{Problem statement}
-The engineering problem is to implement an auditable search over hybrid neural architectures for multiclass IoT intrusion detection. For training data $D_{\rm tr}$, validation data $D_{\rm va}$, architecture/training configuration $a\in\mathcal A$, seed $s$, and epoch budget $b$, define
+The engineering problem is to implement an auditable search over hybrid neural architectures for multiclass IoT intrusion detection. For training data $D_{\rm tr}$, validation data $D_{\rm va}$, architecture/training configuration $a\in\mathcal A$, seed $s$, and training duration $b$, define
 \begin{equation}
  \theta_{a,b,s}=\operatorname{Train}(a,D_{\rm tr},b,s),\quad
  a^*\in\arg\max_{a\in\mathcal A}\macroF(D_{\rm va};\theta_{a,b,s}).
 \end{equation}
 The selected architecture is retrained with a dedicated final seed and evaluated at a fixed endpoint on $D_{\rm te}$. The test partition is excluded from search fitness and transform fitting.
 
-The research question is whether low-budget fitness reliably orders architectures that learn at larger budgets, and whether established multi-fidelity controls adequately preserve useful late learners under limited compute. The extension answered the ranking question descriptively for four fixed presets: the epoch-10 winner matched the epoch-30 winner in all three seeds. Full-space reliability and comparative allocation benefits remain unanswered. An implemented search procedure is not evidence that its selected model is effective or that its allocation policy is novel.
+The research question is whether fitness from short training runs reliably orders architectures that learn with longer training, and whether established multi-fidelity controls adequately preserve useful late learners under limited compute. The extension answered the ranking question descriptively for four fixed presets: the epoch-10 winner matched the epoch-30 winner in all three seeds. Full-space reliability and comparative allocation benefits remain unanswered. An implemented search procedure is not evidence that its selected model is effective or that its allocation policy is novel.
 
 \section{Audit scope and evidence hierarchy}
 The review inspected the Python source, tests, YAML configurations, CLI and scripts, saved JSON/CSV records, prediction archives, training trajectories, environment records, and the supplied 19-page IEEE reference PDF. The source modules cover preprocessing and fixtures; neural construction and training; binary encoding, BPSO and scheduling; ranking and reporting; and configuration/provenance. The evidence inventory recorded 6,136 files at audit time with checksums. The inventory is a snapshot rather than a claim that every binary checkpoint was exhaustively validated. Saved predictions were re-scored; covered tests were rerun; selected integration paths and new conventional controls were executed. Checkpoint correctness beyond covered cases, every paper-space architecture, hardware portability, and crash recovery at every instruction boundary were not proved.
@@ -73,14 +76,14 @@ The review inspected the Python source, tests, YAML configurations, CLI and scri
 Observed results, historical measurements, implementation choices and planned work are distinguished. External paper numbers are not project results. The extended normalization, component and grouping controls used validation only. A subsequent fixed-reference study used dedicated final seeds and tested after 200 epochs, with its protocol recorded before generating new test predictions. Archived predictions were also re-scored to verify metric integrity. Earlier test outcomes and split audits were already known, so the final-reference study is an evaluation on the existing development-known split rather than an independently blinded experiment.
 
 \section{Academic contribution and scope}
-The project contributes an implemented search framework, repeated validation experiments and a fixed-endpoint reference evaluation. These provide evidence for an academic implementation and empirical study. A search-efficiency or new-optimizer contribution is not experimentally established. A competitive research-publication claim would additionally require matched-resource search comparisons, independent evaluation and venue-specific review. The author details follow the project requirements; no material has been submitted to a venue.
+The project contributes an implemented search framework, repeated validation experiments, fixed-endpoint reference evaluations and measured compute comparisons. FP32 execution optimizations and archive-free SH fallback reduced elapsed computation in the tested settings. Online predictive promotion did not activate in the short matched searches, so those savings do not establish superior uncertainty-aware allocation. Full-scale method comparisons and independent evaluation remain outstanding.
 
 \chapter{Related work and research gap}
 Lu et al.~\cite{lu2025} combined binary architecture encoding, BPSO, and hybrid convolutional/recurrent models for intrusion detection. That study is the direct source of the implementation. Reusing its search mechanics constitutes an independent implementation, not algorithmic novelty. Its Gas accuracy of 0.9897 and F1 of 0.9744 are external reference values. Unknown partition identities and multiclass averaging prevent a controlled numerical reproduction claim.
 
-Random search~\cite{bergstra2012} provides a standard unguided hyperparameter-search control. Successive halving~\cite{jamieson2016} allocates increasing budgets to surviving candidates. Hyperband~\cite{li2018} uses multiple halving brackets. DEHB~\cite{awad2021} combines differential evolution and Hyperband. BOHB~\cite{falkner2018} combines model-based proposals with multi-fidelity allocation. Their existence prevents claiming that adaptive resource allocation alone is a research gap. BOHB was not implemented or evaluated in this repository; it remains a relevant additional control if a new allocation method is proposed.
+Random search~\cite{bergstra2012} provides a standard unguided hyperparameter-search control. Successive halving~\cite{jamieson2016} allocates increasing training durations to surviving candidates. Hyperband~\cite{li2018} uses multiple halving brackets. DEHB~\cite{awad2021} combines differential evolution and Hyperband. BOHB~\cite{falkner2018} combines model-based proposals with multi-fidelity allocation. Their existence prevents claiming that adaptive resource allocation alone is a research gap. BOHB was not implemented or evaluated in this repository; it remains a relevant additional control if a new allocation method is proposed.
 
-The narrow unresolved empirical gap is whether this IDS architecture space exhibits a repeatable early-versus-late selection problem after ordinary training issues and data dependence are controlled, and whether a proposed policy improves on existing controls under matched resources. No positive answer follows from prediction collapse or undefined rank correlations. A focused prior-art review around any future concrete mechanism remains necessary; the present bibliography is not an exhaustive novelty search.
+The narrow unresolved empirical gap is whether this IDS architecture space exhibits a repeatable early-versus-late selection problem after ordinary training issues and data dependence are controlled, and whether a proposed policy improves on existing controls under matched resources. Prediction collapse or undefined rank correlations alone do not answer these questions. A focused prior-art review around any future concrete mechanism remains necessary; the present bibliography is not an exhaustive novelty search.
 
 The dataset owner distinguishes multiple Gas releases and warns of unintended operating-condition patterns in the older Gas/Water collection~\cite{morrisdata}. This warning motivates caution; it does not identify a causal shortcut in the current file. Matching row counts does not identify the reference paper's exact bytes.
 
@@ -120,7 +123,7 @@ For minibatch $B$, class weight $\alpha_{y_i}$, and recurrent weight matrices $\
  +\lambda_1\!\sum_{W\in\mathcal W_r^{(1)}}\!\|W\|_1
  +\lambda_2\!\sum_{W\in\mathcal W_r^{(2)}}\!\|W\|_F^2.
 \end{equation}
-The unweighted default uses $\alpha_c=1$. Balanced weights use $n/(K n_c)$ from training labels only, normalized to unit mean. Square-root balanced weights are also available. The per-minibatch denominator follows PyTorch weighted-mean cross entropy. The logged epoch loss averages minibatch losses by batch size; it is not an independently recomputed corpus weighted loss. Encoded regularization applies to recurrent layer weights, not every network parameter; biases are excluded. Default L1/L2 coefficients are $10^{-5}$. The bounded learning controls used gradient clipping at norm 1, Adam, learning rate 0.001, and batch size 256.
+The unweighted default uses $\alpha_c=1$. Balanced weights use $n/(K n_c)$ from training labels only, normalized to unit mean. Square-root balanced weights are also available. The per-minibatch denominator follows PyTorch weighted-mean cross entropy. The logged epoch loss averages minibatch losses by batch size; it is not an independently recomputed corpus weighted loss. Encoded regularization applies to recurrent layer weights, not every network parameter; biases are excluded. Default L1/L2 coefficients are $10^{-5}$. The compute-limited learning controls used gradient clipping at norm 1, Adam, learning rate 0.001, and batch size 256.
 
 \section{Binary particle swarm optimization}
 For particle $i$, dimension $j$, and generation $t$, the implemented update is
@@ -133,19 +136,19 @@ For particle $i$, dimension $j$, and generation $t$, the implemented update is
 All random draws are independent across dimensions and updates. Positions initialize uniformly as bits; velocities initialize uniformly in $[-10,10]$. This out-of-range replacement follows the selected equation interpretation, rather than clipping. Strictly higher validation macro-F1 replaces personal/global bests. The source algorithm's contradictory global-best inequality was interpreted as a printing error. The implementation returns an evaluated candidate rather than an unevaluated final position.
 
 \noindent\fbox{\begin{minipage}{.94\linewidth}
-\textbf{Algorithm 1: implemented fixed-budget BPSO}\par
+\textbf{Algorithm 1: implemented fixed-allocation BPSO}\par
 1. Freeze preprocessing, split IDs, codec, training seed, and compute cap.\par
 2. Initialize positions, velocities, personal bests, and global best.\par
-3. For $G$ evaluated populations: decode each particle; evaluate validation macro-F1 at cumulative budget $b$ using its seed-scoped cache.\par
+3. For $G$ evaluated populations: decode each particle; evaluate validation macro-F1 at cumulative training duration $b$ using its seed-scoped cache.\par
 4. Replace personal/global bests only on strict improvement; save history.\par
 5. Update velocities and positions with the equations above; stop if a compute cap prevents further evaluation.\par
-6. Return the best observed candidate at the highest completed fidelity and record its actual budget.
+6. Return the best observed candidate at the highest completed fidelity and record its actual compute use.
 \end{minipage}}
 
 Paper-informed Gas settings specify 20 particles, 30 populations, 30 search epochs, and 200 final epochs. Coefficients are $c_1=c_2=1.5$, inertia settings 0.8/0.4, and velocity bounds $\pm10$. These settings were configured, not executed at full scale. The generation index starts at zero; $G$ populations are evaluated. The post-final update is not evaluated and need not attain the minimum inertia exactly.
 
 \section{Search controls and continuation}
-Implemented methods are BPSO; reduced-budget BPSO; BPSO with successive halving; random search; Hyperband; upstream DEHB 0.1.1; and a conventional random-forest proposal control. The halving hybrid permits only final-rung scores to update swarm bests. It is an explicit baseline variant, not a literature-exact novel algorithm. Hyperband uses integer cumulative epochs; DEHB thresholds continuous coordinates at 0.5 to obtain bits. Identical phenotype spaces do not imply identical proposal distributions or search mechanics. The surrogate control uses ten warmup observations, 64 proposals, 64 forest trees, and 20\% random exploration by default.
+Implemented methods are BPSO; reduced-allocation BPSO; BPSO with successive halving; random search; Hyperband; upstream DEHB 0.1.1; and a conventional random-forest proposal control. The halving hybrid permits only final-rung scores to update swarm bests. It is an explicit baseline variant, not a literature-exact novel algorithm. Hyperband uses integer cumulative epochs; DEHB thresholds continuous coordinates at 0.5 to obtain bits. Identical phenotype spaces do not imply identical proposal distributions or search mechanics. The surrogate control uses ten warmup observations, 64 proposals, 64 forest trees, and 20\% random exploration by default.
 
 Promotions resume model, optimizer, data-loader generator, Python, NumPy, PyTorch and CUDA random states. Training functions read train/validation arrays only. Caches distinguish phenotype, training configuration, data fingerprint, and seed. A cached evaluation is memoization, not a replicate. Scheduler replay is deterministic for covered native paths; upstream DEHB manages its own scheduler files and its exact resume behavior was not equivalently established by the native replay test.
 
@@ -184,7 +187,7 @@ A descriptive sort by \file{time} retained all eight classes in the first 60\% b
 
 \chapter{Experimental setup and measured results}
 \section{Completed experiments and environments}
-Historical learning checks used Python 3.14.4, PyTorch 2.15.0, NumPy 2.5.4, pandas 3.1.1, scikit-learn 1.9.1, SciPy 1.18.1, and CPU training. A previous bounded CUDA integration recorded an RTX 3050 Laptop GPU with 4 GB and CUDA 13.2. That historical GPU check is separate from this review's fresh CPU run; the full 74-test expanded suite was not rerun on CUDA; the new neural trajectories themselves used CUDA. The prior GPU suite contained 70 tests. No multi-GPU training implementation or source-paper four-GPU equivalence was established.
+Historical learning checks used Python 3.14.4, PyTorch 2.15.0, NumPy 2.5.4, pandas 3.1.1, scikit-learn 1.9.1, SciPy 1.18.1, and CPU training. A previous compute-limited CUDA integration recorded an RTX 3050 Laptop GPU with 4 GB and CUDA 13.2. At that earlier review stage, the fresh integration run used CPU and the full 74-test expanded suite had not yet been rerun on CUDA; the later neural trajectories used CUDA. The prior GPU suite contained 70 tests. Later recorded verification stages are distinguished below and in the computational-efficiency chapter. No multi-GPU training implementation or source-paper four-GPU equivalence was established.
 
 The existing validation study executed two network presets and two weighting modes on four profiles, yielding 16 ten-epoch runs at seed 42. Only Gas was real. The tiny preset used CNN4, kernel 2, pool 1, GRU4 and zero dropout; the reference used CNN16, kernel 3, pool 2, GRU32 and dropout 0.1. Both used Adam at 0.001 and batch 256. The architecture factor changes width, kernel, pooling, and dropout together; it is a preset ablation rather than a pure size study.
 
@@ -253,57 +256,61 @@ Normal recall was approximately 0.5730 and NMRI precision was approximately 0.09
 \begin{figure}[htbp]\centering\includegraphics[width=.85\linewidth]{final_confusion.pdf}
 \caption{Row-normalized final test confusion matrices averaged across three training seeds. The normal-to-NMRI error is prominent.}\end{figure}
 
-\input{false_alarm_study}
-\input{nmri_study}
+\input{manuscript_false_alarm_study}
+\input{manuscript_nmri_study}
 
-\section{Current workflow verification}
-The current CPU and CUDA-configured suites each passed 74 tests. Device-aware tests exercised CUDA, while the three component-continuation tests explicitly used CPU. Fresh bounded integration checks exercised preparation, fixed-model training and testing, architecture search, diagnostics, all seven search controls, reporting and search resume for real Gas data and three synthetic profiles. Synthetic profiles remained marked as artificial and were excluded from research performance tables. The 94 earlier validation measurement records were rechecked against saved predictions and hashes. Environment dependency consistency and Python compilation also passed.
+\section{Earlier workflow verification}
+At that study stage, the CPU and CUDA-configured suites each passed 74 tests. Device-aware tests exercised CUDA, while the three component-continuation tests explicitly used CPU. Compute-limited integration checks exercised preparation, fixed-model training and testing, architecture search, diagnostics, all seven search controls, reporting and search resume for real Gas data and three synthetic profiles. Synthetic profiles remained marked as artificial and were excluded from research performance tables. The 94 earlier validation measurement records were rechecked against saved predictions and hashes. Environment dependency consistency and Python compilation also passed.
+
+\input{report_efficiency}
 
 \chapter{Fairness, ablations, and missing evidence}
-\section{Budget accounting and limitations}
+\section{Compute accounting and limitations}
 An epoch cap bounds completed training passes, not FLOPs: widths, sequence lengths, repairs, and batch sizes change cost. Search time includes scheduler, cache access, model construction, training/validation and I/O; final training, preprocessing and inference are separate. Time limits are checked at epoch boundaries and may overshoot by an epoch plus I/O. The evaluator reserves a full incremental promotion and can stop with unused resources. Fixed BPSO generation limits and caches can also underuse a cap. Equal caps therefore do not imply equal consumption. Report both actual usage and the selected candidate's fidelity. If a run stops before any maximum-fidelity result, its highest-fidelity fallback must be labelled incomplete rather than treated as a completed common-fidelity comparison.
 
-Synchronized GPU seconds measure elapsed occupancy, not energy or kernel-active time. No runtime saving, IoT energy saving, or hardware-level acceleration conclusion is supported. Dense one-hot preprocessing and large candidates can exceed memory on small devices. Numerical failures are recorded; unexpected exceptions propagate. Interrupted partial-epoch work and a hard kill between individually atomic checkpoint/JSON/ledger writes can leave accounting gaps. Experiment directories must not be shared by concurrent processes. Cross-device exact floating-point equivalence is not guaranteed by deterministic settings.
+Synchronized GPU seconds measure elapsed occupancy, not energy or kernel-active time. The later FP32 profiles and target-or-cap comparisons quantify elapsed-time reductions only in their tested settings; they do not measure IoT energy savings or hardware-level acceleration. Dense one-hot preprocessing and large candidates can exceed memory on small devices. Numerical failures are recorded; unexpected exceptions propagate. Interrupted partial-epoch work and a hard kill between individually atomic checkpoint/JSON/ledger writes can leave accounting gaps. Experiment directories must not be shared by concurrent processes. Cross-device exact floating-point equivalence is not guaranteed by deterministic settings.
 
 \section{Ranking protocol: implemented, not completed at research scale}
 The configured study samples 25 unique, diverse canonical phenotypes using greedy max-min Hamming spread, holds them fixed across seeds 42/43/44, and evaluates all at 3, 10 and 30 epochs. Measures include Spearman and Kendall correlation, top-$k$ overlap, elimination and regret
 \begin{equation}R_{b\to B}=\max_a f_B(a)-f_B(\arg\max_a f_b(a)).\end{equation}
 Tied early winners can produce a regret interval. Ties crossing selection boundaries yield null overlap/elimination; index-based tie-breaking is only descriptive. Constant scores have undefined rank correlations. Candidate-index rank changes in saved class-learning CSVs retain deterministic tie-breaking and should not be interpreted as identifiable rank reversals through ties.
 
-The default 200-epoch continuation selects a top shortlist, uniformly sampled early-rejected candidates, and median/worst examples. This subset is selected and cannot identify full-cohort 200-epoch regret or elimination. Setting the shortlist to the complete cohort removes that censoring if all jobs succeed. The two-candidate smoke diagnostic had tied macro-F1 values; it did not establish ranking instability. A new confidence-aware swarm or allocation policy was not implemented or validated.
+The default 200-epoch continuation selects a top shortlist, uniformly sampled early-rejected candidates, and median/worst examples. This subset is selected and cannot identify full-cohort 200-epoch regret or elimination. Setting the shortlist to the complete cohort removes that censoring if all jobs succeed. The two-candidate smoke diagnostic had tied macro-F1 values; it did not establish ranking instability. The four-preset study did not implement or validate a new confidence-aware policy; the later predictive allocation experiments are reported in the computational-efficiency chapter.
 
 \begin{longtable}{>{\raggedright\arraybackslash}p{.27\linewidth}>{\raggedright\arraybackslash}p{.28\linewidth}>{\raggedright\arraybackslash}p{.35\linewidth}}\toprule
 Study / claim & Evidence status & Required next action\\\midrule\endhead
 Conventional controls & Initial controls and repeated state-grouped controls completed & Independent release and locked evaluation; do not claim held-out superiority\\
 Loss and architecture & Repeated hybrid/MLP/CNN/GRU validation controls completed & Separate width/kernel/pool/dropout; repeat independent search and locked final evaluation\\
 Low-fidelity rankings & Four-preset, three-seed 3/10/30 study completed & Full diverse cohort and adequate training protocols\\
-Long-budget ranking & Four reference continuations completed; full cohort missing & Train all candidates if making population-level claims\\
-Search efficiency & Only bounded execution checks & Matched wall-time and resource comparisons, utilization, failures, common final endpoint\\
-Additional established methods & Seven paths implemented, no research-scale ordering & Execute random, Hyperband, DEHB and BPSO controls; consider BOHB for a new allocator claim\\
+Long-training ranking & Four reference continuations completed; full cohort missing & Train all candidates if making population-level claims\\
+Search efficiency & FP32 profiles and compute-limited method comparisons completed; online predictive promotion inactive & Full-scale matched-resource comparisons, utilization, failures and common final endpoints\\
+Additional established methods & Seven paths implemented; compute-limited BPSO, SH, Hyperband and DEHB comparisons completed & Extend the comparisons to full scale; consider BOHB for a new allocator claim\\
 Normalization / repairs & Three scaling choices evaluated across seeds & Padding-repair versus valid-only space; repeat on independent data\\
 Time and split policy & Semantics verified; zero-overlap exact-state grouping evaluated & Actual capture timestamps/order, session groups and independent release\\
 Dataset generality & Original Gas only & Acquire approved original ToN-IoT/Bot-IoT/SWaT releases, schemas and licenses\\
-Novel optimizer & Not established & Identify residual limitation, implement specific mechanism, review its prior art, compare under equal budgets\\
+Novel optimizer & Not established & Identify residual limitation, implement specific mechanism, review its prior art, compare under equal compute limits\\
 Statistical superiority & Missing independent repeated searches & Prespecify paired seed analysis, effect sizes, multiplicity and power; avoid epoch-level pseudo-replication\\\bottomrule
 \end{longtable}
 
 \section{Scope of the reported results}
-The completed results cover the four-preset validation cohort, normalization and component controls, selected long continuations, grouped sensitivity checks and three fixed-reference final evaluations. Full-budget BPSO winner results, matched-resource method comparisons, the complete 25-candidate long-budget cohort, independent-release testing and original ToN-IoT/Bot-IoT/SWaT benchmarks were not measured. Those experiments remain future work and have no assigned performance values.
+The completed results cover the four-preset validation cohort, normalization and component controls, selected long continuations, grouped sensitivity checks, three fixed-reference final evaluations, false-alarm and NMRI follow-ups, runtime profiles and compute-limited search comparisons. Full-length BPSO winner results, full-scale matched-resource comparisons, the complete 25-candidate long-training cohort, independent-release testing and original ToN-IoT/Bot-IoT/SWaT benchmarks remain outstanding. The bounded search studies and inactive online gates do not establish superior uncertainty-aware allocation.
 
 \chapter{Experimental reproducibility}
 Repeatability was supported by recording dataset identity, feature order, partition rows, training-fitted transforms, class weights, model settings, random seeds and fixed endpoints. Validation experiments shared candidate identities across seeds 42, 43 and 44. Final-reference testing used independent restarts at seeds 10042, 10043 and 10044 after exactly 200 epochs. Checkpoint continuation preserved optimizer and random-number state. Saved predictions allowed the reported metrics to be recomputed independently. Repeated seeds describe training variability on fixed data; new releases and capture-aware partitions remain necessary for broader generalization claims.
 
 \chapter{Conclusion and future work}
-This project developed a reproducible framework for automated hybrid intrusion detection and evaluated how training budgets, preprocessing and model choices affect its evidence. Training-only transforms, validation-only candidate fitness and fixed-endpoint testing provided a consistent progression from data preparation to evaluation. The completed workflow checks and prediction audits support the implemented behavior within the tested cases.
+This project developed a reproducible framework for automated hybrid intrusion detection and evaluated how training duration, preprocessing and model choices affect its evidence. Training-only transforms, validation-only candidate fitness and fixed-endpoint testing provided a consistent progression from data preparation to evaluation. The completed workflow checks and prediction audits support the implemented behavior within the tested cases.
 
-The experiments show that low-budget fitness must be interpreted in the context of ordinary learning choices. At 30 epochs, Min--Max normalization yielded reference validation macro-F1 \ExtMinmaxThirty{}, compared with \ExtColumnThirty{} for column L2. The epoch-10 winning preset remained the winner at epoch 30 for each of the three seeds in the four-preset cohort. Conventional MLP and CNN controls also performed strongly, so hybrid complexity alone did not establish a performance advantage. The grouped sensitivity study further showed the importance of examining repeated operating states when interpreting random-split results.
+The experiments show that fitness from short training runs must be interpreted in the context of ordinary learning choices. At 30 epochs, Min--Max normalization yielded reference validation macro-F1 \ExtMinmaxThirty{}, compared with \ExtColumnThirty{} for column L2. The epoch-10 winning preset remained the winner at epoch 30 for each of the three seeds in the four-preset cohort. Conventional MLP and CNN controls also performed strongly, so hybrid complexity alone did not establish a performance advantage. The grouped sensitivity study further showed the importance of examining repeated operating states when interpreting random-split results.
 
-Three separately initialized reference models achieved mean test macro-F1 \FinalTestFOne{} with sample SD \FinalTestFOneSD{} at the fixed 200-epoch endpoint. These results extend the project beyond short-budget execution checks while remaining specific to the fixed reference and historical partition. Class recall and normal-class false alarms remain necessary measures of detector usefulness. The work supports an academic implementation and empirical evaluation contribution; it does not establish a new optimizer or measured search speedup.
+Three separately initialized reference models achieved mean test macro-F1 \FinalTestFOne{} with sample SD \FinalTestFOneSD{} at the fixed 200-epoch endpoint. These results extend the project beyond execution checks with short training runs while remaining specific to the fixed reference and historical partition. Class recall and normal-class false alarms remain necessary measures of detector usefulness. The work supports an academic implementation and empirical evaluation contribution; it does not establish a new optimizer or superior uncertainty-aware allocation.
 
-\input{false_alarm_conclusion}
-\input{nmri_conclusion}
+The archive-free follow-up removed separately trained GPU predictor observations and reduced total target-or-cap GPU cost by 28.99\% relative to BPSO. The short matched searches remained in SH fallback. This saving therefore does not establish a contribution from online prediction or uncertainty. DEHB was the strongest baseline. The contribution of this work is a reproducible framework and a measured comparison of search methods under a fixed \mbox{compute allocation. It does not show that} uncertainty-aware allocation outperforms existing methods.
 
-Future work should compare established search methods under matched actual resources, expand the architecture cohort, and evaluate on independently collected or capture-separated data. Such experiments would determine whether a residual allocation problem remains after adequate training and whether any search-policy change improves practical intrusion detection.
+\input{manuscript_false_alarm_conclusion}
+\input{manuscript_nmri_conclusion}
+
+Future work should extend established-method comparisons to full scale under matched actual resources, expand the architecture cohort, and evaluate on independently collected or capture-separated data. Such experiments would determine whether a residual allocation problem remains after adequate training and whether any search-policy change improves practical intrusion detection.
 
 \appendix
 % The loss-correction supplement is reported above alongside the final results.
@@ -311,7 +318,7 @@ Future work should compare established search methods under matched actual resou
 \section{Source layout and fixes}
 \file{src/data} supplies explicit profiles, file checksums, splitting and transforms; \file{src/models} supplies shape-safe blocks; \file{src/training} supplies loss and cumulative checkpoints; \file{src/optimization} supplies codec, shared evaluator and schedules; \file{src/evaluation} supplies metrics, rankings and exports. Configurations inherit via \file{extends}; exact resolved settings are saved per run. Debug and synthetic configurations are explicitly separated from original-data configurations.
 
-Earlier local review edits were present when this audit began and were preserved. They included unmatched-pattern rejection, canonical-path deduplication, synthetic provenance in the main smoke workflow, and tie/censoring corrections. New changes in this pass extended overlap diagnostics and corrected a remaining artificial CLI validation configuration to set \file{synthetic: true}. New scripts supplied reproducible conventional controls, prediction/inventory auditing, and table/figure generation. No historical checkpoints, partitions or model scores were rewritten.
+Earlier local review edits were present when this audit began and were preserved. They included unmatched-pattern rejection, canonical-path deduplication, synthetic provenance in the main smoke workflow, and tie/censoring corrections. The earlier review extended overlap diagnostics and corrected a remaining artificial CLI validation configuration to set \file{synthetic: true}. The earlier scripts supplied reproducible conventional controls, prediction/inventory auditing, and table/figure generation. No historical checkpoints, partitions or model scores were rewritten.
 
 \section{Commands}
 From the repository root, create an isolated environment and install \file{requirements.txt}; \file{requirements.lock.txt} records the existing full environment and includes platform-specific CUDA packages. It is not a universal portable lock. Obtain the exact approved source file and verify its checksum before preparation. Historical metric audits require the saved prediction artifacts, which a plain Git checkout does not contain.
@@ -325,7 +332,7 @@ export MPLCONFIGDIR=/tmp/bpso-mpl
 # New validation controls and historical integrity audit:
 .venv/bin/python -m scripts.review_submission
 # Rebuild figures/tables from preserved measurement artifacts:
-.venv/bin/python -m scripts.build_submission_assets
+.venv/bin/python -m scripts.build_submission_assets --snapshot
 \end{lstlisting}
 The review script refuses to overwrite an existing completed controls record. Use \file{--output} and \file{--evidence-output} with fresh directories for a repeat and preserve the original. The asset generator reads the exact historical learning directory recorded in its source; it does not fabricate replacement results when artifacts are absent. Its \file{--snapshot} mode instead uses the bundled evidence without historical run directories.
 
@@ -338,7 +345,7 @@ Longer runs, \emph{not executed by this review}, are:
 Before these runs, resolve data dependence, freeze the scientific protocol and explicit feature lists, estimate representative candidate memory/runtime, and set resource caps accordingly. Current configurations are executable templates, not approval to interpret their defaults as fair or sufficiently powered. The Gas BPSO upper bound is 18,000 candidate-training epochs per search before caching. The common diagnostic cohort costs $25\times3\times30=2,250$ cumulative candidate epochs through epoch 30; continuing all to 200 adds 12,750. These are configuration arithmetic, not measured runtime estimates. A seven-method three-seed comparison can consume substantially more; available hardware and feasible parallel scheduling must be assessed without inventing hours or speedups.
 
 \section{Document build and artifact contents}
-Run \file{python3 scripts/compile_submission.py} to compile both LaTeX documents with pdfLaTeX/BibTeX. The bundle contains \file{implementation_report.tex}, \file{manuscript.tex}, shared macros/architecture source, generated table inputs, vector PDF and 300-dpi PNG figures, separate \file{references.bib}, IEEEtran class/style with original notices, verified evidence summaries, build logs and both PDFs. \file{README.md} in the bundle records exact build and archive commands. Original raw data and the licensed reference PDF are not redistributed in the review archive.
+Run \file{python3 scripts/compile_submission.py} to compile both LaTeX documents with pdfLaTeX/BibTeX. Run \file{python -m scripts.build_submission_documents} to synchronize the Markdown reports from the current LaTeX sources without rerunning experiments. The bundle contains \file{implementation_report.tex}, \file{manuscript.tex}, shared macros/architecture source, generated table inputs, vector PDF and 300-dpi PNG figures, separate \file{references.bib}, IEEEtran class/style with original notices, verified evidence summaries, build logs and both PDFs. \file{README.md} in the bundle records exact build and archive commands. Original raw data and the licensed reference PDF are not redistributed in the review archive.
 
 \bibliographystyle{IEEEtran}
 \bibliography{references}
