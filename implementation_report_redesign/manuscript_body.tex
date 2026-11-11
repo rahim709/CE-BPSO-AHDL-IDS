@@ -1,0 +1,315 @@
+\begin{abstract}
+Neural architecture search for intrusion detection requires useful evaluation under limited compute. This project retains a 73-bit BPSO CNN--RNN framework and investigates multi-fidelity allocation on real Gas Pipeline data. An earlier archive-based uncertainty-aware (UA) method reduced online GPU use but required 403.82 GPU seconds of predictor observations, eliminating end-to-end savings. We implement an archive-free candidate that begins as BPSO with successive halving (SH). It learns only from search-generated observations using architecture-disjoint, prequentially checked CPU prediction. In 42 fresh compute-limited runs across three seeds, the full archive-free method used 11.947 GPU seconds on average. This is the mean time to reach a validation macro-F1 of 0.6 or to exhaust the cap. Standard BPSO used 16.824 GPU seconds, giving a reduction of 28.99\% in total GPU computation. Targets were attained in 2/3 versus 1/3 seeds. However, predictive promotion never activated in the short searches. Results matched ordinary halving, so the measured saving is attributable to multi-fidelity fallback rather than online uncertainty learning. DEHB, the strongest baseline, reached 3/3 targets using 6.778 GPU seconds. Existing test results use a historical split already known during development. The work supports reproducible engineering and removal of archive overhead; superiority or novelty of uncertainty-aware optimization remains unsupported.
+\end{abstract}
+\begin{IEEEkeywords}
+Intrusion detection, neural architecture search, binary particle swarm optimization, compute efficiency, class imbalance.
+\end{IEEEkeywords}
+
+\section{Introduction}
+An intrusion detector must identify rare attacks while limiting false alarms on normal traffic. A hybrid neural model requires choices about depth, recurrent units, optimizer and training duration. Each candidate must be trained. Architecture search explores these choices, and shorter runs reduce its cost. The scores from shorter runs must still distinguish promising candidates.
+
+We use BPSO-AHDL-IDS, the convolutional and recurrent architecture-search framework proposed by Lu et al.~\cite{lu2025}, to study model selection with limited computation. The research question was whether fitness from short training runs provided useful evidence about later validation performance after ordinary learning and preprocessing controls were examined. If a model predicts only one class, its accuracy can be misleading and different architectures can receive the same fitness. We therefore check the learning setup and preprocessing before treating such results as a reason to change the search algorithm.
+
+This study supports four contributions. (1) We provide an executable compute-efficient BPSO framework with explicit reproduction choices and validation-only search. (2) We conduct a repeated-seed, four-preset study of 3/10/30-epoch fitness and selected 200-epoch learning trajectories. (3) We examine normalization, neural-component and predictor-state grouping controls on real Gas data. (4) We provide a fixed 200-epoch reference evaluation at three dedicated final-training seeds. The follow-up adds FP32 execution optimization, target-stopping and measured-GPU-compute experiments. The supported contributions concern empirical findings and reproducibility. A separate candidate extension adds architecture-disjoint learning-curve prediction and uncertainty-aware resource allocation, with matched-time comparisons and ablations (Section~\ref{sec:amf-efficiency}). We claim no new BPSO update, and algorithmic novelty has not been established.
+
+\section{Related Work}
+The source method~\cite{lu2025} encodes network choices as binary strings and uses BPSO to search for a hybrid CNN/recurrent model. The source study reported Gas accuracy of 0.9897 and F1 of 0.9744. We include these measurements only for reference. Unknown source-paper partition identities, seeds, feature ordering and multiclass averaging prevent a controlled numerical reproduction claim.
+
+We include random search~\cite{bergstra2012} as a baseline for selecting architectures without a guided proposal rule. Successive halving~\cite{jamieson2016} increases the training allocated to candidates that survive each rung. Hyperband~\cite{li2018} runs several of these brackets. DEHB~\cite{awad2021} adds differential-evolution proposals to Hyperband; BOHB~\cite{falkner2018} uses model-based proposals with multi-fidelity allocation. Adaptive compute \mbox{allocation is} \mbox{therefore a baseline requirement}, not evidence of novelty. We did not implement BOHB.
+
+Do scores from short training runs in this IDS search space reject candidates that improve with more training? We also test whether another allocation rule improves selection with the same resources. These are questions about the tested search space, not assumptions about architecture search in general. The original Gas documentation~\cite{morris2014,hsu2014} also motivates explicit label verification and scrutiny of operating-state dependence.
+
+\section{Problem Formulation and Methodology}
+\subsection{Architecture Selection Under Compute Limits}
+For architecture $a$, training seed $s$ and $b$ cumulative training epochs, define
+\begin{equation}
+ f_b(a,s)=\macroF(D_{\rm va};\operatorname{Train}(a,D_{\rm tr},b,s)).
+\end{equation}
+The search maximizes observed validation fitness under an experimental cap. For evaluation requests $q$ with incremental completed epochs $\Delta e_q$, the resource-limited form is
+\begin{equation}
+ \max_a f_B(a,s)\quad\text{subject to}\quad\sum_q\Delta e_q\leq C_e.
+\end{equation}
+Resource caps can bound search wall time or measured GPU training/validation elapsed time. The fixed-quality protocol stops when an actual 30-epoch candidate reaches the target or the compute cap is exhausted; fixed-compute comparisons use common GPU horizons. Epochs do not equal FLOPs across different models. An equal cap also need not imply equal consumption, because a full promotion may not fit the remaining allowance. Actual epochs, selected fidelity, elapsed search time and failures must therefore accompany a method comparison.
+
+Search uses training and validation only. Architecture, preprocessing, loss and training duration are fixed before final evaluation. Following the validation studies, the reference hybrid was independently initialized using three dedicated training seeds. Evaluation used the existing test split after exactly 200 epochs. This fixed-reference evaluation is separate from BPSO candidate selection and from the earlier validation continuations.
+
+\subsection{Hybrid Model and Encoding}
+\begin{figure}[!t]\centering
+\begin{tikzpicture}[node distance=3mm, font=\scriptsize,
+ block/.style={draw,rounded corners,align=center,text width=.87\linewidth,inner sep=4pt},
+ >={Stealth}]
+\node[block] (data) {Frozen raw files, explicit features, recorded split IDs};
+\node[block,below=of data] (prep) {Training-fitted imputation, encoding and normalization};
+\node[block,below=of prep] (model) {Tabular input $(N,F)\to(N,1,F)$\\Conv1d + activation + max pool $\to (N,L,C)$\\RNN/LSTM/GRU/linear blocks $\to$ last-position classifier};
+\node[block,below=of model] (search) {73-bit search controls; cumulative checkpoint training\\Validation macro-F1 fitness; isolated candidate caches};
+\node[block,below=of search] (final) {Selected fixed architecture + independent final seed\\Fixed training endpoint $\to$ held-out test report};
+\foreach \a/\b in {data/prep,prep/model,model/search,search/final}
+ \draw[->] (\a)--(\b);
+\end{tikzpicture}
+
+
+\caption{Framework architecture. Recurrent blocks traverse the transformed feature axis of one tabular record. Test data are used after the architecture and training endpoint have been fixed.}\label{fig:architecture}\end{figure}
+Each record $(N,F)$ is reshaped to $(N,1,F)$ for one-dimensional convolution, activation and max pooling. The tensor is then transposed to $(N,L,C)$ for sequence-preserving RNN, LSTM, GRU or linear blocks. A classifier reads the last sequence position. This is feature-axis processing, not a temporal window of successive events. Encoded recurrent activations follow each module; native PyTorch recurrent gates are retained.
+
+The paper-informed codec has 73 bits. Eight bits encode batch size, optimizer and learning rate, and two bits encode CNN count. The remaining allocation is four ten-bit CNN slots, one bit for recurrent count, and two eleven-bit recurrent slots. Cache keys use only the active parts of the decoded architecture. Fixed-slot count mappings, pooling, output aggregation and feature order were explicit implementation choices. If an operation is invalid for a short feature sequence, the implementation pads the sequence and records the repair. This policy and the encoding are documented choices. The original authors' code was unavailable for an exact comparison.
+
+\subsection{Training and Swarm Update}
+The minibatch objective is
+\begin{equation}\begin{split}
+ \mathcal L={}&-\frac{\sum_{i\in B}\alpha_{y_i}\log p_\theta(y_i\mid x_i)}{\sum_{i\in B}\alpha_{y_i}}\\
+ &+\lambda_1\!\sum_{W\in\mathcal W_r^{(1)}}\|W\|_1
+ +\lambda_2\!\sum_{W\in\mathcal W_r^{(2)}}\|W\|_F^2.
+\end{split}\end{equation}
+Balanced weights are proportional to inverse training-class frequency and normalized to unit mean. Validation and test frequencies are not used to fit them. The encoding applies L1/L2 penalties to recurrent weights, although the preset controls evaluated here did not enable them. Unweighted loss is the framework default. We explicitly enabled balanced loss for this study.
+
+Let $x_{ij}$ denote the particle position, $p_{ij}$ its personal best and $g_j$ the global best. The BPSO update is
+\begin{align}
+ w_t&=w_{\max}-(w_{\max}-w_{\min})t/G,\\
+ v'_{ij}&=w_tv_{ij}+c_1r_{1,ij}(p_{ij}-x_{ij})+c_2r_{2,ij}(g_j-x_{ij}),\\
+\intertext{Before updating the position, $v_{ij}$ is assigned the updated velocity $v'_{ij}$, with any out-of-range value replaced by an independent Uniform$[0,1]$ draw.}
+ x'_{ij}&=\mathbf{1}\{r_{ij}\leq\sigma(v_{ij})\}.
+\end{align}
+The function $\sigma$ is the logistic sigmoid. Each random factor is sampled independently. A best record changes only when validation macro-F1 strictly improves. We treat the conflicting global-best inequality in the printed source as a typographical error. The search returns candidates that were actually evaluated.
+
+\noindent\textbf{Algorithm 1: compute-efficient search with cumulative training.}
+\begin{enumerate}
+\item Record the raw-file checksums, split IDs, training transforms, codec, seeds and compute limits before starting.
+\item Start the scheduler and request a candidate configuration.
+\item Decode the architecture. Resume the checkpoint matching its seed, data and configuration, or initialize it if none exists.
+\item Train to the requested cumulative training duration and preserve optimizer/RNG state. Then score validation macro-F1.
+\item Record incremental resource use, update the scheduler and promote or propose candidates until the schedule or cap ends.
+\item Record the best observed candidate and its fidelity. Evaluate a separately frozen final model on locked test data only when that experiment is performed.
+\end{enumerate}
+
+We implemented seven paths. These comprise BPSO, reduced BPSO, BPSO with successive halving, random, Hyperband, upstream DEHB 0.1.1 and a conventional random-forest proposal control. BPSO with halving updates swarm bests only from final-rung fitness. Paper-informed Gas settings specify 20 particles, 30 populations, 30 candidate epochs and 200 final epochs, with $c_1=c_2=1.5$, inertia settings 0.8/0.4 and velocity bounds $\pm10$.
+
+\section{Data and Experimental Protocol}
+\subsection{Dataset and Preprocessing}
+The Gas ARFF came from the dataset author's link and contained 97,019 records. It had 26 numeric predictors and eight target codes. The source hash and feature allowlist were preserved, and Table~\ref{tab:class_names} follows the dataset documentation~\cite{morris2014,hsu2014} for code meanings. Stratified splitting with seeds 1729/1730 produced 58,211 training records, with 19,404 records each for validation and test. These partitions were fixed. They do not recover the row identities in the source paper.
+
+\begin{table}[!t]\centering\caption{Verified Gas Pipeline class names. Original numeric targets were preserved.}\label{tab:class_names}
+\resizebox{\columnwidth}{!}{
+\begin{tabular}{ll}
+\toprule
+Class (code) & Meaning \\
+\midrule
+Normal (0) & Normal operation \\
+NMRI (1) & Naive malicious response injection \\
+CMRI (2) & Complex malicious response injection \\
+MSCI (3) & Malicious state command injection \\
+MPCI (4) & Malicious parameter command injection \\
+MFCI (5) & Malicious function command injection \\
+DoS (6) & Denial of service \\
+Recon (7) & Reconnaissance \\
+\bottomrule
+\end{tabular}
+
+}\end{table}
+
+We fitted imputation and normalization on training data only and removed alternate target columns. The column L2, row L2 and Min--Max experiments shared training/validation rows and the fitted imputer. Column L2 divides each feature by its training-column norm. Zero norms are replaced with one. Row L2 uses each record's own norm. Min--Max parameters came from training extrema, and no transformation was fitted to validation extrema.
+
+In the original source, \file{time} means the Modbus query--response interval~\cite{morris2014}. It is not an acquisition timestamp, so sorting it cannot establish chronology. Original ToN-IoT, Bot-IoT and SWaT data were unavailable; generated profiles served only as software fixtures and supplied no original-benchmark efficacy evidence.
+
+\subsection{Preset Cohort and Neural Controls}
+The repeated-seed study froze four hybrid presets before reading new scores. Each used Adam with a learning rate of 0.001 and a batch size of 256. Training used balanced cross entropy, a clipping norm of 1 and GRU dropout of 0.1. Small, reference and wide presets used CNN/GRU widths 8/16, 16/32 and 32/64. Their CNN kernel size was 3 and their pool size was 2. The stacked preset added a CNN32 block with pool size 1 to the reference CNN16 block, followed by GRU32. The cohort was a controlled four-preset sensitivity study, not a sample of the full 73-bit search space.
+
+All four presets reached 3, 10 and 30 epochs under column L2 for seeds 42, 43 and 44. The reference also reached these training durations under Min--Max and row L2. The additional Min--Max models were MLP64/32, CNN16 with a flattened 32-unit head, and GRU32 over the feature sequence. We used them as conventional model-family controls. Their widths, readouts and parameter counts differ, so the scores cannot isolate a single component's effect at equal capacity.
+
+Before observing later scores, we specified 200-epoch continuations for all three column-L2 reference seeds. We also specified one for the Min--Max reference at seed 42. Each continuation resumed its existing weights. These four runs extend earlier fits and are not additional independent fits. The extension contained 27 neural trajectories through epoch 30, plus four longer continuations.
+
+\subsection{Predictor-State Grouping}
+With all 26 features included, the original random partitions had no exact predictor overlap. With time excluded, training and validation shared 2,033 predictor hashes. Training and test shared 2,087. Across the full corpus, 105 non-time predictor hashes had conflicting labels. The audit identifies repeated states but does not measure their effect on scores.
+
+For a separate sensitivity split, we grouped identical states across the 25 non-time features. The hashes used predictors alone, without labels. Seeded group splitting reserved 20\% of groups and split the remaining pool into training and validation groups. It produced 62,198 training, 14,462 validation and 20,359 reserved rows across 7,675 unique groups, with zero shared groups between partitions. Every class occurred in training and validation. Only training/validation arrays were made available to the new runs.
+
+This split evaluated balanced 100-tree random forests, balanced logistic regression with training-fitted standard scaling, and the reference hybrid for seeds 42/43/44. The hybrid used training-fitted Min--Max and was trained for 30 epochs. Grouping separates exact predictor states in this release. Capture identities and actual timestamps are unavailable, so near-duplicate records may still be dependent. Row counts, class proportions and hardware also differ between the grouped and random experiments. Their score difference cannot measure leakage alone.
+
+\subsection{Metrics, Repeats and Hardware}
+Macro-F1 covers all eight training classes, with zero assigned to undefined class metrics. We also report accuracy, per-class recall, predicted-class coverage, confusion matrices and the normal-versus-attack false-positive rate (FPR). The majority baseline always predicts the most frequent training label. Means and sample standard deviations summarize training variability across three seeds on one partition. They do not measure variation across independently collected datasets.
+
+For each seed, we compared the same four candidates using Spearman/Kendall correlation. We also measured selection regret, $\max_a f_{30}(a)-f_{30}(\arg\max_a f_b(a))$. Statistics remained undefined for constant rankings. When selection-boundary ties prevented a unique choice, we reported regret intervals. Four candidates cannot characterize the full search space.
+
+The random-split neural runs and final reference evaluations used an RTX 3050 Laptop GPU with 4~GB, Python 3.14.4, PyTorch 2.15.0 and CUDA 13.2. We ran the state-grouped hybrid controls on CPU and saved the environment and timing records with each experiment. An epoch counts a training pass, not a fixed amount of computation. Synchronized GPU seconds measure elapsed occupancy rather than energy. No test arrays were present in the validation-study directories. Final evaluation reused the original test partition, with its earlier outcomes already known. This was neither a new blind test nor an evaluation on an independent release.
+
+\subsection{Fixed-Endpoint Reference Evaluation}
+The CNN16--GRU32 reference used training-fitted Min--Max scaling and balanced cross entropy. Training used Adam at learning rate 0.001, batch size 256, dropout 0.1 and gradient clipping at norm 1. We fixed seeds 10042, 10043 and 10044 before reading new test predictions. Each run used 200 epochs and an independent initialization; validation peaks did not select checkpoints or stop training. We verified the source checksum and every partition row identity against the original preparation. Test predictions were generated only at the fixed endpoint. We then re-scored them independently to measure the fixed reference's training variability on the existing split. The model was not selected by a full-length BPSO search.
+
+\section{Results}
+\subsection{Training-Duration Sensitivity}
+\begin{table}[!t]\centering\caption{Validation macro-F1, mean $\pm$ sample SD over three training seeds, complete four-preset column-L2 cohort.}\label{tab:cohort}
+\resizebox{\columnwidth}{!}{
+\begin{tabular}{lrrr}
+\toprule
+Preset & Epoch 3 F1 & Epoch 10 F1 & Epoch 30 F1 \\
+\midrule
+Small & 0.0460 $\pm$ 0.0460 & 0.0794 $\pm$ 0.0632 & 0.1724 $\pm$ 0.0478 \\
+Reference & 0.0243 $\pm$ 0.0094 & 0.1309 $\pm$ 0.1186 & 0.4267 $\pm$ 0.2074 \\
+Wide & 0.0705 $\pm$ 0.0550 & 0.4912 $\pm$ 0.0715 & 0.7348 $\pm$ 0.0868 \\
+Stacked & 0.0194 $\pm$ 0.0142 & 0.2903 $\pm$ 0.2629 & 0.4735 $\pm$ 0.1835 \\
+\bottomrule
+\end{tabular}
+
+}\end{table}
+\begin{table}[!t]\centering\caption{Within-seed early-to-30-epoch rankings for four presets. Dashes denote non-identifiable statistics, not zero.}\label{tab:rankings}
+\resizebox{\columnwidth}{!}{
+\begin{tabular}{rrrrr}
+\toprule
+Seed & Early epoch & Spearman & Kendall & Regret \\
+\midrule
+42 & 3 & 0.9487 & 0.9129 & 0.0000 \\
+42 & 10 & 0.8000 & 0.6667 & 0.0000 \\
+43 & 3 & 0.3162 & 0.1826 & 0.0284 \\
+43 & 10 & 0.8000 & 0.6667 & 0.0000 \\
+44 & 3 & 0.2000 & 0.0000 & 0.0000 \\
+44 & 10 & 0.8000 & 0.6667 & 0.0000 \\
+\bottomrule
+\end{tabular}
+
+}\end{table}
+\begin{figure}[!t]\centering\includegraphics[width=\columnwidth]{extended_fidelity.pdf}
+\caption{Validation trajectories of four presets, averaged over three seeds. The presets were fixed before running them and were not selected by a completed BPSO search.}\end{figure}
+The complete cohort appears in Tables~\ref{tab:cohort} and~\ref{tab:rankings}. For every seed, the epoch-10 winner remained best at epoch 30. At epoch 10, regret was zero and Spearman correlation was 0.8 for every seed. Epoch-3 regret was positive only for seed 43 (0.0284). Other presets changed order. We observed no large failure to retain the later winner within the four tested presets and training durations. This does not show that a new allocation rule would improve selection. We did not infer an unobserved full-cohort ranking from a selected 200-epoch subset.
+
+\subsection{Normalization and Component Controls}
+\begin{table}[!t]\centering\caption{Reference CNN--GRU at 30 epochs on the frozen random split. Macro-F1 shows mean $\pm$ sample SD; accuracy and FPR show means across three seeds.}\label{tab:norm}
+\resizebox{\columnwidth}{!}{
+\begin{tabular}{lrrr}
+\toprule
+Scaling & Macro-F1 & Accuracy & FPR \\
+\midrule
+Column L2 & 0.4267 $\pm$ 0.2074 & 0.3136 & 0.9442 \\
+Min--Max & 0.7831 $\pm$ 0.0768 & 0.6550 & 0.5324 \\
+Row L2 & 0.7190 $\pm$ 0.0390 & 0.6710 & 0.4934 \\
+\bottomrule
+\end{tabular}
+
+}\end{table}
+\begin{figure}[!t]\centering\includegraphics[width=\columnwidth]{extended_normalization.pdf}
+\caption{Reference-model validation curves. Shading represents the sample SD over three training seeds on the same dataset; it is not a confidence interval across datasets.}\end{figure}
+The reference obtained mean macro-F1 \ExtColumnThirty{}, \ExtRowThirty{} and \ExtMinmaxThirty{} under column L2, row L2 and Min--Max, respectively. Scaling affected scores in this experiment. This does not establish Min--Max as the best choice in other settings. A preprocessing gain also does not establish a new search method.
+
+\begin{table}[!t]\centering\caption{Conventional neural controls with Min--Max at 30 epochs; three training seeds. Component capacities and readouts differed.}\label{tab:components}
+\resizebox{\columnwidth}{!}{
+\begin{tabular}{lrrrr}
+\toprule
+Model & Macro-F1 & Accuracy & FPR & Params. \\
+\midrule
+MLP & 0.8325 $\pm$ 0.0012 & 0.7247 & 0.4217 & 4,072 \\
+CNN & 0.8275 $\pm$ 0.0032 & 0.7233 & 0.4221 & 7,016 \\
+GRU & 0.7510 $\pm$ 0.0709 & 0.6416 & 0.5469 & 3,624 \\
+CNN--GRU & 0.7831 $\pm$ 0.0768 & 0.6550 & 0.5324 & 5,128 \\
+\bottomrule
+\end{tabular}
+
+}\end{table}
+\begin{figure}[!t]\centering\includegraphics[width=\columnwidth]{extended_class_recall.pdf}
+\caption{Mean class recall of the reference at epoch 30 under two scaling choices. These are validation recalls, not new held-out results.}\end{figure}
+The MLP, CNN-only and GRU-only results are given in Table~\ref{tab:components}. Both the MLP and CNN-only model had higher mean validation macro-F1 than the reference hybrid at this training duration. The experiment therefore did not establish a hybrid advantage. We include parameter counts and FPR because model capacity and errors on normal traffic also matter. The Min--Max reference flagged an average of 53.24\% of normal validation records as attacks, compared with 42.17\% for the MLP. These false-alarm rates do not support deployment readiness. Differences in the remaining model settings also prevent attributing the scores solely to recurrence or convolution.
+
+\subsection{Longer Training and State-Grouped Validation}
+\begin{table}[!t]\centering\caption{Selected reference continuations to 200 epochs. Column L2 used three seeds; Min--Max used seed 42 only. All measurements are validation-only.}\label{tab:long}
+\resizebox{\columnwidth}{!}{
+\begin{tabular}{lrrrr}
+\toprule
+Scaling & Seeds & Epochs & Macro-F1 & Accuracy \\
+\midrule
+Column L2 & 3 & 200 & 0.8390 $\pm$ 0.0084 & 0.7267 \\
+Min--Max & 1 & 200 & 0.8407 (n=1) & 0.7264 \\
+\bottomrule
+\end{tabular}
+
+}\end{table}
+\begin{figure}[!t]\centering\includegraphics[width=\columnwidth]{extended_long.pdf}
+\caption{Reference trajectories with longer training. The Min--Max curve has one seed; its variability is not estimable from this run.}\end{figure}
+After 200 epochs, the column-L2 reference had mean validation macro-F1 \ExtColumnLong{}, while the one Min--Max continuation reached \ExtMinmaxLong{}. Scaling therefore affected the comparison differently at different training durations. The unequal seed counts also prevent a general conclusion about which scaling method is best. These runs extend the earlier reference trajectories. The separate final-seed evaluation below supplies fixed-endpoint test measurements; a full-cohort comparison with longer training remains outstanding.
+
+\begin{table}[!t]\centering\caption{State-grouped validation, mean $\pm$ sample SD over three training seeds. Its validation rows differ from those in the random split.}\label{tab:grouped}
+\resizebox{\columnwidth}{!}{
+\begin{tabular}{lrrr}
+\toprule
+Model & Macro-F1 & Accuracy & FPR \\
+\midrule
+Random forest & 0.8372 $\pm$ 0.0010 & 0.8480 & 0.1885 \\
+Logistic & 0.8018 $\pm$ 0.0000 & 0.6806 & 0.4902 \\
+CNN--GRU & 0.7559 $\pm$ 0.0804 & 0.6077 & 0.6158 \\
+\bottomrule
+\end{tabular}
+
+}\end{table}
+The state-grouped reference achieved mean validation macro-F1 \ExtGroupedHybrid{} (Table~\ref{tab:grouped}) under zero exact non-time state-group overlap. It does not establish capture-level independence, prospective detection or cross-release performance. The reserved group partition was not evaluated by a model.
+
+\subsection{Fixed-Endpoint Test Evaluation}
+\begin{table}[!t]\centering\caption{Fixed CNN16--GRU32 reference after 200 epochs with Min--Max scaling and balanced loss. Validation and test F1 are macro-averages. The historical random-split test partition was retained.}\label{tab:final}
+\resizebox{\columnwidth}{!}{
+\begin{tabular}{rrrrr}
+\toprule
+Seed & Val. F1 & Test acc. & Test F1 & FPR \\
+\midrule
+10042 & 0.8416 & 0.7242 & 0.8456 & 0.4268 \\
+10043 & 0.8423 & 0.7236 & 0.8441 & 0.4271 \\
+10044 & 0.8436 & 0.7243 & 0.8465 & 0.4271 \\
+\bottomrule
+\end{tabular}
+
+}\end{table}
+\begin{figure}[!t]\centering\includegraphics[width=\columnwidth]{final_class_recall.pdf}
+\caption{Test recall at the fixed 200-epoch endpoint. Bars show means and whiskers show sample SD across three final training seeds on the same test rows.}\end{figure}
+The three independent initializations obtained mean test macro-F1 \FinalTestFOne{} $\pm$ \FinalTestFOneSD{}, mean accuracy \FinalTestAccuracy{} and mean normal-class FPR \FinalTestFPR{} (Table~\ref{tab:final}). All three prediction archives reproduced their saved classification metrics and confusion matrices. These results extend the evidence beyond verification with short training runs, but they do not identify a BPSO-selected winner or demonstrate a search benefit. The earlier ten-epoch reference used different scaling and training duration, so the difference cannot be attributed to a single factor. Repeating training with different seeds measures training variability. It does not provide independent test data: the runs share test rows, and repeated operating states create dependence among records.
+
+\begin{table}[!t]\centering\caption{Mean final test class metrics across three training seeds. Support is the fixed test class count.}\label{tab:finalclass}
+\resizebox{\columnwidth}{!}{
+\begin{tabular}{lrrrr}
+\toprule
+Class & Precision & Recall & F1 & Support \\
+\midrule
+Normal & 0.9847 & 0.5730 & 0.7244 & 12,231 \\
+NMRI & 0.0944 & 0.9439 & 0.1717 & 553 \\
+CMRI & 0.9374 & 0.9845 & 0.9604 & 3,093 \\
+MSCI & 0.9677 & 0.9615 & 0.9646 & 156 \\
+MPCI & 0.9810 & 0.9804 & 0.9807 & 1,528 \\
+MFCI & 1.0000 & 0.9652 & 0.9823 & 115 \\
+DoS & 0.9944 & 0.9646 & 0.9792 & 367 \\
+Recon & 1.0000 & 1.0000 & 1.0000 & 1,361 \\
+\bottomrule
+\end{tabular}
+
+}\end{table}
+Table~\ref{tab:finalclass} explains the gap between macro-F1 and accuracy. Normal recall was approximately 0.5730, while NMRI precision was approximately 0.0944 despite NMRI recall of 0.9439. About 42.70\% of normal records were flagged as attacks, predominantly NMRI. Thus high attack recall coexisted with substantial false alarms, and aggregate macro-F1 alone would overstate practical detector quality. No post-test tuning was performed to reduce these errors.
+
+
+\input{manuscript_false_alarm_study}
+
+\input{manuscript_nmri_study}
+
+\subsection{Historical Evidence and Software Verification}
+The earlier ten-epoch held-out reference scored 0.299371 macro-F1 and 0.707792 accuracy, with no CMRI or MSCI records detected. We retained those results. The later validation experiments do not supply replacement test scores. Re-scoring saved predictions reproduced the checked metrics for 47 historical files.
+
+The expanded software suite passed 74 tests per CPU and CUDA-configured run. Component-continuation checks explicitly use CPU, while device-aware checks also exercised CUDA. Compute-limited integration checks covered preparation, training, search, diagnostics, seven-method comparison, reporting and search resume. They used real Gas data and three synthetic profiles. Tests covered train-fitted transforms, encoding, maximization, resource caps, native scheduler replay and tie-aware rankings. The synthetic results support software execution only. These checks support covered behavior, not every architecture or deployment condition.
+
+\FloatBarrier
+
+\input{amf_efficiency}
+
+\section{Limitations and Remaining Research}
+The new measurements address several evidence gaps, although an adaptive-prediction advantage is not established. Full-scale comparisons of BPSO, random search, Hyperband and DEHB with matched actual resources remain incomplete. The four-preset study and short 25-architecture pilot leave full-training search reliability unresolved. They also lack a complete three-seed search study and a complete 200-epoch cohort. Preset rankings were measured under column L2. Another normalization may change them. Mean scores, learning curves and successful runs alone cannot establish statistical superiority or speedup.
+
+The source paper leaves its splits, averaging, feature order and layer conventions uncertain. Our recurrent blocks process feature positions within one record, rather than a sequence of captured events. Normalization and component experiments cover one release and a few seeds. Grouping removed exact shared predictor states. Capture identities remain unknown, and class proportions changed. The dataset owner's warnings about operating conditions~\cite{morrisdata,hsu2014} still apply. We have not evaluated the original ToN-IoT/Bot-IoT/SWaT releases or validated deployment. Nor have we measured energy savings or established equivalence across multiple GPUs.
+
+The next experiments should use a fixed protocol, capture metadata or an independent release, matched-resource search controls and a locked final evaluation endpoint. Any proposed allocation rule also needs comparison with relevant prior methods and ablations of its components. Each of these requires additional measurements.
+
+The new efficiency study adds explicit target stopping, actual GPU-compute comparisons and an exploratory charged continuation. Its controls, engineering profiles, censoring and archive-inclusive costs are reported in Section~\ref{sec:amf-efficiency}; none establish superior uncertainty-aware optimization.
+
+\section{Reproducibility}
+Each experiment retains its dataset checksum, predictor order, partition identities, preprocessing parameters and training settings. Imputation, scaling and class weights used training data alone. Validation used the same candidate identities at seeds 42, 43 and 44. Final reference training restarted at seeds 10042, 10043 and 10044, with evaluation after exactly 200 epochs. Checkpoints preserved model weights, optimizer state and random-number states so larger training allocations could continue earlier runs. Re-scoring saved predictions verified the metrics and confusion matrices. Means and sample standard deviations describe training variability on fixed partitions. Broader generalization requires independent releases.
+
+\section{Conclusion}
+The implemented framework supports examination of hybrid intrusion-detection models with limited computation. Training duration and normalization affected candidate fitness. At 30 epochs, reference validation macro-F1 was \ExtMinmaxThirty{} under Min--Max. Column L2 gave \ExtColumnThirty{}. Across all three seeds in the four-preset cohort, the epoch-10 winner remained best at epoch 30. This warrants checking the training setup when early scores are weak.
+
+At the fixed 200-epoch endpoint, independently initialized reference models reached mean test macro-F1 \FinalTestFOne{}. The sample standard deviation was \FinalTestFOneSD{}. These scores describe a fixed hybrid on the existing split. They do not describe a BPSO-selected winner. Per-class errors, false alarms and repeated predictor states still limit the result. The project supplies a runnable framework and measurements of sensitivity to training duration. Larger matched-resource comparisons and independent evaluation data are needed to establish an adaptive-prediction advantage and deployment performance.
+
+The archive-free follow-up removed separately trained GPU predictor observations and reduced total target-or-cap GPU cost by 28.99\% relative to BPSO. The short matched searches remained in SH fallback. This saving therefore does not establish a contribution from online prediction or uncertainty. DEHB was the strongest baseline. The contribution of this work is a reproducible framework and a measured comparison of search methods under a fixed \mbox{compute allocation. It does not show that} uncertainty-aware allocation outperforms existing methods.
+
+
+\input{manuscript_false_alarm_conclusion}
+
+\input{manuscript_nmri_conclusion}

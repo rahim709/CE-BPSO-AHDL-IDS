@@ -1,0 +1,77 @@
+% Enhanced common configuration for the redesigned implementation report.
+\usepackage[T1]{fontenc}
+\usepackage{amsmath,amssymb,booktabs,graphicx,array,longtable}
+\usepackage{xurl}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,positioning}
+\usepackage{listings}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage{caption}
+
+% Graphics search paths
+\graphicspath{{figures/}{images/}}
+
+% Professional Academic Color Palette
+\definecolor{IIITDMNavy}{HTML}{0B2545}
+\definecolor{IIITDMBlue}{HTML}{134074}
+\definecolor{IIITDMLightBlue}{HTML}{EEF4F8}
+\definecolor{ReportNavy}{HTML}{0B2545}
+\definecolor{ReportGray}{HTML}{546E7A}
+\definecolor{AccentGold}{HTML}{C59B27}
+\definecolor{BorderGray}{HTML}{CFD8DC}
+\definecolor{CodeBg}{HTML}{F7F9FA}
+
+% Hyperref Setup with Elegant Link Styling
+\usepackage[hidelinks]{hyperref}
+\hypersetup{
+  colorlinks=true,
+  linkcolor=IIITDMBlue,
+  citecolor=IIITDMBlue,
+  urlcolor=IIITDMNavy,
+  pdfauthor={Abdur Rahim, Arpit Kumar Singh, Gosala Buela},
+  pdftitle={CE-BPSO-AHDL-IDS: Implementation Report - IIITDM Kancheepuram}
+}
+
+% Code Listings Styling
+\lstset{
+  backgroundcolor=\color{CodeBg},
+  basicstyle=\ttfamily\footnotesize,
+  breaklines=true,
+  columns=fullflexible,
+  keepspaces=true,
+  showstringspaces=false,
+  frame=single,
+  rulecolor=\color{BorderGray},
+  framerule=0.6pt,
+  framesep=5pt,
+  xleftmargin=3pt,
+  xrightmargin=3pt
+}
+
+% Caption Styling
+\captionsetup{
+  labelfont={bf,color=IIITDMNavy},
+  font={small},
+  skip=6pt
+}
+
+% Balanced Float Parameters
+\renewcommand{\topfraction}{0.88}
+\renewcommand{\bottomfraction}{0.85}
+\renewcommand{\textfraction}{0.12}
+\renewcommand{\floatpagefraction}{0.75}
+
+% Anti-Widow/Orphan Constraints
+\widowpenalty=10000
+\clubpenalty=10000
+\displaywidowpenalty=10000
+
+% Subtle Table Formatting
+\renewcommand{\arraystretch}{1.12}
+
+% Helper Macros
+\newcommand{\missing}[1]{\textbf{\textcolor{red}{[MISSING EVIDENCE: #1]}}}
+\newcommand{\file}[1]{\path{#1}}
+\newcommand{\macroF}{\mathrm{F1}_{\mathrm{macro}}}

@@ -1,10 +1,130 @@
-# CE-BPSO-AHDL-IDS: Compute-Efficient Binary Particle Swarm Optimization-Based Architecture Search for Hybrid Deep Learning Intrusion Detection in the Internet of Things
+<div align="center">
 
-**Authors:** Abdur Rahim, Arpit Kumar Singh, Gosala Buela
+<img src="logo.589b5376-removebg-preview.png" alt="IIITDM Kancheepuram Logo" width="130" />
 
-**Institution:** Indian Institute of Information Technology, Design and Manufacturing, Kancheepuram
+# CE-BPSO-AHDL-IDS
+### Compute-Efficient Binary Particle Swarm Optimization for Hybrid Deep Learning Intrusion Detection in IoT SCADA Networks
 
-This course project implements binary particle swarm optimization (BPSO) for hybrid neural architecture search and evaluates compute allocation for IoT intrusion detection. It includes CNN/GRU models, Successive Halving (SH), Hyperband, DEHB, predictive allocation variants, execution optimizations and an archive-free policy with SH fallback. Research experiments use the official Gas Pipeline dataset. ToN-IoT, Bot-IoT and SWaT adapters are included; their generated fixtures verify software only.
+[![Python](https://img.shields.io/badge/Python-3.11%2B-3776AB.svg?logo=python&logoColor=white)](https://www.python.org/)
+[![PyTorch](https://img.shields.io/badge/PyTorch-2.5%2B-EE4C2C.svg?logo=pytorch&logoColor=white)](https://pytorch.org/)
+[![CUDA](https://img.shields.io/badge/CUDA-13.2%20Tested-76B900.svg?logo=nvidia&logoColor=white)](https://developer.nvidia.com/cuda-zone)
+[![Test Suite](https://img.shields.io/badge/Tests-110%20Passed-brightgreen.svg)](results/verification/package_cpu.xml)
+[![Dataset](https://img.shields.io/badge/Dataset-Gas%20Pipeline%20SCADA-orange.svg)](docs/datasets.md)
+[![Project Paper](https://img.shields.io/badge/Project%20Paper-PDF-blue.svg)](CE-BPSO-AHDL-IDS.pdf)
+[![Implementation Report](https://img.shields.io/badge/Implementation%20Report-PDF-purple.svg)](docs/latex/implementation_report.pdf)
+
+**Authors:** Abdur Rahim, Arpit Kumar Singh, Gosala Buela  
+**Institution:** Indian Institute of Information Technology, Design and Manufacturing, Kancheepuram (IIITDM Kancheepuram)  
+**Academic Context:** CS5002 Course Project & Research Evaluation
+
+[📄 Project Paper](CE-BPSO-AHDL-IDS.pdf) • [📊 Implementation Report](docs/latex/implementation_report.pdf) • [🏗️ Architecture](#system-architecture) • [📈 Results](#results) • [⚡ Quickstart](#setup) • [🔄 Zero-Cost Plot Reproduction](#reproduce-results-and-graphs-without-retraining)
+
+---
+</div>
+
+## Overview
+
+**CE-BPSO-AHDL-IDS** implements a compute-efficient binary particle swarm optimization (BPSO) framework for hybrid neural architecture search (NAS) and rigorously evaluates multi-fidelity compute allocation policies for Internet of Things (IoT) / SCADA intrusion detection. 
+
+The framework explores 1D-CNN + GRU hybrid architectures over a 73-bit search space and benchmarks diverse resource-allocation mechanisms including **Successive Halving (SH)**, **Hyperband**, **DEHB (Differential Evolution Hyperband)**, predictive allocation variants, and an **Archive-Free online policy** with automatic SH fallback. Research experiments are conducted on the official Gas Pipeline SCADA benchmark, with software adapters provided for ToN-IoT, Bot-IoT, and SWaT.
+
+## Table of Contents
+
+- [Overview](#overview)
+- [System Architecture](#system-architecture)
+- [Key Highlights and Findings](#key-highlights-and-findings)
+- [Command Reference Cheat Sheet](#command-reference-cheat-sheet)
+- [Results](#results)
+  - [Detector Performance](#detector-performance)
+  - [Final Archive-Free Search Comparison](#final-archive-free-search-comparison)
+  - [Execution Optimization and Earlier Predictive Allocation](#execution-optimization-and-earlier-predictive-allocation)
+  - [Historical-Test Evaluation of Search-Selected Models](#historical-test-evaluation-of-search-selected-models)
+  - [Supporting Validation Controls](#supporting-validation-controls)
+  - [CPU/GPU Verification](#cpugpu-verification)
+- [Repository Layout](#repository-layout)
+- [Setup](#setup)
+- [Verify the Installation](#verify-the-installation)
+- [Reproduce Results and Graphs Without Retraining](#reproduce-results-and-graphs-without-retraining)
+- [Obtain and Prepare the Official Dataset](#obtain-and-prepare-the-official-dataset)
+- [Run Training and Architecture Search](#run-training-and-architecture-search)
+- [Predict with a Recreated Specialist Pipeline](#predict-with-a-recreated-specialist-pipeline)
+- [Paper and Reports](#paper-and-reports)
+- [Included and Local-Only Artifacts](#included-and-local-only-artifacts)
+- [Citation](#citation)
+
+---
+
+## System Architecture
+
+The following diagram illustrates the complete end-to-end pipeline: from raw SCADA telemetry ingestion to 73-bit BPSO neural architecture search, multi-fidelity scheduling, and deployment of the two-stage hybrid specialist detector.
+
+```mermaid
+flowchart TD
+    subgraph S1["1. Data Preprocessing & Provenance"]
+        RAW["Raw SCADA Telemetry (Gas Pipeline ARFF)"] --> PRE["Train-Fitted Preprocessor (Min-Max / Column L2)"]
+        PRE --> SPLIT["Frozen Split (60% Train / 20% Val / 20% Test)"]
+    end
+
+    subgraph S2["2. Architecture Search Space & Optimizers"]
+        SPLIT --> BPSO_NAS["73-bit Binary NAS Encoding"]
+        BPSO_NAS --> SWARM["Swarm Particles (Pop=20, Gen=30)"]
+        SWARM --> ALLOC{"Compute Allocator"}
+        ALLOC -->|Full-Fidelity Baseline| B_STD["Fixed-Epoch BPSO (30 epochs)"]
+        ALLOC -->|Geometric Multi-Fidelity| B_SH["Successive Halving / DEHB"]
+        ALLOC -->|Adaptive Curve Prediction| B_AMF["Uncertainty-Aware AMF"]
+        ALLOC -->|Zero-Archive Online Policy| B_AF["Archive-Free Search (SH Fallback)"]
+    end
+
+    subgraph S3["3. Hybrid Deep Learning Detector"]
+        B_SH & B_AF & B_STD & B_AMF --> HYBRID["Hybrid CNN-GRU Backbone"]
+        CNN["1D-CNN (Spatial Feature Extraction)"] --> GRU["GRU (Temporal Sequence Modeling)"]
+        GRU --> DENSE["Classification Head (8 Classes)"]
+    end
+
+    subgraph S4["4. Two-Stage Detection & Evaluation"]
+        HYBRID --> STAGE1["Stage 1: Cost-Sensitive Weighted Hybrid"]
+        STAGE1 -->|High-Precision Filter| NORM_OUT["Normal Traffic / Known Attacks"]
+        STAGE1 -->|Ambiguous / Potential NMRI| STAGE2["Stage 2: Specialist NMRI Classifier"]
+        STAGE2 --> FINAL_OUT["Final Evaluated Class Prediction"]
+    end
+```
+
+### Core Components
+
+1. **73-bit Binary Architecture Encoding**: Encodes 1D-CNN convolutional depth, filter counts, kernel sizes, GRU layer configurations, hidden recurrent units, dropout probabilities, dense classification topologies, and optimizer learning rates into a binary vector sampled by particle swarms.
+2. **Multi-Fidelity Resource Schedulers**: Early evaluation rungs (3, 10, and 30 epochs) prune unpromising candidates early, drastically curtailing overall GPU runtime compared to full-budget evaluations.
+3. **Execution Optimizations**: Tensor residency, vectorized batch processing, bounded caching, and single-construction continuation checks deliver a **19.47% GPU speedup** while preserving exact numeric parameter parity.
+4. **Two-Stage Specialist Pipeline**: A class-weighted hybrid backbone coupled with a second-stage NMRI specialist classifier to counter acute class imbalance in SCADA attacks.
+
+---
+
+## Key Highlights and Findings
+
+> [!NOTE]
+> All results are verified through reproducible scripts, complete evaluation ledgers, and bundled output artifacts without requiring external retraining.
+
+- ⚡ **Compute Savings**: Successive Halving and Archive-Free search achieve **28.99% less online GPU time** compared to standard BPSO. DEHB was the strongest search baseline, reaching target quality in 6.78s (3/3 target attainment).
+- 📉 **Execution Optimization**: Vectorized batches, resident data, bounded caches, and deferred scalar synchronization reduced aggregate GPU runtime from **25.059s to 20.182s (19.47% reduction)** with bit-exact parameter identity.
+- 🎯 **Intrusion Detection**: On the frozen Gas Pipeline split, the two-stage specialist detector achieves **95.46% test accuracy** and **0.8854 Macro-F1**, successfully detecting 92.23% of attacks overall while driving normal false alarms down to **2.60%**.
+- 🔬 **Honest Scientific Reporting**: The archive-free search policy fell back to Successive Halving in primary trials (making zero premature predictive promotions), demonstrating that surrogate promotion requires warmer start profiles. DEHB remained superior at fixed compute budgets.
+
+---
+
+## Command Reference Cheat Sheet
+
+| Action | Command | Expected Time | Prerequisites |
+|---|---|---|---|
+| **Run Unit Tests** | `python -m pytest -q` | ~15 sec | Core Python environment |
+| **Run Software Smoke** | `python -m scripts.software_smoke` | ~20 sec | Core Python environment |
+| **Rebuild Final Figures** | `python -m plots.generate` | < 5 sec | Matplotlib (included data) |
+| **Audit Search Results** | `python -m scripts.archive_free_analyze` | ~10 sec | Bundled results |
+| **Audit Efficiency Results** | `python -m scripts.efficiency_analyze` | ~10 sec | Bundled results |
+| **Re-score Detector Assets** | `python -m scripts.build_final_evaluation_assets --snapshot` | ~5 sec | Bundled results |
+| **Prepare Gas Pipeline** | `python -m src.cli prepare --config configs/gas_pipeline.yaml` | ~1 min | `gas_final.arff` downloaded |
+| **Run Fast CPU NAS Check** | `python -m src.cli search --config experiments/debug.yaml --output results/test` | ~30 sec | Core Python environment |
+| **Compile Paper & Report** | `python3 scripts/compile_submission.py` | ~1 min | pdfLaTeX & BibTeX |
+
+---
 
 ## Results
 
@@ -21,6 +141,11 @@ Mean test results across three hybrid-model seeds on the frozen Gas Pipeline spl
 The final specialist pipeline detects 92.23% of attacks overall, but most NMRI attacks remain undetected. One training-fitted specialist is shared across three hybrid seeds. These are fixed-reference and specialist results, not a demonstrated BPSO-selected winning detector. The historical test split was examined during development, so independent confirmation is still required.
 
 Evidence: [reference summary](docs/latex/evidence/final_summary.json), [weighted-hybrid summary](docs/latex/evidence/false_alarm_summary.json), [specialist summary](docs/latex/evidence/nmri_summary.json), [false-alarm study](docs/false_alarm_optimization.md), and [NMRI study](docs/nmri_balance.md).
+
+<div align="center">
+  <img src="plots/final/detector_comparison.png" alt="Final Detector Comparison" width="850" />
+  <p><em>Figure 1: Mean test metrics across three hybrid model seeds on the frozen Gas Pipeline split.</em></p>
+</div>
 
 ### Final archive-free search comparison
 
@@ -41,6 +166,12 @@ Archive-free full consumed **28.99% less online GPU time than BPSO**, but made *
 The final study contains 42 matched runs and one separate 120-second cold-start diagnostic. The diagnostic matured 16 terminal architectures, fitted one CPU predictor and applied no predictive promotions. It is not a matched superiority comparison. Timing is synchronized training/validation elapsed, including host stalls; it is not pure kernel time or energy. Final epochs may overrun the cap, while score checks under the strict compute limit exclude observations beyond the horizon.
 
 Evidence: [complete final report](results/ua_amf_online_20261108/REPORT.md), [comparison CSV](results/ua_amf_online_20261108/comparison.csv), [per-seed measurements](results/ua_amf_online_20261108/seed_results.csv), [anytime measurements](results/ua_amf_online_20261108/anytime.csv), [campaign costs](results/ua_amf_online_20261108/campaign_costs.csv), and [method description](docs/archive_free_ua_amf.md).
+
+<div align="center">
+  <img src="plots/final/search_target_cost.png" alt="Search Target Cost Comparison" width="440" />
+  <img src="plots/final/search_fixed_compute.png" alt="Search Fixed Compute Quality" width="440" />
+  <p><em>Figure 2: Search cost to reach target validation macro-F1 (left) and final validation macro-F1 achieved under strict 20-GPU-second budget (right).</em></p>
+</div>
 
 ### Execution optimization and earlier predictive allocation
 
@@ -63,6 +194,11 @@ The earlier offline adaptive study used a charged continuation from an 8-second 
 Full UA saved 24.72% online GPU time versus BPSO but was 5.78% slower than SH. Charging the 403.819-second historical archive removes a net single-search saving. At fixed compute it trailed DEHB by 0.1965 macro-F1. The original predictive study completed 61 of 75 requested terminal architecture/seed trajectories; partial-cohort limitations are preserved in its reliability record.
 
 Evidence: [efficiency report](results/ua_amf_efficiency_20261108/REPORT.md), [continuation comparison](results/ua_amf_efficiency_20261108/followup20/comparison.csv), [profile measurements](results/ua_amf_efficiency_20261108/profile_comparison.csv), [conclusion](results/ua_amf_efficiency_20261108/research_conclusion.json), [predictor reliability](results/ua_amf_prediction_20261108/reliability_summary.json), and [earlier predictive comparison](results/ua_amf_prediction_benchmark_20261108/comparison.csv).
+
+<div align="center">
+  <img src="plots/final/search_anytime.png" alt="Search Anytime Trajectory" width="850" />
+  <p><em>Figure 3: Search anytime validation macro-F1 progression over elapsed GPU seconds across all candidate allocation methods.</em></p>
+</div>
 
 ### Historical-test evaluation of search-selected models
 
@@ -116,32 +252,42 @@ All listed records have zero failures and errors. The suites overlap; their coun
 
 Export verification re-scored 948 prediction archives across 43 archive-free runs, 1,184 across 108 efficiency pilot runs, and 1,069 across 54 charged continuations. Prediction metrics and the checked GPU/epoch ledgers matched. See [verification summary](results/verification/package_verification.json).
 
+---
+
 ## Repository layout
 
 ```text
 CE-BPSO-AHDL-IDS/
-├── README.md
-├── requirements.txt
-├── requirements.lock.txt
-├── pyproject.toml
-├── .gitignore
-├── configs/          # Canonical dataset, model and search settings
-├── src/              # Preprocessing, neural models, optimization and evaluation
-├── scripts/          # Experiment execution, auditing and report reproduction
-├── experiments/      # Runnable configurations and experiment index
-├── results/          # Verified metrics, predictions, tables and CPU/GPU records
-├── plots/            # generate.py and final/ graphs
-├── docs/             # Reports, protocols, bibliography and compact evidence
-└── tests/            # Regression tests
+├── README.md                 # Primary project overview, findings and reproduction guide
+├── requirements.txt          # Core dependencies and version constraints
+├── requirements.lock.txt     # Pinned reference environment (Python 3.14.4 / Linux)
+├── pyproject.toml            # Project packaging specification and test configuration
+├── .gitignore                # Excludes large binaries, intermediate caches and models
+├── configs/                  # Canonical dataset, model and search configurations
+├── src/                      # Implementation: data, models, BPSO, search schedulers
+│   ├── data/                 # SCADA preprocessing, feature transforms and split logic
+│   ├── models/               # Hybrid CNN-GRU architectures, controls and specialists
+│   ├── optimization/         # 73-bit BPSO, Successive Halving, DEHB, AMF variants
+│   ├── training/             # PyTorch training engine, resident data, runtime cache
+│   ├── evaluation/           # Multiclass metrics, cost-sensitive scoring, analysis
+│   └── cli.py                # Unified CLI interface for prepare, train, search, compare
+├── scripts/                  # Reproduction runners, verification and report builders
+├── experiments/              # Runnable experimental configurations with documented defaults
+├── results/                  # Frozen experiment ledgers, trajectories and test XMLs
+├── plots/                    # Visualization generation script and final output figures
+├── docs/                     # Specifications, protocols, evidence summaries and reports
+└── tests/                    # Pytest test suite covering core modules and search runners
 ```
 
 See the [implementation map](src/README.md), [experiment index](experiments/README.md), [plot guide](plots/README.md), [result index](results/README.md), and [evaluation protocol](docs/protocol.md).
+
+---
 
 ## Setup
 
 Open a terminal in the repository root. Python 3.11 or newer is required, with compatible wheels for the chosen Python/OS. The saved experiment environment used Linux, Python 3.14.4 and CUDA 13.2. `requirements.txt` specifies supported dependency ranges; `requirements.lock.txt` records that historical machine and should not be installed blindly on another platform.
 
-Linux/macOS:
+### Linux / macOS
 
 ```bash
 python3 -m venv .venv
@@ -151,7 +297,7 @@ export MPLCONFIGDIR=/tmp/ce-bpso-mpl
 python -m pip check
 ```
 
-Windows PowerShell:
+### Windows PowerShell
 
 ```powershell
 py -3 -m venv .venv
@@ -166,7 +312,11 @@ The core requirements include PyTorch, NumPy, pandas, SciPy, scikit-learn, Matpl
 python -c "import torch; print('PyTorch:', torch.__version__); print('CUDA available:', torch.cuda.is_available()); print('GPU:', torch.cuda.get_device_name(0) if torch.cuda.is_available() else 'none')"
 ```
 
+---
+
 ## Verify the installation
+
+Run the quick regression suite and software smoke tests:
 
 ```bash
 python -m pytest -q
@@ -191,7 +341,12 @@ Remove-Item Env:BPSO_TEST_DEVICE
 
 `python -m scripts.run_gpu_validation` also exercises bounded CLI workflows. It requires CUDA access, prepared real Gas data and the synthetic profiles documented in [dataset setup](docs/datasets.md).
 
+---
+
 ## Reproduce results and graphs without retraining
+
+> [!TIP]
+> The repository includes complete result ledgers, predictions, and measurements. You can regenerate all four final comparison figures in under 5 seconds on CPU without needing GPU hardware or the raw dataset.
 
 Rebuild the main final comparison figures from the included JSON/CSV measurements:
 
@@ -199,9 +354,7 @@ Rebuild the main final comparison figures from the included JSON/CSV measurement
 python -m plots.generate
 ```
 
-Outputs under `plots/final/` are `detector_comparison`, `search_target_cost`, `search_fixed_compute` and `search_anytime`, each as PDF and PNG. The graph code is [plots/generate.py](plots/generate.py). [Report figures](plots/final/report_figures/) and [final search figures](plots/final/search_figures/) are also included. Preview:
-
-![Final detector comparison](plots/final/detector_comparison.png)
+Outputs under `plots/final/` are `detector_comparison`, `search_target_cost`, `search_fixed_compute` and `search_anytime`, each generated as both high-resolution PDF and PNG. The graph generator is [plots/generate.py](plots/generate.py). [Report figures](plots/final/report_figures/) and [final search figures](plots/final/search_figures/) are also included.
 
 Audit the bundled search predictions and regenerate the original study plots/tables:
 
@@ -220,6 +373,8 @@ python -m scripts.build_nmri_assets --snapshot
 
 Saved results can be inspected without recreating the 13 GB development run directory. Original historical manifests describe their full experiment snapshots; `SUBMISSION_MANIFEST.json` describes the exported file subset.
 
+---
+
 ## Obtain and prepare the official dataset
 
 Follow [dataset setup](docs/datasets.md) to obtain the author-linked Gas Pipeline release. Preserve its original documentation and usage terms, and place it at:
@@ -228,7 +383,7 @@ Follow [dataset setup](docs/datasets.md) to obtain the author-linked Gas Pipelin
 datasets/raw/gas_pipeline/gas_final.arff
 ```
 
-The reviewed release has 97,019 records, 26 predictors and eight classes. Its SHA256 is:
+The reviewed release has 97,019 records, 26 predictors and eight classes. Its SHA256 checksum is:
 
 ```text
 bfe14cf8656f58e7840a2d8b366febb0da7593d2af262ab936ec8029e505695a
@@ -247,6 +402,8 @@ python -m src.cli prepare --config configs/gas_pipeline.yaml
 ```
 
 This writes 58,211 training, 19,404 validation and 19,404 test records, plus train-fitted preprocessing and provenance metadata. The ordinary configuration uses column L2 normalization. The final reference and weighted-hybrid studies use Min–Max configurations; preparing the ordinary profile alone does not recreate their data views. The `time` predictor is query–response duration, not a capture timestamp. Repeated non-time predictor states across partitions limit generalization claims.
+
+---
 
 ## Run training and architecture search
 
@@ -283,6 +440,8 @@ Search variants are selected by configuration or `--method`; inspect `python -m 
 
 Checkpoints retain optimizer and RNG state. Use a fresh output directory after changing configuration or data; rerunning an unchanged completed output may resume or reuse it. Avoid concurrent writers to one run directory. Search and threshold selection use validation data; final evaluation uses the configured test endpoint.
 
+---
+
 ## Predict with a recreated specialist pipeline
 
 After recreating the hybrid checkpoint, specialist, preprocessor and pipeline manifest:
@@ -293,10 +452,12 @@ python -m scripts.predict_nmri_specialist --pipeline path/to/pipeline_seed_10042
 
 CSV inputs are transformed with the saved training-fitted preprocessor. NPZ inputs must contain already transformed features in the expected order. The command verifies artifact hashes and uses no labels. Model weights and serialized specialists are excluded from this repository; the saved prediction archives remain available for verification.
 
+---
+
 ## Paper and reports
 
-- [Project paper](CE-BPSO-AHDL-IDS.pdf)
-- [Implementation report](docs/latex/implementation_report.pdf)
+- [Project paper (PDF)](CE-BPSO-AHDL-IDS.pdf)
+- [Implementation report (PDF)](docs/latex/implementation_report.pdf)
 - [Research report in Markdown](docs/reports/CE-BPSO-AHDL-IDS.md)
 - [Technical report in Markdown](docs/reports/CE-BPSO-AHDL-IDS-Implementation-Report.md)
 - [LaTeX build guide](docs/latex/README.md)
@@ -312,8 +473,26 @@ python3 -m scripts.build_submission_documents
 
 The first command compiles both PDFs from their current LaTeX sources and bundled assets. The second synchronizes both Markdown reports from those same sources without rerunning experiments. The implementation report includes the pilot, exploratory continuation and fresh archive-free comparison. Older study-specific prose generators describe historical stages and should not be used to replace the reviewed text. The separate course submission also contains a self-contained `overleaf/` project with `main.tex`, `references.bib`, `images/` and the required IEEE style/license files. Select `main.tex` and pdfLaTeX in Overleaf. The [paper review](docs/latex/review_report.md) records the current checks and resolved notation question. [REMAINING_ACTIONS.md](docs/latex/REMAINING_ACTIONS.md) is an earlier planning record; its pending-comparison statements predate the completed compute-limited studies.
 
+---
+
 ## Included and local-only artifacts
 
 Final metrics, per-seed measurements, comparison tables, trajectories, prediction archives, graph inputs, CPU/GPU test XML, environment records and frozen protocols are included. Supporting earlier studies remain where the final paper depends on them. `.gitignore` excludes credentials, environments, raw/processed datasets, trained model exports, caches and document intermediates while retaining the exported results and graphs. Source backups, manuscript backups, debug-only runs are omitted.
 
 The contribution is an implemented and measured architecture-search framework, execution optimizations and a controlled assessment of compute allocation. Neither a novel optimizer nor statistically established search superiority, exact reproduction of the source paper's numerical scores, or independent-release detector performance has been demonstrated.
+
+---
+
+## Citation
+
+If you use or reference this codebase, experiments, or implementation report in your research or course projects, please cite:
+
+```bibtex
+@article{ce_bpso_ahdl_ids_2026,
+  title   = {CE-BPSO-AHDL-IDS: Compute-Efficient Binary Particle Swarm Optimization-Based Architecture Search for Hybrid Deep Learning Intrusion Detection in the Internet of Things},
+  author  = {Abdur Rahim and Arpit Kumar Singh and Gosala Buela},
+  journal = {Technical Report, Indian Institute of Information Technology, Design and Manufacturing, Kancheepuram},
+  year    = {2026},
+  url     = {https://github.com/arpit/CE-BPSO-AHDL-IDS}
+}
+```
