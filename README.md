@@ -493,6 +493,6 @@ If you use or reference this codebase, experiments, or implementation report in 
   author  = {Abdur Rahim and Arpit Kumar Singh and Gosala Buela},
   journal = {Technical Report, Indian Institute of Information Technology, Design and Manufacturing, Kancheepuram},
   year    = {2026},
-  url     = {https://github.com/arpit/CE-BPSO-AHDL-IDS}
+  url     = {https://github.com/rahim709/CE-BPSO-AHDL-IDS}
 }
 ```
